@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":KhachHang" as Client
+boundary ":LichSuDatVe" as UI
+control ":DatVeController" as Ctrl
+entity ":DonDatVe" as ModelBooking
+entity ":GheNgoi" as ModelSeat
+
+Client -> UI: 1. Xem lịch sử đặt vé và chọn đơn cần hủy
+activate UI
+UI -> Ctrl: 2. Yêu cầu hủy đơn đặt vé
+activate Ctrl
+Ctrl -> ModelBooking: 3. kiemTraDieuKienHuy(bookingId)
+activate ModelBooking
+
+ModelBooking --> Ctrl: 4.1. Không đủ điều kiện (suất chiếu diễn ra dưới 60 phút)
+Ctrl --> UI: 5. Thông báo "Không thể hủy vé sát giờ chiếu"
+UI --> Client: 6. Hiển thị thông báo từ chối hủy
+
+Ctrl -> ModelBooking: 3. kiemTraDieuKienHuy(bookingId)
+ModelBooking --> Ctrl: 4.2. Đủ điều kiện hủy vé
+Ctrl -> ModelBooking: 7. capNhatTrangThaiHuy(bookingId, 'cancelled')
+ModelBooking --> Ctrl: 8. Cập nhật hủy đơn thành công
+
+Ctrl -> ModelSeat: 9. giaiPhongGheNgoi(showtimeId, danhSachGhe)
+activate ModelSeat
+ModelSeat --> Ctrl: 10. Giải phóng ghế về trạng thái trống thành công
+deactivate ModelSeat
+
+Ctrl --> UI: 11. Thông báo "Hủy đơn đặt vé thành công"
+UI --> Client: 12. Hiển thị thông báo và hướng dẫn nhận hoàn tiền
+deactivate UI
+deactivate Ctrl
+deactivate ModelBooking
+
+@enduml

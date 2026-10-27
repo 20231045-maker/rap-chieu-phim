@@ -1,0 +1,48 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":KhachHang" as Client
+boundary ":ChonGheVaSuatChieu" as UI_Seat
+boundary ":DatVe" as UI_Book
+control ":DatVeController" as Ctrl
+control ":VNPay" as Payment
+entity ":DonDatVe" as ModelBooking
+entity ":VeXemPhim" as ModelTicket
+
+Client -> UI_Seat: 1. Khách hàng chọn suất chiếu và ghế ngồi
+activate UI_Seat
+UI_Seat -> UI_Book: 2. Nhấn nút "Tiếp tục đặt vé"
+deactivate UI_Seat
+activate UI_Book
+
+UI_Book -> Ctrl: 3.1. Thông tin cần thiết: suất chiếu, danh sách ghế, combo, VNPay
+activate Ctrl
+Ctrl -> Payment: 4. Gọi phương thức thanh toán VNPay
+activate Payment
+Payment --> UI_Book: 5. Giao diện thanh toán VNPay
+UI_Book --> Client: 6. Hiển thị màn hình thanh toán VNPay
+
+Client -> Payment: 7. Nhập thông tin thanh toán (thẻ / QR Pay)
+Payment -> Ctrl: 8. Thanh toán thành công, gửi lại dữ liệu giao dịch
+deactivate Payment
+
+Ctrl -> ModelBooking: 9. taoDonDatVe(userId, showtimeId, tongTien, paymentInfo)
+activate ModelBooking
+ModelBooking --> Ctrl: 10. Thêm đơn vé thành công
+deactivate ModelBooking
+
+Ctrl -> ModelTicket: 11. taoVeXemPhim(bookingId, danhSachGhe, maQRCode)
+activate ModelTicket
+ModelTicket --> Ctrl: 12. Thêm vé điện tử thành công
+deactivate ModelTicket
+
+Ctrl --> UI_Book: 13. Thông báo đặt vé thành công
+deactivate Ctrl
+UI_Book --> Client: 14. Hiển thị thông báo thành công và mã vé điện tử QR Code
+deactivate UI_Book
+
+@enduml

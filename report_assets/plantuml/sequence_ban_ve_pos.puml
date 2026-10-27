@@ -1,0 +1,40 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":NhanVien" as Staff
+boundary ":BanVePOS" as UI
+control ":BanVeController" as Ctrl
+entity ":DonDatVe" as ModelBooking
+entity ":VeXemPhim" as ModelTicket
+boundary ":MayInHoaDon" as Printer
+
+Staff -> UI: 1. Chọn suất chiếu, ghế ngồi và combo theo yêu cầu của khách
+activate UI
+UI -> Ctrl: 2. Yêu cầu tạo đơn vé tại quầy
+activate Ctrl
+
+Ctrl -> ModelBooking: 3. taoDonDatVeTaiQuay(staffId, showtimeId, tongTien, hinhThucTT)
+activate ModelBooking
+ModelBooking --> Ctrl: 4. Tạo đơn vé thành công (bookingId)
+deactivate ModelBooking
+
+Ctrl -> ModelTicket: 5. taoVeVaMaQR(bookingId, danhSachGhe)
+activate ModelTicket
+ModelTicket --> Ctrl: 6. Tạo vé xem phim thành công
+deactivate ModelTicket
+
+Ctrl -> Printer: 7. inVeVaHoaDon(bookingId, thongTinVe)
+activate Printer
+Printer --> Staff: 8. In vé giấy kèm mã vạch / QR Code hoàn tất
+deactivate Printer
+
+Ctrl --> UI: 9. Thông báo "Thanh toán và in vé thành công"
+deactivate Ctrl
+UI --> Staff: 10. Hiển thị kết quả bán vé thành công
+deactivate UI
+
+@enduml

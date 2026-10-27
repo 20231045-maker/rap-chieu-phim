@@ -1,0 +1,206 @@
+<%- include('../layouts/header') %>
+
+<!-- Banner Header Phim (Phong cách CGV & Beta) -->
+<div class="position-relative mb-4 bg-white border-bottom shadow-sm">
+    <div style="background: linear-gradient(to right, rgba(255,255,255,0.98) 30%, rgba(255,255,255,0.85) 100%), url('<%= movie.banner_url || movie.poster_url %>') center/cover no-repeat; padding: 50px 0 40px;">
+        <div class="container">
+            <div class="row align-items-center g-4">
+                <!-- Poster -->
+                <div class="col-md-4 col-lg-3 text-center text-md-start">
+                    <div class="rounded-4 overflow-hidden shadow-md border d-inline-block position-relative bg-white" style="max-width: 260px;">
+                        <img src="<%= movie.poster_url %>?v=20261013_theatrical" alt="<%= movie.title %>" class="img-fluid w-100">
+                        <span class="badge-rating rating-<%= movie.age_rating %>"><%= movie.age_rating %></span>
+                    </div>
+                </div>
+
+                <!-- Thông tin chi tiết -->
+                <div class="col-md-8 col-lg-9">
+                    <span class="badge <%= movie.status === 'now_showing' ? 'bg-success' : 'bg-primary' %> mb-2 px-3 py-1 fw-bold">
+                        <%= movie.status === 'now_showing' ? 'Đang Chiếu Tại Rạp' : 'Sắp Khởi Chiếu' %>
+                    </span>
+                    <h1 class="display-5 fw-extrabold text-dark mb-1"><%= movie.title %></h1>
+                    <% if (movie.original_title) { %>
+                        <h5 class="text-muted mb-3"><%= movie.original_title %></h5>
+                    <% } %>
+
+                    <div class="d-flex flex-wrap gap-4 text-secondary small mb-3">
+                        <div><i class="fa-regular fa-clock text-danger me-1"></i> <strong>Thời lượng:</strong> <%= movie.duration %> phút</div>
+                        <div><i class="fa-solid fa-tag text-primary me-1"></i> <strong>Thể loại:</strong> <%= movie.genre %></div>
+                        <div><i class="fa-regular fa-calendar text-info me-1"></i> <strong>Khởi chiếu:</strong> <%= movie.release_date %></div>
+                        <div><i class="fa-solid fa-language text-success me-1"></i> <strong>Ngôn ngữ:</strong> <%= movie.language %></div>
+                    </div>
+
+                    <div class="mb-3 text-secondary small">
+                        <div class="mb-1"><strong class="text-dark">Đạo diễn:</strong> <%= movie.director || 'Đang cập nhật' %></div>
+                        <div><strong class="text-dark">Diễn viên:</strong> <%= movie.cast || 'Đang cập nhật' %></div>
+                    </div>
+
+                    <p class="text-muted mb-4" style="max-width: 780px; line-height: 1.7;">
+                        <%= movie.description || 'Chưa có tóm tắt nội dung phim.' %>
+                    </p>
+
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="#showtimes" class="btn btn-danger rounded-pill px-4 py-2 fw-bold shadow-sm">
+                            <i class="fa-solid fa-ticket me-2"></i> Đặt Vé Ngay
+                        </a>
+                        <% if (movie.trailer_url) { %>
+                            <button class="btn btn-outline-danger rounded-pill px-4 py-2 fw-bold shadow-sm" data-bs-toggle="modal" data-bs-target="#trailerModal">
+                                <i class="fa-solid fa-play me-2"></i> Xem Trailer Chính Thức
+                            </button>
+                        <% } %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Trailer Xem Phim Thật -->
+<% if (movie.trailer_url) { 
+    let embedUrl = movie.trailer_url;
+    let watchUrl = movie.trailer_url;
+    let videoId = '';
+    if (movie.trailer_url.includes('watch?v=')) {
+        videoId = movie.trailer_url.split('watch?v=')[1].split('&')[0];
+    } else if (movie.trailer_url.includes('embed/')) {
+        videoId = movie.trailer_url.split('embed/')[1].split('?')[0];
+    } else if (movie.trailer_url.includes('youtu.be/')) {
+        videoId = movie.trailer_url.split('youtu.be/')[1].split('?')[0];
+    } else if (!movie.trailer_url.startsWith('http')) {
+        videoId = movie.trailer_url.trim();
+    }
+    if (videoId) {
+        embedUrl = 'https://www.youtube-nocookie.com/embed/' + videoId;
+        watchUrl = 'https://www.youtube.com/watch?v=' + videoId;
+    }
+%>
+    <div class="modal fade" id="trailerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
+            <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="modal-header bg-white py-3">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fa-brands fa-youtube text-danger fs-5"></i>
+                        <h6 class="modal-title fw-bold text-dark mb-0">Trailer Chính Thức: <%= movie.title %></h6>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <a href="<%= watchUrl %>" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold">
+                            <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Mở trên YouTube
+                        </a>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                </div>
+                <div class="modal-body p-0 bg-black">
+                    <div class="ratio ratio-16x9">
+                        <iframe id="trailerIframe" src="" data-src="<%= embedUrl %>" title="Official Trailer - <%= movie.title %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="p-2 bg-dark text-white-50 text-center small border-top border-secondary">
+                        <i class="fa-solid fa-circle-info me-1 text-warning"></i>
+                        Nếu video không phát được trong khung, vui lòng bấm <strong class="text-white">"Mở trên YouTube"</strong> ở góc phải trên.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const trailerModal = document.getElementById('trailerModal');
+            const iframe = document.getElementById('trailerIframe');
+            if (trailerModal && iframe) {
+                const trailerSrc = iframe.getAttribute('data-src');
+                trailerModal.addEventListener('show.bs.modal', function() {
+                    iframe.src = trailerSrc + (trailerSrc.includes('?') ? '&' : '?') + 'autoplay=1&rel=0&enablejsapi=1';
+                });
+                trailerModal.addEventListener('hidden.bs.modal', function() {
+                    iframe.src = '';
+                });
+            }
+        });
+    </script>
+<% } %>
+
+<!-- Lịch Chiếu & Đặt Vé -->
+<div id="showtimes" class="container py-4 mb-5">
+    <div class="card bg-white border-0 p-4 rounded-4 shadow-sm">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <h4 class="text-dark fw-bold mb-0 d-flex align-items-center gap-2">
+                <i class="fa-solid fa-calendar-days text-danger"></i>
+                <span>LỊCH CHIẾU & ĐẶT VÉ TRỰC TUYẾN</span>
+            </h4>
+            <div class="d-flex align-items-center gap-2">
+                <label for="movieDatePicker" class="small text-secondary fw-semibold mb-0 text-nowrap">
+                    <i class="fa-regular fa-calendar-check text-danger me-1"></i> Chọn ngày khác:
+                </label>
+                <input type="date" id="movieDatePicker" class="form-control form-control-sm border-danger-subtle bg-light text-dark fw-bold shadow-sm"
+                       min="2026-10-21" max="2026-12-31" value="<%= selectedDate %>"
+                       onchange="if(this.value) window.location.href='/movies/<%= movie.id %>?date=' + this.value + '#showtimes'"
+                       style="width: 155px;">
+            </div>
+        </div>
+
+        <!-- Chọn ngày chiếu (7 ngày tới) -->
+        <div class="d-flex overflow-auto gap-2 pb-3 mb-4 border-bottom" style="scrollbar-width: thin; -webkit-overflow-scrolling: touch;">
+            <% dates.forEach(d => { %>
+                <a href="/movies/<%= movie.id %>?date=<%= d.dateStr %>#showtimes" 
+                   class="btn <%= selectedDate === d.dateStr ? 'btn-danger text-white fw-bold shadow-sm' : 'btn-outline-secondary text-dark' %> rounded-3 px-3 py-2 text-center text-nowrap flex-shrink-0">
+                    <div style="font-size: 0.75rem;"><%= d.dayName %></div>
+                    <div class="fs-5 fw-bold"><%= d.label %></div>
+                </a>
+            <% }) %>
+        </div>
+
+        <% if (typeof currentUser === 'undefined' || !currentUser) { %>
+            <div class="alert alert-warning border-warning-subtle d-flex flex-wrap align-items-center justify-content-between p-3 rounded-3 mb-4 gap-2">
+                <div class="small text-dark">
+                    <i class="fa-solid fa-lock text-danger me-2"></i>
+                    <strong>Yêu cầu đăng nhập:</strong> Vui lòng đăng nhập hoặc đăng ký tài khoản thành viên để chọn ghế và mua vé xem phim.
+                </div>
+                <div class="d-flex gap-2">
+                    <a href="/auth/login?redirect=<%= encodeURIComponent('/movies/' + movie.id + '?date=' + selectedDate) %>" class="btn btn-danger btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                        <i class="fa-solid fa-right-to-bracket me-1"></i> Đăng Nhập
+                    </a>
+                    <a href="/auth/register?redirect=<%= encodeURIComponent('/movies/' + movie.id + '?date=' + selectedDate) %>" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                        Đăng Ký
+                    </a>
+                </div>
+            </div>
+        <% } %>
+
+        <!-- Danh sách suất chiếu theo định dạng phòng -->
+        <% if (totalShowtimes > 0) { %>
+            <div class="row g-4">
+                <% Object.keys(groupedShowtimes).forEach(screenType => { %>
+                    <div class="col-12">
+                        <div class="p-3 bg-light border rounded-3">
+                            <div class="d-flex align-items-center gap-2 mb-3">
+                                <span class="badge bg-danger fs-6 fw-bold"><%= screenType %></span>
+                                <span class="text-secondary small fw-semibold">Phòng chiếu tiêu chuẩn âm thanh đa chiều</span>
+                            </div>
+
+                            <div class="d-flex flex-wrap gap-2 gap-sm-3">
+                                <% groupedShowtimes[screenType].forEach(st => { %>
+                                    <a href="/booking/seats/<%= st.id %>" class="btn btn-outline-danger bg-white border text-decoration-none p-3 rounded-3 text-center shadow-sm hover-shadow flex-grow-1 flex-sm-grow-0" style="min-width: 140px;">
+                                        <div class="fs-4 fw-bold text-dark mb-1"><%= formatTime(st.start_time) %></div>
+                                        <div class="small text-danger fw-semibold text-truncate" style="max-width: 170px;"><i class="fa-solid fa-location-dot me-1"></i><%= st.cinema_name || 'Cinestar' %></div>
+                                        <div class="small text-muted mb-1 text-truncate" style="max-width: 170px;"><%= st.room_name %></div>
+                                        <div class="badge bg-light text-danger border">
+                                            <%= Number(st.base_price).toLocaleString('vi-VN') %> đ
+                                        </div>
+                                    </a>
+                                <% }) %>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        <% } else { %>
+            <div class="text-center py-5">
+                <i class="fa-regular fa-calendar-xmark text-muted display-4 mb-3"></i>
+                <h5 class="text-dark fw-bold">Hiện chưa có suất chiếu cho ngày này!</h5>
+                <p class="text-muted small mb-3">Vui lòng chọn ngày chiếu khác để tiếp tục đặt vé.</p>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":QuanLy" as Manager
+boundary ":QuanLyPhim" as UI
+control ":PhimController" as Ctrl
+entity ":Phim" as Model
+
+Manager -> UI: 1. Nhập thông tin phim mới (tiêu đề, thể loại, thời lượng, poster)
+activate UI
+UI -> Ctrl: 2. Yêu cầu thêm phim mới
+activate Ctrl
+Ctrl -> Model: 3. kiemTraPhimTonTai(tieuDe)
+activate Model
+
+Model --> Ctrl: 4.1. Phim đã tồn tại trong danh mục
+Ctrl --> UI: 5. Thông báo "Tên phim đã tồn tại"
+UI --> Manager: 6. Hiển thị thông báo lỗi
+
+Ctrl -> Model: 3. kiemTraPhimTonTai(tieuDe)
+Model --> Ctrl: 4.2. Phim chưa tồn tại (hợp lệ)
+Ctrl -> Model: 7. themPhimMoi(thongTinPhim)
+Model --> Ctrl: 8. Lưu phim mới vào cơ sở dữ liệu thành công
+Ctrl --> UI: 9. Thông báo "Thêm phim thành công"
+UI --> Manager: 10. Hiển thị thông báo và cập nhật danh sách phim
+deactivate UI
+deactivate Ctrl
+deactivate Model
+
+@enduml

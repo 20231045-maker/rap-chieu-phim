@@ -1,0 +1,43 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":QuanLy" as Manager
+boundary ":LapSuatChieu" as UI
+control ":SuatChieuController" as Ctrl
+entity ":SuatChieu" as ModelShowtime
+entity ":GheNgoi" as ModelSeat
+
+Manager -> UI: 1. Chọn phim, phòng chiếu, ngày và giờ bắt đầu
+activate UI
+UI -> Ctrl: 2. Yêu cầu tạo suất chiếu mới
+activate Ctrl
+
+Ctrl -> Ctrl: 3. Tự động tính giờ kết thúc (start_time + duration + 15m)
+Ctrl -> ModelShowtime: 4. kiemTraXungDotPhong(roomId, startTime, endTime)
+activate ModelShowtime
+
+ModelShowtime --> Ctrl: 5.1. Phát hiện khung giờ bị trùng lặp
+Ctrl --> UI: 6. Thông báo "Xung đột phòng chiếu"
+UI --> Manager: 7. Cảnh báo trùng lịch và gợi ý khung giờ khác
+
+Ctrl -> ModelShowtime: 4. kiemTraXungDotPhong(roomId, startTime, endTime)
+ModelShowtime --> Ctrl: 5.2. Không có xung đột (khung giờ hợp lệ)
+Ctrl -> ModelShowtime: 8. luuSuatChieuMoi(thongTinSuat)
+ModelShowtime --> Ctrl: 9. Lưu suất chiếu thành công
+
+Ctrl -> ModelSeat: 10. khoiTaoDanhSachGhe(showtimeId, roomId)
+activate ModelSeat
+ModelSeat --> Ctrl: 11. Khởi tạo ma trận ghế trống thành công
+deactivate ModelSeat
+
+Ctrl --> UI: 12. Thông báo "Tạo suất chiếu thành công"
+UI --> Manager: 13. Hiển thị thông báo & cập nhật lịch chiếu phòng
+deactivate UI
+deactivate Ctrl
+deactivate ModelShowtime
+
+@enduml

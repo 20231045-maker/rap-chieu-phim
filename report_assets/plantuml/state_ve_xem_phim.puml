@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam roundCorner 0
+skinparam dpi 300
+
+title BIỂU ĐỒ CHUYỂN TRẠNG THÁI CỦA VÉ XEM PHIM (TICKET STATE MACHINE)
+
+[*] --> UNUSED : Thanh toán thành công (Tạo vé & cấp QR Code)
+
+UNUSED --> CHECKED_IN : Nhân viên quét QR soát vé hợp lệ tại cửa phòng chiếu
+
+UNUSED --> EXPIRED : Quá giờ chiếu phim mà khách không tới soát vé
+
+UNUSED --> CANCELLED : Hủy đơn đặt vé / hoàn tiền theo chính sách rạp
+
+CHECKED_IN --> [*] : Suất chiếu hoàn tất
+EXPIRED --> [*]
+CANCELLED --> [*]
+
+@enduml

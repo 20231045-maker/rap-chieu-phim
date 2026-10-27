@@ -1,0 +1,1327 @@
+/* ====================================================================
+   CINESTAR CINEMA - LIGHT THEME (GIAO DIỆN SÁNG)
+   THIẾT KẾ THAM KHẢO BETACINEMAS.VN & CGV.VN
+   ĐỒ ÁN CHUYÊN NGÀNH CÔNG NGHỆ PHẦN MỀM - NHÓM 10
+   ==================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    /* Brand Colors (CGV Red & Beta Blue) */
+    --cgv-red: #e71a0f;
+    --cgv-red-hover: #c4140a;
+    --cgv-red-light: #fee2e2;
+    --beta-blue: #0284c7;
+    --beta-blue-hover: #0369a1;
+    --cinema-gold: #f59e0b;
+    --cinema-gold-light: #fef3c7;
+    
+    /* Light Theme Backgrounds & Surfaces */
+    --bg-body: #f8fafc;
+    --bg-surface: #ffffff;
+    --bg-card: #ffffff;
+    --bg-card-hover: #ffffff;
+    --bg-subtle: #f1f5f9;
+    --bg-highlight: #f8fafc;
+    
+    /* Borders & Dividers */
+    --border-light: #e2e8f0;
+    --border-subtle: #edf2f7;
+    --border-strong: #cbd5e1;
+    
+    /* Typography Colors (High Contrast Light Mode) */
+    --text-primary: #0f172a;
+    --text-body: #334155;
+    --text-secondary: #475569;
+    --text-muted: #64748b;
+    --text-light: #94a3b8;
+    
+    /* Seat Map Palette (Mới theo yêu cầu: Ghế thường green, Đang giữ chỗ blue, Đã đặt icon) */
+    --seat-regular-bg: #10b981;
+    --seat-regular-border: #059669;
+    --seat-regular-text: #ffffff;
+    --seat-available: #10b981;
+    
+    --seat-vip-bg: #fef3c7;
+    --seat-vip-border: #f59e0b;
+    --seat-vip-text: #b45309;
+    --seat-vip: #f59e0b;
+    
+    --seat-sweetbox-bg: #fce7f3;
+    --seat-sweetbox-border: #ec4899;
+    --seat-sweetbox-text: #be185d;
+    --seat-sweetbox: #ec4899;
+    
+    --seat-selected-bg: #2563eb;
+    --seat-selected-border: #1d4ed8;
+    --seat-selected-text: #ffffff;
+    
+    --seat-locked-bg: #3b82f6;
+    --seat-locked-border: #1d4ed8;
+    --seat-locked-text: #ffffff;
+    
+    --seat-booked-bg: #e2e8f0;
+    --seat-booked-border: #cbd5e1;
+    --seat-booked-text: #475569;
+    --seat-booked: #cbd5e1;
+    
+    --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+    --shadow-md: 0 4px 14px rgba(0,0,0,0.06);
+    --shadow-lg: 0 12px 28px rgba(0,0,0,0.08);
+}
+
+/* Base Styling */
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--bg-body);
+    color: var(--text-body);
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.6;
+}
+
+.main-content {
+    flex: 1;
+}
+
+a {
+    color: var(--cgv-red);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+a:hover {
+    color: var(--cgv-red-hover);
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* Topbar phụ phía trên Navbar */
+.topbar-cinema {
+    background-color: #f1f5f9;
+    border-bottom: 1px solid var(--border-light);
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    padding: 6px 0;
+}
+
+.topbar-cinema a {
+    color: var(--text-muted);
+}
+
+.topbar-cinema a:hover {
+    color: var(--cgv-red);
+}
+
+/* Main Navbar (Giao diện sáng CGV & Beta) */
+.navbar-cinema {
+    background-color: #ffffff !important;
+    border-bottom: 2px solid var(--cgv-red);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+    padding: 12px 0;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    color: #0f172a !important;
+}
+
+.brand-accent {
+    color: var(--cgv-red);
+}
+
+.navbar-nav .nav-link {
+    color: #334155 !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 14px !important;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+}
+
+.navbar-nav .nav-link:hover {
+    color: var(--cgv-red) !important;
+    background-color: #fff1f2;
+}
+
+.navbar-nav .nav-link.active {
+    color: var(--cgv-red) !important;
+    font-weight: 700;
+    background-color: #fee2e2;
+}
+
+/* CGV Style Breadcrumb Bar (Thanh điều hướng giống CGV Cinemas - media_1791900552504.png) */
+.cinema-breadcrumb-bar {
+    background-color: #fbf8f2;
+    border-top: 1px solid #f2ede1;
+    border-bottom: 1px solid #e7dfd0;
+    padding: 8px 0;
+    font-size: 0.88rem;
+    color: #4b5563;
+    line-height: 1.5;
+}
+
+.cinema-breadcrumb-bar .crumb-home {
+    color: #4b5563;
+    font-size: 0.95rem;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    transition: color 0.2s ease;
+}
+
+.cinema-breadcrumb-bar .crumb-home:hover {
+    color: var(--cgv-red);
+}
+
+.cinema-breadcrumb-bar .crumb-separator {
+    margin: 0 10px;
+    color: #9ca3af;
+    font-size: 1.1rem;
+    font-weight: 300;
+    user-select: none;
+    line-height: 1;
+}
+
+.cinema-breadcrumb-bar .crumb-link {
+    color: #374151;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.cinema-breadcrumb-bar .crumb-link:hover {
+    color: var(--cgv-red);
+    text-decoration: underline;
+}
+
+.cinema-breadcrumb-bar .crumb-current {
+    color: #111827;
+    font-weight: 700;
+}
+
+.cinema-breadcrumb-bar .crumb-current u {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+/* CGV Movie Category Tabs (Phim Đang Chiếu vs Phim Sắp Chiếu) */
+.cgv-movies-header {
+    margin-top: 4px;
+}
+
+.cgv-nav-tabs {
+    position: relative;
+    bottom: -1px;
+}
+
+.cgv-nav-link {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #64748b;
+    text-decoration: none;
+    padding-bottom: 10px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+    letter-spacing: 0.3px;
+}
+
+.cgv-nav-link:hover {
+    color: var(--cgv-red);
+}
+
+.cgv-nav-link.active {
+    color: var(--cgv-red);
+    border-bottom-color: var(--cgv-red);
+}
+
+/* Cards & Surfaces - Chuẩn giao diện sáng */
+.card, .bg-card {
+    background-color: #ffffff !important;
+    color: var(--text-body) !important;
+    border: 1px solid var(--border-light) !important;
+    border-radius: 12px !important;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-header {
+    background-color: #ffffff !important;
+    border-bottom: 1px solid var(--border-light) !important;
+    color: var(--text-primary) !important;
+    font-weight: 700;
+    padding: 14px 18px;
+}
+
+.card-body {
+    background-color: transparent !important;
+    color: var(--text-body) !important;
+    padding: 18px;
+}
+
+.card-footer {
+    background-color: #f8fafc !important;
+    border-top: 1px solid var(--border-light) !important;
+    padding: 12px 18px;
+}
+
+/* Form Controls & Inputs */
+.form-label, label {
+    color: var(--text-primary) !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    margin-bottom: 6px !important;
+    display: inline-block;
+}
+
+.form-control, .form-select {
+    background-color: #ffffff !important;
+    border: 1px solid var(--border-strong) !important;
+    color: var(--text-primary) !important;
+    border-radius: 8px !important;
+    padding: 10px 14px !important;
+    font-size: 0.95rem !important;
+    transition: all 0.2s ease !important;
+}
+
+.form-control-sm, .form-select-sm {
+    padding: 5px 12px !important;
+    font-size: 0.875rem !important;
+    border-radius: 6px !important;
+    height: auto !important;
+    min-height: 34px !important;
+    line-height: 1.4 !important;
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+}
+
+select option {
+    color: #0f172a !important;
+    background-color: #ffffff !important;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #ffffff !important;
+    border-color: var(--cgv-red) !important;
+    color: var(--text-primary) !important;
+    box-shadow: 0 0 0 3px rgba(231, 26, 15, 0.15) !important;
+}
+
+.form-control::placeholder {
+    color: #94a3b8 !important;
+}
+
+.input-group-text {
+    background-color: #f1f5f9 !important;
+    border: 1px solid var(--border-strong) !important;
+    color: var(--text-muted) !important;
+}
+
+.form-text, .text-muted {
+    color: var(--text-muted) !important;
+}
+
+/* Cinema Buttons */
+.btn-danger {
+    background-color: var(--cgv-red) !important;
+    border-color: var(--cgv-red) !important;
+    color: #ffffff !important;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(231, 26, 15, 0.2);
+    transition: all 0.2s ease;
+}
+
+.btn-danger:hover, .btn-danger:focus {
+    background-color: var(--cgv-red-hover) !important;
+    border-color: var(--cgv-red-hover) !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(231, 26, 15, 0.35);
+    transform: translateY(-1px);
+}
+
+.btn-outline-danger {
+    color: var(--cgv-red) !important;
+    border-color: var(--cgv-red) !important;
+    background-color: transparent !important;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-outline-danger:hover {
+    background-color: var(--cgv-red) !important;
+    color: #ffffff !important;
+}
+
+.btn-outline-secondary {
+    color: var(--text-secondary) !important;
+    border-color: var(--border-strong) !important;
+    background-color: #ffffff !important;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #f1f5f9 !important;
+    color: var(--text-primary) !important;
+    border-color: #94a3b8 !important;
+}
+
+/* Quick Ticket Booking Bar (Thanh đặt vé nhanh Beta/CGV) */
+.quick-booking-bar {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    padding: 20px 24px;
+    position: relative;
+    z-index: 10;
+    margin-top: -45px;
+}
+
+/* Movie Cards (Thẻ phim phong cách Beta Cinemas & CGV) */
+.movie-card {
+    background-color: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 14px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.movie-card:hover {
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-lg);
+    border-color: #cbd5e1;
+}
+
+.movie-poster-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    overflow: hidden;
+    background-color: #f1f5f9;
+}
+
+.movie-poster {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+
+.movie-card:hover .movie-poster {
+    transform: scale(1.04);
+}
+
+/* Play Trailer Button on Poster (CGV & Beta style) */
+.btn-play-trailer {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: rgba(231, 26, 15, 0.9);
+    color: #ffffff;
+    border: 2px solid #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+    z-index: 3;
+    padding-left: 3px;
+}
+
+.movie-poster-wrap:hover .btn-play-trailer {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-play-trailer:hover {
+    background: #e71a0f;
+    transform: translate(-50%, -50%) scale(1.12) !important;
+}
+
+/* Age Rating Badges (Phân loại độ tuổi) */
+.badge-rating {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    padding: 4px 9px;
+    font-size: 0.72rem;
+    font-weight: 800;
+    border-radius: 6px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+.rating-P, .badge-age-p {
+    background-color: #16a34a !important;
+    color: #ffffff !important;
+}
+
+.rating-K, .badge-age-k {
+    background-color: #0284c7 !important;
+    color: #ffffff !important;
+}
+
+.rating-T13, .badge-age-t13 {
+    background-color: #d97706 !important;
+    color: #ffffff !important;
+}
+
+.rating-T16, .badge-age-t16 {
+    background-color: #ea580c !important;
+    color: #ffffff !important;
+}
+
+.rating-T18, .badge-age-t18 {
+    background-color: #dc2626 !important;
+    color: #ffffff !important;
+}
+
+.movie-content {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.movie-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.35;
+}
+
+.movie-card:hover .movie-title {
+    color: var(--cgv-red);
+}
+
+.movie-meta {
+    font-size: 0.82rem;
+    color: var(--text-muted);
+    margin-bottom: 14px;
+}
+
+/* Tabs phong cách CGV / Beta Cinemas */
+.nav-pills-cinema .nav-link {
+    color: var(--text-secondary);
+    background-color: #f1f5f9;
+    border: 1px solid var(--border-light);
+    font-weight: 700;
+    padding: 10px 24px;
+    border-radius: 30px;
+    transition: all 0.2s ease;
+}
+
+.nav-pills-cinema .nav-link:hover {
+    color: var(--cgv-red);
+    background-color: #fff1f2;
+}
+
+.nav-pills-cinema .nav-link.active {
+    background-color: var(--cgv-red) !important;
+    color: #ffffff !important;
+    border-color: var(--cgv-red) !important;
+    box-shadow: 0 4px 12px rgba(231, 26, 15, 0.25);
+}
+
+/* Suất Chiếu Nhanh (Showtime Buttons) */
+.showtime-pill {
+    background: #ffffff;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.showtime-pill:hover {
+    background-color: var(--cgv-red);
+    border-color: var(--cgv-red);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(231, 26, 15, 0.25);
+}
+
+.showtime-pill:hover .text-muted,
+.showtime-pill:hover .text-primary {
+    color: #ffffff !important;
+}
+
+/* SƠ ĐỒ CHỌN GHẾ NGỒI (SEAT SELECTION MAP - LIGHT THEME) */
+.seat-map-container {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    padding: 30px 20px;
+    box-shadow: var(--shadow-sm);
+}
+
+/* Màn Hình Chiếu Rạp (Screen Curve) */
+.screen-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.screen-curve {
+    width: 75%;
+    height: 10px;
+    background: linear-gradient(180deg, #94a3b8 0%, #cbd5e1 100%);
+    border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+    box-shadow: 0 8px 20px rgba(148, 163, 184, 0.3);
+    margin-bottom: 8px;
+}
+
+.screen-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+/* Ghế Ngồi (Cinema Seats) */
+.seat-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 10px;
+}
+
+.seat-row-wrapper, .seat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}
+
+.row-label {
+    width: 24px;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.seat-item {
+    width: 34px;
+    height: 32px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.75rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    user-select: none;
+    border: 1px solid transparent;
+}
+
+/* 1. Ghế Thường (Regular) */
+.seat-regular {
+    background-color: var(--seat-regular-bg);
+    border-color: var(--seat-regular-border);
+    color: var(--seat-regular-text);
+}
+
+.seat-regular:hover:not(.seat-booked):not(.seat-locked) {
+    background-color: #059669;
+    border-color: #047857;
+    color: #ffffff;
+    transform: scale(1.1);
+}
+
+/* 2. Ghế VIP */
+.seat-vip {
+    background-color: var(--seat-vip-bg);
+    border-color: var(--seat-vip-border);
+    color: var(--seat-vip-text);
+}
+
+.seat-vip:hover:not(.seat-booked):not(.seat-locked) {
+    background-color: #fde68a;
+    border-color: #d97706;
+    color: #92400e;
+    transform: scale(1.1);
+}
+
+/* 3. Ghế Sweetbox (Ghế đôi) */
+.seat-sweetbox {
+    background-color: var(--seat-sweetbox-bg);
+    border-color: var(--seat-sweetbox-border);
+    color: var(--seat-sweetbox-text);
+    width: 38px;
+}
+
+.seat-sweetbox:hover:not(.seat-booked):not(.seat-locked) {
+    background-color: #fbcfe8;
+    border-color: #db2777;
+    transform: scale(1.1);
+}
+
+/* 4. Ghế Đang Chọn (Selected) - Blue */
+.seat-selected {
+    background-color: var(--seat-selected-bg) !important;
+    border-color: var(--seat-selected-border) !important;
+    color: var(--seat-selected-text) !important;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.5) !important;
+    transform: scale(1.08);
+}
+
+/* 5. Ghế Đang Giữ Chỗ Tạm Thời (Locked) - Blue */
+.seat-locked {
+    background-color: var(--seat-locked-bg) !important;
+    border-color: var(--seat-locked-border) !important;
+    color: var(--seat-locked-text) !important;
+    cursor: not-allowed !important;
+    box-shadow: 0 0 8px rgba(59, 130, 246, 0.35) !important;
+}
+
+.seat-locked i {
+    font-size: 0.75rem;
+    color: var(--seat-locked-text);
+    line-height: 1;
+}
+
+/* 6. Ghế Đã Bán / Đã Đặt (Booked) - Có Icon meme icon.jpg */
+.seat-booked {
+    background-color: var(--seat-booked-bg) !important;
+    border-color: var(--seat-booked-border) !important;
+    color: var(--seat-booked-text) !important;
+    cursor: not-allowed !important;
+    opacity: 0.95;
+    padding: 0 !important;
+    overflow: hidden !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+.seat-booked img,
+.seat-booked-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    border-radius: 4px !important;
+    pointer-events: none !important;
+    display: block !important;
+}
+
+.seat-booked i {
+    font-size: 0.85rem;
+    color: var(--seat-booked-text);
+    line-height: 1;
+}
+
+/* Chú thích ghế (Seat Legend) */
+.seat-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    padding: 16px;
+    background-color: #f8fafc;
+    border-radius: 12px;
+    border: 1px solid var(--border-light);
+    margin-top: 30px;
+    font-size: 0.85rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-secondary);
+}
+
+.legend-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+}
+
+/* Sticky Sidebar Tóm Tắt Đơn Vé */
+.booking-summary-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 16px;
+    box-shadow: var(--shadow-md);
+    position: sticky;
+    top: 90px;
+}
+
+/* Combo Card (Bắp nước) */
+.combo-card {
+    background: #ffffff;
+    border: 1px solid var(--border-light);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.combo-card:hover {
+    box-shadow: var(--shadow-md);
+    border-color: var(--border-strong);
+}
+
+.combo-thumb {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+/* Payment Method Cards (Thẻ phương thức thanh toán) */
+.payment-option-card {
+    border: 2px solid var(--border-light);
+    border-radius: 12px;
+    padding: 16px;
+    cursor: pointer;
+    background: #ffffff;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.payment-option-card:hover {
+    border-color: #cbd5e1;
+    background-color: #f8fafc;
+}
+
+.payment-option-card.selected,
+.payment-option-card:has(input[type="radio"]:checked) {
+    border-color: var(--cgv-red);
+    background-color: #fff1f2;
+}
+
+/* Footer (Chuẩn giao diện sáng Beta Cinemas & CGV) */
+footer {
+    background-color: #ffffff;
+    border-top: 1px solid var(--border-light);
+    padding: 50px 0 20px;
+    margin-top: 60px;
+    color: var(--text-secondary);
+}
+
+footer h5, footer h6 {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+footer a {
+    color: var(--text-secondary);
+}
+
+footer a:hover {
+    color: var(--cgv-red);
+}
+
+.footer-bottom {
+    border-top: 1px solid var(--border-light);
+    padding-top: 20px;
+    margin-top: 40px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* Modals & Alerts */
+.modal-content {
+    background-color: #ffffff !important;
+    color: var(--text-body) !important;
+    border-radius: 16px !important;
+    border: 1px solid var(--border-light) !important;
+    box-shadow: var(--shadow-lg);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-light) !important;
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-light) !important;
+}
+
+.alert-danger {
+    background-color: #fef2f2 !important;
+    border-color: #fecaca !important;
+    color: #991b1b !important;
+}
+
+.alert-success {
+    background-color: #f0fdf4 !important;
+    border-color: #bbf7d0 !important;
+    color: #166534 !important;
+}
+
+.alert-warning {
+    background-color: #fffbeb !important;
+    border-color: #fde68a !important;
+    color: #92400e !important;
+}
+
+.alert-info {
+    background-color: #f0f9ff !important;
+    border-color: #bae6fd !important;
+    color: #075985 !important;
+}
+
+/* Tables (Zebra striped light tables) */
+.table {
+    color: var(--text-body) !important;
+}
+
+.table th {
+    background-color: #f8fafc !important;
+    color: var(--text-primary) !important;
+    font-weight: 700;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.table td {
+    border-bottom: 1px solid var(--border-light);
+    vertical-align: middle;
+}
+
+.table-hover tbody tr:hover {
+    background-color: #f1f5f9 !important;
+}
+
+/* Card, Table & POS light theme compatibility */
+.bg-card {
+    background-color: var(--bg-card) !important;
+}
+
+.table-dark {
+    background-color: #ffffff !important;
+    color: var(--text-body) !important;
+}
+
+.table-dark th {
+    background-color: #f8fafc !important;
+    color: var(--text-primary) !important;
+    border-bottom: 2px solid var(--border-light) !important;
+}
+
+.table-dark td {
+    background-color: #ffffff !important;
+    color: var(--text-body) !important;
+    border-bottom: 1px solid var(--border-light) !important;
+}
+
+.table-dark tr:hover td {
+    background-color: #f1f5f9 !important;
+}
+
+.border-secondary {
+    border-color: var(--border-light) !important;
+}
+
+.form-control.bg-dark, .form-select.bg-dark {
+    background-color: #ffffff !important;
+    color: var(--text-primary) !important;
+    border-color: var(--border-strong) !important;
+}
+
+/* Smooth Scrolling cho trang web */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Sửa lỗi không ấn được nút trên Carousel Banner */
+.carousel-control-prev,
+.carousel-control-next {
+    width: 64px !important;
+    pointer-events: none !important;
+    z-index: 15 !important;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    pointer-events: auto !important;
+    cursor: pointer;
+    background-color: rgba(15, 23, 42, 0.65);
+    border-radius: 50%;
+    padding: 24px;
+    background-size: 50%;
+    transition: all 0.2s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.carousel-control-prev-icon:hover,
+.carousel-control-next-icon:hover {
+    background-color: var(--cgv-red);
+    transform: scale(1.08);
+}
+
+/* Giao diện Thẻ Chọn Cụm Rạp (Hà Nội & TP.HCM) */
+.cinema-option-card {
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    background-color: #ffffff;
+    border: 1.5px solid var(--border-light) !important;
+}
+
+.cinema-option-card:hover {
+    border-color: var(--cgv-red) !important;
+    background-color: #fef2f2 !important;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(220, 38, 38, 0.12);
+}
+
+.cinema-option-card.selected-cinema {
+    border-color: var(--cgv-red) !important;
+    background-color: #fff1f2 !important;
+    box-shadow: 0 0 0 2px var(--cgv-red);
+}
+
+.cinema-option-card.selected-cinema .cinema-choose-btn {
+    background-color: var(--cgv-red) !important;
+    color: #ffffff !important;
+    border-color: var(--cgv-red) !important;
+}
+
+.hover-danger:hover {
+    color: var(--cgv-red) !important;
+}
+
+/* ====================================================================
+   RESPONSIVE DESIGN CHO ĐA THIẾT BỊ (DESKTOP, TABLET, MOBILE, PHABLET)
+   ==================================================================== */
+
+/* Scroll indicator và container mượt mà */
+.seat-grid::-webkit-scrollbar,
+.overflow-auto::-webkit-scrollbar,
+.table-responsive::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+}
+
+.seat-grid::-webkit-scrollbar-thumb,
+.overflow-auto::-webkit-scrollbar-thumb,
+.table-responsive::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+.seat-grid::-webkit-scrollbar-track,
+.overflow-auto::-webkit-scrollbar-track,
+.table-responsive::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+
+/* 1. TABLET & IPAD (Màn hình từ 768px đến 991px) */
+@media (max-width: 991.98px) {
+    /* Navbar collapse */
+    .navbar-cinema .navbar-collapse {
+        background-color: #ffffff;
+        border: 1px solid var(--border-light);
+        border-radius: 16px;
+        padding: 16px;
+        margin-top: 10px;
+        box-shadow: var(--shadow-md);
+    }
+
+    .navbar-cinema .nav-item {
+        border-bottom: 1px solid var(--border-subtle);
+        padding: 4px 0;
+    }
+
+    .navbar-cinema .nav-item:last-child {
+        border-bottom: none;
+    }
+
+    .navbar-cinema .navbar-collapse button[onclick="openCinemaModal()"] {
+        width: 100%;
+        justify-content: center;
+        margin: 10px 0 !important;
+    }
+
+    /* Carousel Banner */
+    .carousel-inner {
+        max-height: 420px;
+    }
+
+    .carousel-item > div {
+        height: 400px !important;
+    }
+
+    .carousel-item h1 {
+        font-size: 2rem !important;
+    }
+
+    .carousel-item p {
+        font-size: 0.92rem !important;
+        margin-bottom: 16px !important;
+    }
+
+    /* Seat map container */
+    .seat-map-container {
+        padding: 24px 16px;
+    }
+
+    .seat-item {
+        width: 30px;
+        height: 28px;
+        font-size: 0.72rem;
+    }
+
+    .seat-sweetbox {
+        width: 34px;
+    }
+
+    .row-label {
+        width: 20px;
+        font-size: 0.75rem;
+    }
+
+    /* Breadcrumbs */
+    .cinema-breadcrumb-bar {
+        font-size: 0.8rem;
+        padding: 8px 0;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+/* 2. MOBILE & PHABLET (Màn hình dưới 768px) */
+@media (max-width: 767.98px) {
+    /* Topbar & Navbar */
+    .navbar-brand span {
+        font-size: 1.15rem;
+    }
+
+    /* Hero Carousel Banner */
+    .carousel-inner {
+        max-height: 380px;
+    }
+
+    .carousel-item > div {
+        height: 360px !important;
+        padding: 20px 0 !important;
+    }
+
+    .carousel-item h1 {
+        font-size: 1.55rem !important;
+        line-height: 1.25;
+    }
+
+    .carousel-item p {
+        font-size: 0.82rem !important;
+        line-height: 1.5;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        margin-bottom: 14px !important;
+    }
+
+    .carousel-item .btn {
+        font-size: 0.85rem !important;
+        padding: 8px 16px !important;
+    }
+
+    /* Movie Card trên Mobile */
+    .movie-card {
+        border-radius: 12px;
+    }
+
+    .movie-content {
+        padding: 10px 8px;
+    }
+
+    .movie-title {
+        font-size: 0.88rem;
+        margin-bottom: 4px;
+        line-height: 1.3;
+    }
+
+    .movie-meta {
+        font-size: 0.72rem;
+        margin-bottom: 8px;
+    }
+
+    .movie-content .btn {
+        font-size: 0.72rem !important;
+        padding: 5px 6px !important;
+    }
+
+    .btn-play-trailer {
+        opacity: 0.9 !important;
+        width: 38px;
+        height: 38px;
+        font-size: 0.9rem;
+        transform: translate(-50%, -50%) scale(1) !important;
+    }
+
+    .badge-rating {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+        top: 6px;
+        left: 6px;
+    }
+
+    /* Seat Map trên Mobile */
+    .seat-map-container {
+        padding: 16px 8px;
+        border-radius: 12px;
+    }
+
+    .seat-grid {
+        padding: 4px 0;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .seat-row-wrapper {
+        gap: 4px;
+        margin-bottom: 4px !important;
+    }
+
+    .seat-item {
+        width: 27px;
+        height: 25px;
+        font-size: 0.65rem;
+        border-radius: 4px;
+    }
+
+    .seat-sweetbox {
+        width: 30px;
+    }
+
+    .row-label {
+        width: 16px;
+        font-size: 0.68rem;
+    }
+
+    .seat-legend {
+        gap: 8px 12px;
+        padding: 8px;
+        font-size: 0.72rem;
+    }
+
+    .legend-box {
+        width: 15px;
+        height: 15px;
+    }
+
+    /* Thanh tóm tắt cố định dưới cùng */
+    .fixed-bottom {
+        padding: 10px 0 !important;
+    }
+
+    .fixed-bottom .fs-4 {
+        font-size: 1.2rem !important;
+    }
+
+    .fixed-bottom .btn-lg {
+        padding: 8px 18px !important;
+        font-size: 0.95rem !important;
+    }
+
+    body:has(.fixed-bottom) {
+        padding-bottom: 125px !important;
+    }
+
+    /* Modal Chọn Cụm Rạp */
+    .cinema-option-card > .d-flex {
+        flex-direction: column;
+        align-items: flex-start !important;
+        gap: 10px;
+    }
+
+    .cinema-option-card .cinema-choose-btn {
+        width: 100%;
+        margin-left: 0 !important;
+        text-align: center;
+        padding: 6px 12px;
+    }
+
+    #cinemaCityTabs .nav-link {
+        font-size: 0.8rem;
+        padding: 6px 4px;
+    }
+
+    /* POS Quầy Mobile */
+    .pos-screen-card {
+        border-radius: 12px;
+    }
+
+    #posSeatMapArea {
+        min-height: 240px !important;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* QR Scan Mobile */
+    #reader {
+        min-height: 220px !important;
+    }
+}
+
+/* 3. SMALL MOBILE PHONES (Màn hình siêu nhỏ < 380px: iPhone SE, v.v.) */
+@media (max-width: 379.98px) {
+    .seat-item {
+        width: 23px;
+        height: 22px;
+        font-size: 0.58rem;
+    }
+
+    .seat-sweetbox {
+        width: 26px;
+    }
+
+    .row-label {
+        width: 14px;
+        font-size: 0.62rem;
+    }
+
+    .carousel-item h1 {
+        font-size: 1.3rem !important;
+    }
+
+    .nav-pills-cinema .nav-link {
+        font-size: 0.75rem;
+        padding: 6px 10px;
+    }
+}
+
+

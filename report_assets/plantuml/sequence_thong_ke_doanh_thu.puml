@@ -1,0 +1,35 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":QuanLy" as Manager
+boundary ":BaoCaoThongKe" as UI
+control ":ThongKeController" as Ctrl
+entity ":DonDatVe" as ModelBooking
+entity ":SuatChieu" as ModelShowtime
+
+Manager -> UI: 1. Chọn khoảng thời gian và tiêu chí thống kê
+activate UI
+UI -> Ctrl: 2. Yêu cầu truy vấn dữ liệu báo cáo
+activate Ctrl
+
+Ctrl -> ModelBooking: 3. layDoanhThuVaSoLuongVe(fromDate, toDate)
+activate ModelBooking
+ModelBooking --> Ctrl: 4. Dữ liệu tổng doanh thu và vé đã bán
+deactivate ModelBooking
+
+Ctrl -> ModelShowtime: 5. layTongSoGheKhaDung(fromDate, toDate)
+activate ModelShowtime
+ModelShowtime --> Ctrl: 6. Dữ liệu tổng ghế khả dụng của các suất chiếu
+deactivate ModelShowtime
+
+Ctrl -> Ctrl: 7. Tự động tính tỷ lệ lấp đầy rạp: Occupancy Rate (%)
+Ctrl --> UI: 8. Trả về bộ số liệu thống kê và biểu đồ trực quan
+deactivate Ctrl
+UI --> Manager: 9. Hiển thị biểu đồ doanh thu và bảng tổng hợp số liệu
+deactivate UI
+
+@enduml

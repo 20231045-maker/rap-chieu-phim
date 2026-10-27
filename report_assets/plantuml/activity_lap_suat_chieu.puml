@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện quản lý suất chiếu;
+:Hiển thị sơ đồ lịch chiếu theo phòng và ngày;
+
+:Nhấn nút "Thêm suất chiếu mới";
+:Chọn bộ phim chiếu từ danh mục;
+:Chọn phòng chiếu và ngày chiếu;
+:Nhập thời gian bắt đầu (start_time);
+
+:Hệ thống tự động tính thời gian kết thúc:
+(end_time = start_time + thời lượng phim + 15 phút dọn phòng);
+
+if () then ([Kiểm tra xung đột phòng chiếu])
+    :Xung đột khung giờ với suất chiếu khác trong phòng;
+    :Hiển thị thông báo cảnh báo trùng lịch;
+    :Gợi ý các khung giờ trống khả dụng;
+else ([Không có xung đột])
+    :Lưu suất chiếu mới vào cơ sở dữ liệu;
+    :Khởi tạo danh sách ghế trống cho suất chiếu;
+    :Cập nhật lịch chiếu lên bảng hiển thị trực quan;
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,342 @@
+<%- include('../layouts/header') %>
+
+<!-- HTML5-QRCode Scanner Library CDN -->
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<div class="container py-4 mb-5">
+    <!-- Header -->
+    <div class="card bg-white border p-3 rounded-4 mb-4 shadow-sm">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-primary-subtle text-primary p-2 rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                    <i class="fa-solid fa-qrcode fs-4"></i>
+                </div>
+                <div>
+                    <h4 class="text-dark fw-bold mb-0">SOÁT VÉ QR CODE TẠI CỬA PHÒNG CHIẾU</h4>
+                    <div class="small text-secondary">Quét mã QR qua Camera hoặc súng quét mã vạch để kiểm tra và xác nhận vào rạp</div>
+                </div>
+            </div>
+            <div>
+                <a href="/staff/pos" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                    <i class="fa-solid fa-cash-register me-1"></i> Quay Lại Bán Vé POS
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Cột Trái: Camera Scanner & Nhập Mã Thủ Công -->
+        <div class="col-lg-6">
+            <div class="card bg-white border p-4 rounded-4 shadow-sm h-100">
+                <h5 class="text-dark fw-bold mb-3 d-flex align-items-center justify-content-between border-bottom pb-2">
+                    <span><i class="fa-solid fa-camera text-danger me-2"></i> Camera Quét QR</span>
+                    <button class="btn btn-outline-danger btn-sm rounded-pill fw-semibold" id="btnToggleCamera" onclick="toggleCamera()">
+                        <i class="fa-solid fa-video me-1"></i> Bật Camera
+                    </button>
+                </h5>
+
+                <!-- Khung hiển thị Camera quét QR -->
+                <div id="reader" style="width: 100%; border-radius: 12px; overflow: hidden; background: #000; min-height: 250px;" class="d-flex align-items-center justify-content-center text-secondary small mb-3">
+                    <div class="text-center p-3" id="cameraPlaceholder">
+                        <i class="fa-solid fa-camera display-4 mb-2 text-secondary opacity-50"></i>
+                        <div>Nhấn "Bật Camera" hoặc dùng ô nhập mã bên dưới</div>
+                    </div>
+                </div>
+
+                <!-- Ô Nhập Mã Vé (Cho Máy Quét Mã Vạch / Gõ Thủ Công) -->
+                <div class="mt-2">
+                    <label class="form-label text-dark small fw-bold">Hoặc Nhập / Bắn Mã Vé:</label>
+                    <div class="input-group">
+                        <input type="text" id="manualTicketCode" class="form-control bg-white border text-dark fw-semibold" style="color: #0f172a !important;" placeholder="VD: TKT-20261013-D05..." value="<%= prefillCode %>" onkeydown="if(event.key==='Enter') inspectTicket()">
+                        <button class="btn btn-danger px-4 fw-bold shadow-sm" type="button" onclick="inspectTicket()">
+                            <i class="fa-solid fa-magnifying-glass me-1"></i> Tra Cứu
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Các Mã Vé Mẫu Để Test Nhanh (Demo 1-Click) -->
+                <div class="border-top pt-3 mt-3">
+                    <div class="small text-secondary fw-bold mb-2">MÃ VÉ MẪU ĐỂ TEST HỆ THỐNG:</div>
+                    <div class="d-flex flex-wrap gap-2">
+                        <button class="btn btn-outline-success btn-sm rounded-pill fw-semibold" onclick="testCode('TKT-20261013-D05')">
+                            <i class="fa-solid fa-check me-1"></i> TKT-20261013-D05 (Vé hợp lệ - Chưa soát)
+                        </button>
+                        <button class="btn btn-outline-danger btn-sm rounded-pill fw-semibold" onclick="testCode('TKT-20261013-E07')">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i> TKT-20261013-E07 (Vé đã dùng - Cảnh báo)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột Phải: Kết Quả Xác Thực & Nút Check-In -->
+        <div class="col-lg-6">
+            <div class="card bg-white border p-4 rounded-4 shadow-sm h-100 d-flex flex-column" id="verificationCard">
+                <h5 class="text-dark fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-clipboard-check text-success me-2"></i> Kết Quả Xác Thực Vé
+                </h5>
+
+                <!-- Trạng thái ban đầu khi chưa quét -->
+                <div id="scanPlaceholder" class="my-auto text-center py-5 text-secondary">
+                    <i class="fa-solid fa-qrcode display-1 mb-3 opacity-25"></i>
+                    <h5 class="text-dark opacity-75 fw-bold">Sẵn Sàng Tiếp Nhận Vé</h5>
+                    <p class="small mb-0">Quét mã QR hoặc nhập mã vé để xem thông tin chi tiết</p>
+                </div>
+
+                <!-- Bảng chi tiết vé khi đã quét -->
+                <div id="scanResultArea" style="display: none;" class="flex-grow-1 d-flex flex-column">
+                    <!-- Banner Trạng Thái -->
+                    <div id="statusBanner" class="alert p-3 rounded-3 mb-3 d-flex align-items-center gap-3">
+                        <i id="statusIcon" class="fs-2"></i>
+                        <div>
+                            <div class="fw-bold fs-5" id="statusTitle">...</div>
+                            <div class="small" id="statusDesc">...</div>
+                        </div>
+                    </div>
+
+                    <!-- Thông Tin Vé -->
+                    <div class="bg-light p-3 rounded-3 border mb-3">
+                        <div class="row g-2 small">
+                            <div class="col-12 mb-2">
+                                <div class="text-secondary">Phim:</div>
+                                <h5 class="text-dark fw-bold mb-0" id="resMovieTitle">-</h5>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-secondary">Phòng chiếu:</div>
+                                <div class="text-dark fw-bold" id="resRoomName">-</div>
+                            </div>
+                            <div class="col-6">
+                                <div class="text-secondary">Suất chiếu:</div>
+                                <div class="text-dark fw-bold" id="resShowtime">-</div>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <div class="text-secondary">Ghế ngồi:</div>
+                                <div class="fs-3 fw-extrabold text-danger" id="resSeatCode">-</div>
+                            </div>
+                            <div class="col-6 mt-2">
+                                <div class="text-secondary">Khách hàng:</div>
+                                <div class="text-dark fw-semibold" id="resCustomerName">-</div>
+                                <div class="text-secondary" id="resCustomerPhone">-</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nút Hành Động Check-In -->
+                    <div class="mt-auto">
+                        <button class="btn btn-success w-100 py-3 rounded-pill fw-bold fs-5 shadow" id="btnConfirmCheckIn" onclick="confirmCheckIn()">
+                            <i class="fa-solid fa-circle-check me-2"></i> XÁC NHẬN VÀO RẠP (CHECK-IN)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách các lượt soát vé gần nhất -->
+    <div class="card bg-white border p-4 rounded-4 shadow-sm mt-4">
+        <h5 class="text-dark fw-bold mb-3 border-bottom pb-2">
+            <i class="fa-solid fa-list-check text-warning me-2"></i> Lịch Sử Soát Vé Vừa Thực Hiện Hôm Nay
+        </h5>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0" id="recentScansTable">
+                <thead>
+                    <tr class="border-bottom text-secondary small">
+                        <th>MÃ VÉ</th>
+                        <th>PHIM</th>
+                        <th>PHÒNG</th>
+                        <th>GHẾ</th>
+                        <th>THỜI GIAN SOÁT</th>
+                        <th>TRẠNG THÁI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (recentScans && recentScans.length > 0) { %>
+                        <% recentScans.forEach(s => { %>
+                            <tr>
+                                <td><code><%= s.ticket_code %></code></td>
+                                <td class="fw-bold text-dark"><%= s.movie_title %></td>
+                                <td><%= s.room_name %></td>
+                                <td><span class="badge bg-danger"><%= s.seat_code %></span></td>
+                                <td class="text-secondary small"><%= s.checked_in_at %></td>
+                                <td><span class="badge bg-success">Đã soát</span></td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="6" class="text-center text-secondary py-3">Chưa có lượt soát vé nào hôm nay</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+let html5QrCode = null;
+let isCameraRunning = false;
+let currentInspectedCode = null;
+
+function testCode(code) {
+    document.getElementById('manualTicketCode').value = code;
+    inspectTicket();
+}
+
+function toggleCamera() {
+    const btn = document.getElementById('btnToggleCamera');
+    if (isCameraRunning) {
+        stopCamera();
+        btn.innerHTML = '<i class="fa-solid fa-video me-1"></i> Bật Camera';
+        btn.classList.replace('btn-danger', 'btn-outline-info');
+    } else {
+        startCamera();
+        btn.innerHTML = '<i class="fa-solid fa-video-slash me-1"></i> Tắt Camera';
+        btn.classList.replace('btn-outline-info', 'btn-danger');
+    }
+}
+
+function startCamera() {
+    document.getElementById('cameraPlaceholder').style.display = 'none';
+    html5QrCode = new Html5Qrcode("reader");
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: { width: 250, height: 250 } },
+        (decodedText, decodedResult) => {
+            handleScanSuccess(decodedText);
+        },
+        (errorMessage) => {
+            // bỏ qua frame lỗi quét liên tục
+        }
+    ).then(() => {
+        isCameraRunning = true;
+    }).catch(err => {
+        alert('Không thể mở camera: ' + err);
+        document.getElementById('cameraPlaceholder').style.display = 'block';
+    });
+}
+
+function stopCamera() {
+    if (html5QrCode && isCameraRunning) {
+        html5QrCode.stop().then(() => {
+            html5QrCode.clear();
+            isCameraRunning = false;
+            document.getElementById('cameraPlaceholder').style.display = 'block';
+        });
+    }
+}
+
+function handleScanSuccess(text) {
+    document.getElementById('manualTicketCode').value = text;
+    inspectTicket(text);
+}
+
+async function inspectTicket(customCode) {
+    let code = customCode || document.getElementById('manualTicketCode').value;
+    if (!code || code.trim() === '') {
+        alert('Vui lòng nhập hoặc quét mã vé!');
+        return;
+    }
+
+    try {
+        const res = await fetch('/staff/api/check-ticket', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: code.trim() })
+        });
+
+        const data = await res.json();
+        renderVerificationResult(data);
+    } catch (e) {
+        alert('Lỗi tra cứu vé: ' + e.message);
+    }
+}
+
+function renderVerificationResult(data) {
+    const placeholder = document.getElementById('scanPlaceholder');
+    const resultArea = document.getElementById('scanResultArea');
+    placeholder.style.display = 'none';
+    resultArea.style.display = 'flex';
+
+    const banner = document.getElementById('statusBanner');
+    const icon = document.getElementById('statusIcon');
+    const title = document.getElementById('statusTitle');
+    const desc = document.getElementById('statusDesc');
+    const btn = document.getElementById('btnConfirmCheckIn');
+
+    if (!data.success) {
+        // Vé không tồn tại
+        banner.className = 'alert alert-danger p-3 rounded-3 mb-3 d-flex align-items-center gap-3';
+        icon.className = 'fa-solid fa-circle-xmark text-danger fs-2';
+        title.innerText = 'VÉ KHÔNG HỢP LỆ';
+        desc.innerText = data.message || 'Mã vé không tồn tại trong hệ thống!';
+        btn.disabled = true;
+        btn.style.display = 'none';
+        return;
+    }
+
+    const tkt = data.ticket;
+    currentInspectedCode = tkt.ticket_code;
+
+    document.getElementById('resMovieTitle').innerText = tkt.movie_title;
+    document.getElementById('resRoomName').innerText = tkt.room_name + ' (' + tkt.screen_type + ')';
+    document.getElementById('resShowtime').innerText = tkt.start_time;
+    document.getElementById('resSeatCode').innerText = tkt.seat_code + ' (' + tkt.seat_type.toUpperCase() + ')';
+    document.getElementById('resCustomerName').innerText = tkt.customer_name || 'Khách hàng';
+    document.getElementById('resCustomerPhone').innerText = tkt.customer_phone || '';
+
+    btn.style.display = 'block';
+
+    if (tkt.status === 'unused') {
+        banner.className = 'alert alert-success p-3 rounded-3 mb-3 d-flex align-items-center gap-3';
+        icon.className = 'fa-solid fa-circle-check text-success fs-2';
+        title.innerText = 'VÉ HỢP LỆ - CHƯA SỬ DỤNG';
+        desc.innerText = 'Khách hàng có thể vào rạp. Vui lòng bấm Xác nhận vào rạp.';
+        btn.disabled = false;
+        btn.className = 'btn btn-success w-100 py-3 rounded-pill fw-bold fs-5 shadow';
+        btn.innerText = 'XÁC NHẬN VÀO RẠP (CHECK-IN)';
+    } else if (tkt.status === 'checked_in') {
+        banner.className = 'alert alert-danger p-3 rounded-3 mb-3 d-flex align-items-center gap-3';
+        icon.className = 'fa-solid fa-triangle-exclamation text-danger fs-2';
+        title.innerText = 'CẢNH BÁO: VÉ ĐÃ ĐƯỢC SỬ DỤNG!';
+        desc.innerText = `Vé này đã soát lúc ${tkt.checked_in_at} bởi ${tkt.staff_name || 'nhân viên'}. Không cho phép vào lại!`;
+        btn.disabled = true;
+        btn.className = 'btn btn-secondary w-100 py-3 rounded-pill fw-bold fs-5';
+        btn.innerText = 'VÉ ĐÃ ĐƯỢC CHECK-IN TRƯỚC ĐÓ';
+    } else {
+        banner.className = 'alert alert-warning p-3 rounded-3 mb-3 d-flex align-items-center gap-3';
+        icon.className = 'fa-solid fa-circle-exclamation text-warning fs-2';
+        title.innerText = 'VÉ ĐÃ BỊ HỦY HOẶC HẾT HẠN';
+        desc.innerText = 'Vé không hợp lệ cho suất chiếu này.';
+        btn.disabled = true;
+    }
+}
+
+async function confirmCheckIn() {
+    if (!currentInspectedCode) return;
+
+    try {
+        const res = await fetch('/staff/api/confirm-checkin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ code: currentInspectedCode })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            alert('✅ SOÁT VÉ THÀNH CÔNG! Cho phép khách vào phòng chiếu.');
+            renderVerificationResult(data);
+        } else {
+            alert('❌ ' + data.message);
+        }
+    } catch (e) {
+        alert('Lỗi xác nhận: ' + e.message);
+    }
+}
+
+// Nếu có prefill code trên URL, tự động tra cứu ngay
+<% if (prefillCode) { %>
+    inspectTicket('<%= prefillCode %>');
+<% } %>
+</script>
+
+<%- include('../layouts/footer') %>

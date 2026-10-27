@@ -1,0 +1,73 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam roundCorner 0
+skinparam dpi 300
+skinparam classAttributeIconSize 0
+
+title BIỂU ĐỒ LỚP KIẾN TRÚC MVC - PHÂN HỆ CONTROLLER & SERVICE
+
+class HomeController {
+  + index(req, res): void
+  + pricing(req, res): void
+  + about(req, res): void
+}
+
+class MovieController {
+  + listMovies(req, res): void
+  + movieDetail(req, res): void
+}
+
+class BookingController {
+  + selectSeats(req, res): void
+  + lockSeats(req, res): JSON
+  + selectCombos(req, res): void
+  + checkout(req, res): void
+  + processPayment(req, res): void
+  + ticketSuccess(req, res): void
+  + myTickets(req, res): void
+}
+
+class StaffController {
+  + posDashboard(req, res): void
+  + posSelectSeats(req, res): void
+  + posCheckout(req, res): void
+  + scanTicketPage(req, res): void
+  + checkInTicket(req, res): JSON
+  + checkInHistory(req, res): void
+}
+
+class ManagerController {
+  + dashboard(req, res): void
+  + listMovies(req, res): void
+  + createMovie(req, res): void
+  + listRooms(req, res): void
+  + roomDetail(req, res): void
+  + listShowtimes(req, res): void
+  + checkShowtimeConflict(req, res): JSON
+  + createShowtime(req, res): void
+  + revenueReports(req, res): void
+}
+
+class AdminController {
+  + listUsers(req, res): void
+  + createUser(req, res): void
+  + updateUserRole(req, res): void
+  + systemSettings(req, res): void
+  + auditLogs(req, res): void
+}
+
+class ConflictDetector <<Service>> {
+  + {static} checkConflict(params): Object
+  + {static} isOverlapping(s1, e1, s2, e2): Boolean
+}
+
+HomeController ..> MovieController
+BookingController ..> ConflictDetector : checks
+ManagerController ..> ConflictDetector : invokes
+StaffController ..> BookingController
+
+@enduml

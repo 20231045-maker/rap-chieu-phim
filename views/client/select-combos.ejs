@@ -1,0 +1,183 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-4 mb-5">
+    <!-- Header Thông tin (Light Card) -->
+    <div class="card bg-white border p-3 rounded-4 mb-4 shadow-sm">
+        <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div>
+                <a href="/booking/seats/<%= showtime.id %>" class="text-danger small text-decoration-none fw-bold">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Quay lại chọn ghế
+                </a>
+                <h4 class="text-dark fw-bold mb-1 mt-1"><%= showtime.movie_title %></h4>
+                <div class="text-secondary small">
+                    Phòng: <strong class="text-dark"><%= showtime.room_name %></strong> | 
+                    Ghế đã chọn: 
+                    <% selectedSeats.forEach(s => { %>
+                        <span class="badge bg-danger"><%= s.seat_code %></span>
+                    <% }) %>
+                </div>
+            </div>
+            <div>
+                <span class="badge bg-success-subtle text-success border border-success p-2 fw-bold">
+                    <i class="fa-solid fa-lock me-1"></i> Ghế đang được giữ tạm thời (5 phút)
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh Sách Combo Bắp Nước -->
+    <div class="row g-4 mb-4">
+        <div class="col-lg-8">
+            <div class="card bg-white border-0 p-4 rounded-4 shadow-sm">
+                <h4 class="text-dark fw-bold mb-2 d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-bowl-food text-warning"></i>
+                    <span>CHỌN COMBO BẮP & NƯỚC UỐNG</span>
+                </h4>
+                <p class="text-muted small mb-4">Thưởng thức bắp rang thơm giòn và nước ngọt mát lạnh để trọn vẹn cảm xúc xem phim!</p>
+
+                <div class="row g-3">
+                    <% combos.forEach(combo => { %>
+                        <div class="col-md-6">
+                            <div class="card bg-white border h-100 rounded-3 overflow-hidden d-flex flex-column shadow-sm hover-shadow">
+                                <div style="height: 150px; overflow: hidden;" class="bg-light">
+                                    <img src="<%= combo.image_url %>" alt="<%= combo.name %>" class="w-100 h-100 object-fit-cover">
+                                </div>
+                                <div class="p-3 d-flex flex-column flex-grow-1">
+                                    <h6 class="text-dark fw-bold mb-1"><%= combo.name %></h6>
+                                    <p class="text-muted small mb-2 flex-grow-1"><%= combo.description %></p>
+                                    <div class="d-flex align-items-center justify-content-between mt-auto pt-2 border-top">
+                                        <div class="text-danger fw-bold fs-6">
+                                            <%= Number(combo.price).toLocaleString('vi-VN') %> đ
+                                        </div>
+                                        <div class="input-group input-group-sm" style="width: 110px;">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="changeQty(<%= combo.id %>, -1)">-</button>
+                                            <input type="text" id="qty-<%= combo.id %>" class="form-control text-center bg-white border combo-qty" value="0" readonly data-id="<%= combo.id %>" data-price="<%= combo.price %>" data-name="<%= combo.name %>">
+                                            <button class="btn btn-outline-secondary" type="button" onclick="changeQty(<%= combo.id %>, 1)">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tóm tắt Đơn Hàng Bên Phải -->
+        <div class="col-lg-4">
+            <div class="card bg-white border-0 p-4 rounded-4 shadow-sm sticky-top" style="top: 80px;">
+                <h5 class="text-dark fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-receipt text-danger me-2"></i> Tóm Tắt Đơn Hàng
+                </h5>
+
+                <div class="mb-3">
+                    <div class="text-muted small">Phim:</div>
+                    <div class="text-dark fw-bold"><%= showtime.movie_title %></div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="text-muted small">Suất chiếu:</div>
+                    <div class="text-secondary"><%= formatDateTime(showtime.start_time) %> - <%= showtime.room_name %></div>
+                </div>
+
+                <div class="mb-3">
+                    <div class="text-muted small mb-1">Ghế đã chọn:</div>
+                    <div class="d-flex flex-wrap gap-1">
+                        <% let seatTotal = 0; %>
+                        <% selectedSeats.forEach(s => { seatTotal += s.calculated_price; %>
+                            <span class="badge bg-light text-dark border"><%= s.seat_code %> (<%= Number(s.calculated_price).toLocaleString('vi-VN') %>đ)</span>
+                        <% }) %>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary small mt-2">
+                        <span>Tiền vé:</span>
+                        <strong class="text-dark"><%= seatTotal.toLocaleString('vi-VN') %> đ</strong>
+                    </div>
+                </div>
+
+                <div class="mb-3 border-top pt-2">
+                    <div class="text-muted small mb-1">Bắp nước đã chọn:</div>
+                    <div id="comboSummaryList" class="small text-secondary">
+                        <span class="fst-italic text-muted">Chưa chọn combo</span>
+                    </div>
+                    <div class="d-flex justify-content-between text-secondary small mt-2">
+                        <span>Tiền bắp nước:</span>
+                        <strong class="text-dark" id="comboTotalDisplay">0 đ</strong>
+                    </div>
+                </div>
+
+                <div class="border-top pt-3 mb-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <span class="fw-bold text-dark fs-5">TỔNG CỘNG:</span>
+                        <span class="fw-extrabold text-danger fs-4" id="grandTotalDisplay">
+                            <%= seatTotal.toLocaleString('vi-VN') %> đ
+                        </span>
+                    </div>
+                </div>
+
+                <form action="/booking/save-combos/<%= showtime.id %>" method="POST">
+                    <input type="hidden" name="combos" id="hiddenCombosInput" value="[]">
+                    <button type="submit" class="btn btn-danger w-100 btn-lg rounded-pill fw-bold shadow-sm">
+                        <span>Thanh Toán</span>
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const seatTotal = <%= seatTotal %>;
+const comboMap = new Map();
+
+function changeQty(id, delta) {
+    const input = document.getElementById(`qty-${id}`);
+    let qty = parseInt(input.value) || 0;
+    qty = Math.max(0, qty + delta);
+    input.value = qty;
+
+    const price = Number(input.getAttribute('data-price'));
+    const name = input.getAttribute('data-name');
+
+    if (qty > 0) {
+        comboMap.set(id, { id, name, price, quantity: qty });
+    } else {
+        comboMap.delete(id);
+    }
+
+    updateComboSummary();
+}
+
+function updateComboSummary() {
+    const listContainer = document.getElementById('comboSummaryList');
+    const comboDisplay = document.getElementById('comboTotalDisplay');
+    const grandDisplay = document.getElementById('grandTotalDisplay');
+    const hiddenInput = document.getElementById('hiddenCombosInput');
+
+    let comboTotal = 0;
+    const comboArr = [];
+
+    if (comboMap.size === 0) {
+        listContainer.innerHTML = '<span class="fst-italic text-muted">Chưa chọn combo</span>';
+    } else {
+        let html = '';
+        comboMap.forEach(item => {
+            const lineTotal = item.price * item.quantity;
+            comboTotal += lineTotal;
+            comboArr.push({ id: item.id, quantity: item.quantity, price: item.price });
+            html += `<div class="d-flex justify-content-between mb-1">
+                <span>${item.name} x${item.quantity}</span>
+                <span>${lineTotal.toLocaleString('vi-VN')} đ</span>
+            </div>`;
+        });
+        listContainer.innerHTML = html;
+    }
+
+    comboDisplay.innerText = comboTotal.toLocaleString('vi-VN') + ' đ';
+    const grandTotal = seatTotal + comboTotal;
+    grandDisplay.innerText = grandTotal.toLocaleString('vi-VN') + ' đ';
+    hiddenInput.value = JSON.stringify(comboArr);
+}
+</script>
+
+<%- include('../layouts/footer') %>

@@ -1,0 +1,156 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="text-white fw-bold mb-1">Cấu Hình Sơ Đồ Ghế - <%= room.room_name %></h4>
+        <p class="text-secondary small mb-0">Định dạng màn hình: <strong class="text-danger"><%= room.screen_type %></strong> | Tổng số ghế: <strong class="text-warning"><%= room.total_seats %> ghế</strong></p>
+    </div>
+    <a href="/manager/rooms" class="btn btn-outline-light rounded-pill btn-sm">
+        <i class="fa-solid fa-arrow-left me-1"></i> Danh Sách Phòng
+    </a>
+</div>
+
+<div class="row g-4 mb-4">
+    <div class="col-lg-8">
+        <div class="card bg-card border-secondary p-4 rounded-4 shadow text-center">
+            <h5 class="text-white fw-bold mb-3 text-start">
+                <i class="fa-solid fa-couch text-warning me-2"></i> Sơ Đồ Ghế Phòng Chiếu
+            </h5>
+
+            <!-- Màn hình -->
+            <div class="cinema-screen-wrap my-3">
+                <div class="cinema-screen" style="max-width: 550px;"></div>
+                <div class="screen-text">MÀN HÌNH</div>
+            </div>
+
+            <!-- Chú thích -->
+            <div class="seat-legend mb-3">
+                <div class="legend-item"><span class="legend-color" style="background: var(--seat-available);"></span> Thường (x1.0)</div>
+                <div class="legend-item"><span class="legend-color" style="background: var(--seat-vip);"></span> VIP (x1.25)</div>
+                <div class="legend-item"><span class="legend-color" style="background: var(--seat-sweetbox);"></span> Sweetbox Đôi (x2.0)</div>
+            </div>
+
+            <!-- Lưới ghế -->
+            <div class="overflow-auto py-3">
+                <div style="display: inline-block;">
+                    <% rows.forEach(rowChar => { %>
+                        <div class="seat-row">
+                            <span class="row-label"><%= rowChar %></span>
+                            <% seatsByRow[rowChar].forEach(seat => { %>
+                                <div class="seat-item seat-<%= seat.seat_type %>" 
+                                     id="seat-node-<%= seat.id %>"
+                                     data-id="<%= seat.id %>"
+                                     data-code="<%= seat.seat_code %>"
+                                     data-type="<%= seat.seat_type %>"
+                                     data-mult="<%= seat.price_multiplier %>"
+                                     onclick="selectSeatForConfig(this)"
+                                     title="Ghế <%= seat.seat_code %> (<%= seat.seat_type.toUpperCase() %>)">
+                                    <%= seat.seat_number %>
+                                </div>
+                            <% }) %>
+                            <span class="row-label"><%= rowChar %></span>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cột Phải: Bảng Điều Khiển Cấu Hình Ghế -->
+    <div class="col-lg-4">
+        <div class="card bg-card border-secondary p-4 rounded-4 shadow sticky-top" style="top: 80px;">
+            <h5 class="text-white fw-bold mb-3 border-bottom border-secondary pb-2">
+                <i class="fa-solid fa-sliders text-danger me-2"></i> Tùy Chỉnh Ghế Được Chọn
+            </h5>
+
+            <div id="seatConfigPlaceholder" class="text-center py-5 text-secondary">
+                <i class="fa-solid fa-hand-pointer fs-1 mb-2 opacity-25"></i>
+                <div>Click vào một ghế bất kỳ trên sơ đồ để chỉnh sửa loại ghế và hệ số giá</div>
+            </div>
+
+            <div id="seatConfigForm" style="display: none;">
+                <div class="mb-3">
+                    <label class="form-label text-secondary small">Mã ghế đang chọn:</label>
+                    <div class="fs-2 fw-extrabold text-danger" id="cfgSeatCode">--</div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label text-light small fw-bold">Loại Ghế</label>
+                    <select id="cfgSeatType" class="form-select bg-dark border-secondary text-white" onchange="autoFillMult()">
+                        <option value="regular">Ghế Thường (Regular)</option>
+                        <option value="vip">Ghế VIP</option>
+                        <option value="sweetbox">Ghế Sweetbox Đôi</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label text-light small fw-bold">Hệ Số Nhân Giá Vé</label>
+                    <input type="number" id="cfgPriceMult" class="form-control bg-dark border-secondary text-white" step="0.05" min="0.5" max="5.0" value="1.0">
+                    <div class="form-text text-secondary small">Ghế thường: 1.0 | VIP: 1.25 | Sweetbox: 2.0</div>
+                </div>
+
+                <button class="btn btn-danger w-100 py-2 rounded-pill fw-bold" onclick="saveSeatConfig()">
+                    <i class="fa-solid fa-floppy-disk me-1"></i> Lưu Cập Nhật Ghế
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentConfigSeatId = null;
+
+function selectSeatForConfig(el) {
+    document.querySelectorAll('.seat-item').forEach(s => s.classList.remove('border-danger', 'border-2'));
+    el.classList.add('border-danger', 'border-2');
+
+    currentConfigSeatId = el.dataset.id;
+    document.getElementById('seatConfigPlaceholder').style.display = 'none';
+    document.getElementById('seatConfigForm').style.display = 'block';
+
+    document.getElementById('cfgSeatCode').innerText = el.dataset.code;
+    document.getElementById('cfgSeatType').value = el.dataset.type;
+    document.getElementById('cfgPriceMult').value = el.dataset.mult;
+}
+
+function autoFillMult() {
+    const type = document.getElementById('cfgSeatType').value;
+    const multInp = document.getElementById('cfgPriceMult');
+    if (type === 'regular') multInp.value = '1.0';
+    else if (type === 'vip') multInp.value = '1.25';
+    else if (type === 'sweetbox') multInp.value = '2.0';
+}
+
+async function saveSeatConfig() {
+    if (!currentConfigSeatId) return;
+
+    const seatType = document.getElementById('cfgSeatType').value;
+    const priceMult = document.getElementById('cfgPriceMult').value;
+
+    try {
+        const res = await fetch('/manager/api/update-seat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                seat_id: currentConfigSeatId,
+                seat_type: seatType,
+                price_multiplier: priceMult
+            })
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            // Cập nhật lại UI node
+            const node = document.getElementById('seat-node-' + currentConfigSeatId);
+            node.className = `seat-item seat-${seatType} border-danger border-2`;
+            node.dataset.type = seatType;
+            node.dataset.mult = priceMult;
+            alert('Cập nhật loại ghế thành công!');
+        }
+    } catch (e) {
+        alert('Lỗi khi lưu cấu hình ghế!');
+    }
+}
+</script>
+
+<%- include('../layouts/admin-footer') %>

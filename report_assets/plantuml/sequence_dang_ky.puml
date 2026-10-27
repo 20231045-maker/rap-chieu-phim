@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":NguoiDung" as User
+boundary ":DangKy" as UI
+control ":TaiKhoanController" as Ctrl
+entity ":TaiKhoan" as Model
+
+User -> UI: 1. Nhập thông tin đăng ký (họ tên, email, sđt, mật khẩu)
+activate UI
+UI -> Ctrl: 2. Yêu cầu đăng ký tài khoản mới
+activate Ctrl
+Ctrl -> Model: 3. kiemTraTonTai(email)
+activate Model
+
+Model --> Ctrl: 4.1. Email đã tồn tại trong hệ thống
+Ctrl --> UI: 5. Thông báo "Email đã được đăng ký"
+UI --> User: 6. Hiển thị thông báo lỗi
+
+Ctrl -> Model: 3. kiemTraTonTai(email)
+Model --> Ctrl: 4.2. Email hợp lệ (chưa tồn tại)
+Ctrl -> Model: 7. themTaiKhoan(thongTin)
+Model --> Ctrl: 8. Lưu tài khoản mới thành công
+Ctrl --> UI: 9. Thông báo "Đăng ký thành công"
+UI --> User: 10. Hiển thị thông báo & chuyển sang màn hình Đăng nhập
+deactivate UI
+deactivate Ctrl
+deactivate Model
+
+@enduml

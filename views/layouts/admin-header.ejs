@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'CINESTAR Management System' %></title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom Admin CSS -->
+    <link rel="stylesheet" href="/css/admin.css">
+    <!-- Custom Cinema Style CSS -->
+    <link rel="stylesheet" href="/css/style.css?v=20261013_seatcolor">
+</head>
+<body class="admin-body">
+    <div class="admin-wrapper">
+        <!-- Sidebar Backdrop for Mobile/Tablet -->
+        <div id="adminSidebarBackdrop" class="admin-sidebar-backdrop" onclick="toggleAdminSidebar()"></div>
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar" id="adminSidebar">
+            <div class="sidebar-brand">
+                <i class="fa-solid fa-film text-danger fs-3"></i>
+                <div>
+                    <div>CINESTAR</div>
+                    <div style="font-size: 0.65rem; color: #9ca3af; font-weight: normal;">HỆ THỐNG QUẢN LÝ RẠP</div>
+                </div>
+            </div>
+
+            <ul class="sidebar-nav">
+                <!-- Nhóm Menu Quản Lý (Manager) -->
+                <li class="px-3 pt-3 pb-1 text-uppercase text-secondary fw-bold" style="font-size: 0.72rem;">Phân Hệ Quản Lý</li>
+                <li>
+                    <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/manager/dashboard') ? 'active' : '' %>" href="/manager/dashboard">
+                        <i class="fa-solid fa-chart-pie"></i>
+                        <span>Dashboard Thống Kê</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/manager/movies') ? 'active' : '' %>" href="/manager/movies">
+                        <i class="fa-solid fa-clapperboard"></i>
+                        <span>Danh Mục Phim</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/manager/rooms') ? 'active' : '' %>" href="/manager/rooms">
+                        <i class="fa-solid fa-couch"></i>
+                        <span>Phòng & Sơ Đồ Ghế</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/manager/showtimes') ? 'active' : '' %>" href="/manager/showtimes">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>Quản Lý Suất Chiếu</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/manager/combos') ? 'active' : '' %>" href="/manager/combos">
+                        <i class="fa-solid fa-bowl-food"></i>
+                        <span>Bắp Nước & Combos</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/manager/reports') ? 'active' : '' %>" href="/manager/reports">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                        <span>Báo Cáo Doanh Thu</span>
+                    </a>
+                </li>
+
+                <!-- Nhóm Menu Quản Trị (Admin) -->
+                <% if (typeof currentUser !== 'undefined' && currentUser && currentUser.role_name === 'admin') { %>
+                    <li class="px-3 pt-3 pb-1 text-uppercase text-danger fw-bold" style="font-size: 0.72rem;">Quản Trị Hệ Thống</li>
+                    <li>
+                        <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/admin/users') ? 'active' : '' %>" href="/admin/users">
+                            <i class="fa-solid fa-users-gear"></i>
+                            <span>Tài Khoản & RBAC</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/admin/settings') ? 'active' : '' %>" href="/admin/settings">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>Cấu Hình Rạp</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="nav-link <%= typeof currentPath !== 'undefined' && currentPath.includes('/admin/audit-logs') ? 'active' : '' %>" href="/admin/audit-logs">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>Nhật Ký Đơn Hàng</span>
+                        </a>
+                    </li>
+                <% } %>
+
+                <!-- Phím tắt nhanh đến POS / Soát vé / Client -->
+                <li class="px-3 pt-3 pb-1 text-uppercase text-secondary fw-bold" style="font-size: 0.72rem;">Phím Tắt</li>
+                <li>
+                    <a class="nav-link" href="/staff/pos">
+                        <i class="fa-solid fa-cash-register text-warning"></i>
+                        <span>Bán Vé Quầy (POS)</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/staff/scan">
+                        <i class="fa-solid fa-qrcode text-info"></i>
+                        <span>Soát Vé QR Code</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link" href="/" target="_blank">
+                        <i class="fa-solid fa-arrow-up-right-from-square text-success"></i>
+                        <span>Xem Trang Khách Hàng</span>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="sidebar-user">
+                <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center" style="width: 38px; height: 38px; font-weight: bold;">
+                    <%= currentUser && currentUser.full_name ? currentUser.full_name.charAt(0).toUpperCase() : 'U' %>
+                </div>
+                <div class="overflow-hidden me-auto">
+                    <div class="small fw-bold text-truncate"><%= currentUser ? currentUser.full_name : 'Quản Lý' %></div>
+                    <div style="font-size: 0.72rem; color: #9ca3af;"><%= currentUser ? currentUser.role_display : 'Manager' %></div>
+                </div>
+                <a href="/auth/logout" class="text-danger fs-5" title="Đăng xuất">
+                    <i class="fa-solid fa-arrow-right-from-bracket"></i>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <div class="admin-main">
+            <!-- Topbar Header -->
+            <header class="admin-topbar">
+                <div class="d-flex align-items-center gap-2 gap-md-3">
+                    <button type="button" class="btn btn-outline-danger btn-sm d-lg-none" id="btnSidebarToggle" onclick="toggleAdminSidebar()" title="Mở danh mục menu">
+                        <i class="fa-solid fa-bars fs-6"></i>
+                    </button>
+                    <h5 class="mb-0 text-dark fw-bold fs-6 fs-md-5 text-truncate" style="max-width: 320px;"><%= typeof title !== 'undefined' ? title : 'Quản Lý Rạp Chiếu Phim' %></h5>
+                </div>
+                <div class="d-flex align-items-center gap-2 gap-md-3">
+                    <span class="badge bg-dark border border-secondary px-2 px-md-3 py-2 text-warning d-none d-sm-inline">
+                        <i class="fa-solid fa-calendar-day me-1"></i> Hôm nay: <%= new Date().toLocaleDateString('vi-VN') %>
+                    </span>
+                    <a href="/auth/logout" class="btn btn-outline-danger btn-sm">
+                        <i class="fa-solid fa-power-off me-1"></i> <span class="d-none d-sm-inline">Đăng Xuất</span>
+                    </a>
+                </div>
+            </header>
+            <script>
+                function toggleAdminSidebar() {
+                    const sb = document.getElementById('adminSidebar');
+                    const bd = document.getElementById('adminSidebarBackdrop');
+                    if (sb) sb.classList.toggle('show');
+                    if (bd) bd.classList.toggle('show');
+                }
+            </script>
+
+            <!-- Alerts -->
+            <div class="px-4 pt-3">
+                <% if (typeof error !== 'undefined' && error) { %>
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <i class="fa-solid fa-circle-exclamation me-2"></i> <%= error %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+                <% if (typeof success !== 'undefined' && success) { %>
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <i class="fa-solid fa-circle-check me-2"></i> <%= success %>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Content Body -->
+            <div class="admin-content">

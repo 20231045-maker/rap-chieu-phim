@@ -1,0 +1,594 @@
+[0] CHƯƠNG II. TỔNG HỢP, PHÂN TÍCH VÀ ĐÁNH GIÁ THỰC TẾ=
+[1] 2.1. Tổng hợp và thu thập dữ liệu
+[2] Trong bối cảnh công nghệ thông tin ngày càng phát triển, việc ứng dụng các nền tảng trực tuyến vào hoạt động kinh doanh đã trở thành một xu hướng phổ biến. Đặc biệt, trong lĩnh vực dược phẩm và chăm sóc sức khỏe, nhu cầu tìm kiếm thông tin về thuốc, sản phẩm chăm sóc sức khỏe và mua sắm trực tuyến ngày càng được quan tâm.
+[3] Tuy nhiên, quá trình mua bán và quản lý tại một số nhà thuốc vẫn còn những hạn chế như khách hàng phải trực tiếp đến cửa hàng để tìm hiểu sản phẩm, khó so sánh thông tin giữa các sản phẩm hoặc chưa thuận tiện trong việc theo dõi đơn hàng. Về phía nhà thuốc, công tác quản lý sản phẩm, đơn hàng, khách hàng và thống kê doanh thu cũng đòi hỏi nhiều thời gian nếu chưa được hỗ trợ bằng hệ thống phần mềm phù hợp.
+[4] Xuất phát từ thực tế đó, nhóm thực hiện khảo sát và thu thập thông tin nhằm xác định nhu cầu của người sử dụng, tìm hiểu các quy trình nghiệp vụ và làm cơ sở xây dựng website bán thuốc có tính ứng dụng thực tế.
+[5] 2.1.1. Mục tiêu khảo sát
+[6] Mục tiêu của quá trình khảo sát là tìm hiểu thực trạng hoạt động kinh doanh thuốc và sản phẩm chăm sóc sức khỏe trên các nền tảng trực tuyến, đồng thời xác định nhu cầu của khách hàng và người quản lý nhà thuốc đối với một hệ thống bán hàng trực tuyến.
+[7] Thông qua quá trình khảo sát, nhóm tập trung vào những mục tiêu chính sau:
+[8] Thứ nhất, tìm hiểu nhu cầu của khách hàng.
+[9] Khảo sát nhằm xác định những nhu cầu thường gặp của khách hàng khi tìm kiếm và mua sản phẩm tại nhà thuốc. Các nội dung được quan tâm bao gồm khả năng tìm kiếm sản phẩm, xem thông tin chi tiết, so sánh giá, lựa chọn sản phẩm, đặt hàng và theo dõi tình trạng đơn hàng.
+[10] Ngoài ra, nhóm cũng tìm hiểu mức độ cần thiết của các chức năng hỗ trợ như tư vấn trực tuyến, đánh giá sản phẩm và cung cấp thông tin chăm sóc sức khỏe.
+[11] Thứ hai, tìm hiểu quy trình quản lý và kinh doanh của nhà thuốc.
+[12] Khảo sát quy trình quản lý sản phẩm, phân loại thuốc, cập nhật giá bán, kiểm soát số lượng tồn kho, tiếp nhận đơn hàng và xử lý thông tin khách hàng.
+[13] Đồng thời, tìm hiểu nhu cầu quản lý doanh thu, thống kê hoạt động bán hàng và phân quyền giữa quản trị viên với nhân viên.
+[14] Thứ ba, xác định những hạn chế trong quá trình mua bán và quản lý.
+[15] Tìm hiểu những khó khăn mà khách hàng và người quản lý có thể gặp phải, chẳng hạn như mất thời gian tìm kiếm sản phẩm, thiếu thông tin sản phẩm, khó theo dõi đơn hàng hoặc gặp khó khăn khi tổng hợp dữ liệu kinh doanh.
+[16] Thứ tư, xác định các yêu cầu đối với hệ thống.
+[17] Từ những thông tin thu thập được, nhóm xác định các chức năng cần thiết cho website như quản lý sản phẩm, tìm kiếm, giỏ hàng, đặt hàng, quản lý đơn hàng, quản lý người dùng, thống kê doanh thu và hỗ trợ khách hàng.
+[18] Bên cạnh đó, khảo sát còn giúp xác định các yêu cầu về giao diện, hiệu năng, bảo mật, khả năng sử dụng và mở rộng hệ thống.
+[19] 2.1.2. Phương pháp khảo sát và thu thập dữ liệu
+[20] Để thu thập thông tin phục vụ quá trình phân tích và xây dựng Website bán thuốc Viet Duc Pharmacy, nhóm sử dụng kết hợp nhiều phương pháp nghiên cứu khác nhau, bao gồm phân tích mã nguồn, nghiên cứu cơ sở dữ liệu, phân tích giao diện và quy trình nghiệp vụ, khảo sát nhu cầu người dùng và tổng hợp các thông tin thu thập được.
+[21] Việc kết hợp các phương pháp này giúp nhóm có cái nhìn toàn diện về cấu trúc hệ thống, quy trình hoạt động và nhu cầu thực tế của khách hàng cũng như người quản lý nhà thuốc. Đồng thời, kết quả thu thập dữ liệu là cơ sở để xác định các yêu cầu chức năng và phi chức năng của hệ thống.
+[22] a) Phương pháp phân tích mã nguồn
+[23] Phân tích mã nguồn là phương pháp được sử dụng nhằm tìm hiểu cấu trúc tổ chức, nguyên lý hoạt động và các chức năng được xây dựng trong hệ thống Website bán thuốc Viet Duc Pharmacy.
+[24] Nhóm tiến hành tìm hiểu các tệp mã nguồn được phát triển bằng ngôn ngữ PHP, kết hợp với HTML, CSS và JavaScript để xác định vai trò của từng thành phần trong hệ thống.
+[25] Đối với khu vực dành cho khách hàng, nhóm tập trung nghiên cứu các trang như index.php, product.php, duocmypham.php, thucphamchucnang.php, goc-suc-khoe.php, all-posts.php và all-videos.php. Những trang này liên quan đến việc hiển thị sản phẩm, phân loại sản phẩm, giới thiệu thông tin và cung cấp nội dung chăm sóc sức khỏe.
+[26] Bên cạnh đó, các tệp cart.php, register.php, login.php, logout.php, invoice.php và track-order.php được xem xét nhằm tìm hiểu những quy trình liên quan đến quản lý tài khoản, giỏ hàng, đặt hàng, hóa đơn và tra cứu thông tin đơn hàng.
+[27] Đối với khu vực quản trị, nhóm nghiên cứu các tệp dashboard.php, staff_dashboard.php, themsp.php, add_post.php, edit_post.php, delete_post.php, manage_videos.php, export_excel.php, export_pdf.php và get_chart_data.php. Đây là các thành phần liên quan đến quản lý sản phẩm, bài viết, video, thống kê và xuất báo cáo.
+[28] Ngoài những chức năng bán hàng và quản trị, hệ thống còn có thành phần chatbot AI hỗ trợ người dùng. Nhóm xem xét các tệp chatbot_widget.php, chatbot.css, chatbot.js, ai_chat.php, config/ai.php và config/db.php nhằm tìm hiểu cách tổ chức giao diện chatbot, tiếp nhận câu hỏi, xử lý dữ liệu và kết nối với dịch vụ Gemini API.
+[29] Thông qua phương pháp phân tích mã nguồn, nhóm xác định được các thành phần chính của website, cách tổ chức chức năng và mối liên hệ giữa các khu vực. Kết quả này góp phần hỗ trợ việc phân tích yêu cầu, đánh giá phạm vi hệ thống và đề xuất hướng hoàn thiện.
+[30] b) Phương pháp phân tích cơ sở dữ liệu
+[31] Cơ sở dữ liệu là thành phần quan trọng trong hệ thống bán thuốc trực tuyến, có nhiệm vụ lưu trữ và quản lý những thông tin cần thiết phục vụ quá trình vận hành website.
+[32] Nhóm tiến hành nghiên cứu cơ sở dữ liệu shop_db nhằm xác định các nhóm thông tin được sử dụng, cách tổ chức dữ liệu và mối liên hệ giữa các đối tượng trong hệ thống.
+[33] Các bảng dữ liệu tiêu biểu bao gồm:
+[34] products, product_images: lưu trữ thông tin và hình ảnh sản phẩm.
+[35] categories: quản lý danh mục sản phẩm.
+[36] nhasx: quản lý thông tin nhà sản xuất.
+[37] users, customers: lưu trữ thông tin tài khoản và khách hàng.
+[38] orders, order_details: lưu trữ thông tin đơn hàng và chi tiết đơn hàng.
+[39] coupons: quản lý mã giảm giá.
+[40] reviews: lưu trữ thông tin đánh giá sản phẩm.
+[41] posts: quản lý nội dung bài viết sức khỏe.
+[42] consult_requests: lưu trữ yêu cầu tư vấn của khách hàng.
+[43] newsletter: lưu trữ thông tin đăng ký nhận tin.
+[44] Quá trình phân tích tập trung vào việc xác định mục đích sử dụng của từng nhóm dữ liệu, các thuộc tính cần quản lý và mối liên hệ giữa những thông tin liên quan.
+[45] Chẳng hạn, dữ liệu sản phẩm có mối liên hệ với danh mục và nhà sản xuất để phục vụ việc phân loại, tìm kiếm và hiển thị sản phẩm. Dữ liệu đơn hàng và chi tiết đơn hàng được sử dụng để ghi nhận các giao dịch mua bán. Dữ liệu tài khoản và khách hàng phục vụ việc xác thực người dùng, quản lý thông tin và phân quyền truy cập.
+[46] Ngoài ra, các dữ liệu về khuyến mãi, bài viết sức khỏe, đánh giá sản phẩm và yêu cầu tư vấn giúp hỗ trợ những hoạt động bổ sung của website.
+[47] Thông qua phương pháp này, nhóm có thể đánh giá cách tổ chức dữ liệu, xác định những thông tin cần thiết cho các nghiệp vụ và làm cơ sở xây dựng sơ đồ thực thể liên kết (ERD) cũng như thiết kế cơ sở dữ liệu của hệ thống.
+[48] c) Phương pháp phân tích giao diện và quy trình nghiệp vụ
+[49] Phương pháp phân tích giao diện và quy trình nghiệp vụ được sử dụng nhằm tìm hiểu cách người dùng tương tác với website và trình tự thực hiện các hoạt động mua bán, quản lý sản phẩm và xử lý đơn hàng.
+[50] Đối với khu vực khách hàng, nhóm tập trung xem xét các thao tác cơ bản như truy cập trang chủ, tìm kiếm sản phẩm, lựa chọn danh mục, xem thông tin chi tiết, thêm sản phẩm vào giỏ hàng, nhập thông tin đặt hàng và tra cứu trạng thái đơn hàng.
+[51] Thông qua việc phân tích từng bước, nhóm xác định những thông tin người dùng cần cung cấp, dữ liệu cần được xử lý và kết quả mà hệ thống phải trả về sau mỗi thao tác.
+[52] Đối với khu vực quản trị, nhóm tìm hiểu cách tổ chức giao diện dành cho quản trị viên và nhân viên. Các nội dung được xem xét bao gồm quản lý sản phẩm, quản lý tài khoản, theo dõi đơn hàng, cập nhật nội dung bài viết, quản lý video và thống kê hoạt động kinh doanh.
+[53] Ngoài ra, nhóm phân tích quy trình hỗ trợ khách hàng thông qua chatbot AI, yêu cầu tư vấn và các nội dung cung cấp kiến thức sức khỏe. Những hoạt động này giúp làm rõ nhu cầu tương tác và tiếp nhận thông tin của người dùng trong quá trình sử dụng website.
+[54] Việc phân tích giao diện và quy trình nghiệp vụ giúp nhóm xác định mối quan hệ giữa người dùng và hệ thống, từ đó làm cơ sở xây dựng các sơ đồ Use Case, Activity Diagram và Sequence Diagram trong giai đoạn thiết kế.
+[55] d) Phương pháp khảo sát người dùng
+[56] Bên cạnh việc nghiên cứu các thành phần của hệ thống, nhóm xem xét phương pháp khảo sát người dùng nhằm tìm hiểu nhu cầu và mong muốn của khách hàng đối với website bán thuốc trực tuyến.
+[57] Đối tượng khảo sát hướng đến những người có nhu cầu mua thuốc, thực phẩm chức năng và các sản phẩm chăm sóc sức khỏe. Ngoài ra, có thể mở rộng khảo sát đối với nhân viên hoặc người quản lý nhà thuốc nhằm tìm hiểu những khó khăn trong hoạt động kinh doanh.
+[58] Phương pháp khảo sát có thể thực hiện thông qua bảng câu hỏi trực tuyến hoặc trao đổi trực tiếp.
+[59] Đối với khách hàng, các nội dung cần khảo sát bao gồm thói quen mua thuốc, mức độ sử dụng các nền tảng trực tuyến, nhu cầu tìm kiếm sản phẩm, mức độ quan tâm đến thông tin thuốc, nhu cầu đặt hàng và mong muốn được tư vấn trong quá trình mua sắm.
+[60] Đối với nhân viên và người quản lý, nội dung khảo sát tập trung vào việc quản lý sản phẩm, cập nhật thông tin, tiếp nhận đơn hàng, quản lý khách hàng, theo dõi tình hình kinh doanh và những khó khăn thường gặp khi thực hiện các công việc này.
+[61] Kết quả khảo sát thực tế, nếu được thu thập, sẽ được tổng hợp theo từng nhóm đối tượng và nội dung câu hỏi để xác định nhu cầu phổ biến, từ đó làm cơ sở đánh giá mức độ cần thiết của những chức năng được đề xuất.
+[62] Trong phạm vi tài liệu hiện có, nhóm chưa có số liệu khảo sát định lượng để xác định chính xác số lượng người tham gia hoặc tỷ lệ lựa chọn. Vì vậy, những nhận định về nhu cầu người dùng được xem là cơ sở phân tích ban đầu và cần bổ sung số liệu thực tế khi hoàn thành khảo sát.
+[64] 2.1.3. Nội dung khảo sát
+[65] Nội dung khảo sát được chia thành các nhóm chính nhằm đánh giá nhu cầu sử dụng website của khách hàng và nhu cầu quản lý của nhà thuốc.
+[66] Khảo sát về nhu cầu tìm kiếm và mua sản phẩm
+[67] Nhóm tập trung tìm hiểu cách khách hàng tìm kiếm thông tin và lựa chọn sản phẩm khi có nhu cầu mua thuốc hoặc sản phẩm chăm sóc sức khỏe.
+[68] Các vấn đề khảo sát bao gồm:
+[69] Khách hàng thường mua sản phẩm trực tiếp hay trực tuyến?
+[70] Khách hàng có thường tìm kiếm thông tin sản phẩm trên Internet không?
+[71] Khách hàng quan tâm nhiều nhất đến yếu tố nào khi lựa chọn sản phẩm?
+[72] Khách hàng có cần chức năng tìm kiếm theo tên hoặc danh mục không?
+[73] Khách hàng có muốn xem thông tin chi tiết trước khi đặt mua không?
+[74] Khách hàng có nhu cầu theo dõi trạng thái đơn hàng không?
+[75] Thông qua nhóm câu hỏi này, nhóm xác định các chức năng phù hợp với quá trình mua hàng của khách hàng.
+[76] Khảo sát về thông tin sản phẩm
+[77] Đối với website bán thuốc, thông tin sản phẩm đóng vai trò quan trọng trong việc hỗ trợ người dùng tìm hiểu và lựa chọn sản phẩm phù hợp.
+[78] Nhóm tiến hành xác định những thông tin cần hiển thị như:
+[79] Tên thuốc hoặc sản phẩm.
+[80] Hình ảnh sản phẩm.
+[81] Giá bán.
+[82] Danh mục.
+[83] Nhà sản xuất.
+[84] Thành phần.
+[85] Công dụng.
+[86] Hướng dẫn sử dụng.
+[87] Chống chỉ định và lưu ý khi sử dụng.
+[88] Điều kiện bảo quản.
+[89] Nguồn gốc và xuất xứ.
+[90] Nội dung khảo sát giúp nhóm xây dựng trang chi tiết sản phẩm đầy đủ, rõ ràng và thuận tiện cho người sử dụng.
+[91] Khảo sát về chức năng giỏ hàng và đặt hàng
+[92] Nhóm tìm hiểu những yêu cầu cần thiết trong quá trình đặt hàng trực tuyến.
+[93] Các nội dung khảo sát bao gồm:
+[94] Thêm sản phẩm vào giỏ hàng.
+[95] Thay đổi số lượng sản phẩm.
+[96] Xóa sản phẩm khỏi giỏ hàng.
+[97] Hiển thị tổng tiền.
+[98] Áp dụng mã giảm giá.
+[99] Nhập thông tin nhận hàng.
+[100] Lựa chọn phương thức thanh toán.
+[101] Xác nhận đơn hàng.
+[102] Tra cứu trạng thái đơn hàng.
+[103] Việc khảo sát nhóm chức năng này nhằm xây dựng quy trình đặt hàng đơn giản, hạn chế thao tác không cần thiết và đảm bảo thông tin giao dịch chính xác.
+[104] Khảo sát về nhu cầu quản lý của nhà thuốc
+[105] Bên cạnh khách hàng, hệ thống còn phục vụ hoạt động quản lý của người bán.
+[106] Các nội dung cần khảo sát bao gồm:
+[107] Quản lý thông tin sản phẩm.
+[108] Quản lý danh mục sản phẩm.
+[109] Quản lý nhà sản xuất.
+[110] Cập nhật giá bán và số lượng tồn kho.
+[111] Quản lý tài khoản người dùng.
+[112] Tiếp nhận và xử lý đơn hàng.
+[113] Quản lý mã giảm giá.
+[114] Theo dõi thông tin khách hàng.
+[115] Thống kê doanh thu và số lượng đơn hàng.
+[116] Xuất dữ liệu báo cáo.
+[117] Từ đó, nhóm xác định các chức năng của trang quản trị và cơ chế phân quyền giữa quản trị viên và nhân viên.
+[118] Khảo sát về nhu cầu hỗ trợ và tư vấn khách hàng
+[119] Trong lĩnh vực chăm sóc sức khỏe, khách hàng thường cần được giải đáp các thắc mắc liên quan đến sản phẩm.
+[120] Vì vậy, nhóm tìm hiểu nhu cầu sử dụng các chức năng hỗ trợ như chatbot, gửi yêu cầu tư vấn, đánh giá sản phẩm và đọc các bài viết sức khỏe.
+[121] Nội dung khảo sát tập trung vào mức độ cần thiết của việc cung cấp thông tin nhanh chóng, khả năng liên hệ với nhà thuốc và nhu cầu tiếp cận kiến thức sức khỏe trên cùng một nền tảng.
+[122] Đặc biệt, các câu hỏi liên quan đến việc lựa chọn hoặc sử dụng thuốc cần có giới hạn rõ ràng và được chuyển đến dược sĩ có chuyên môn khi cần thiết.
+[123] Bảng tổng hợp nội dung khảo sát
+[126] 2.1.4. Kết quả khảo sát
+[127] Trên cơ sở tổng hợp những nội dung cần khảo sát và phân tích các chức năng của website nhà thuốc trực tuyến, nhóm xác định được những nhu cầu và yêu cầu cơ bản làm nền tảng xây dựng hệ thống.
+[128] Về phía khách hàng
+[129] Khách hàng cần một website có giao diện đơn giản, dễ sử dụng và cho phép tìm kiếm sản phẩm nhanh chóng. Thông tin sản phẩm cần được trình bày rõ ràng để khách hàng có thể tham khảo trước khi lựa chọn.
+[130] Bên cạnh đó, hệ thống cần hỗ trợ giỏ hàng, đặt hàng và tra cứu đơn hàng nhằm tạo sự thuận tiện trong quá trình mua sắm.
+[131] Những tính năng như đánh giá sản phẩm, cập nhật khuyến mãi, đọc bài viết sức khỏe và yêu cầu tư vấn cũng được xác định là các chức năng có thể hỗ trợ trải nghiệm người dùng.
+[132] Về phía nhân viên
+[133] Nhân viên cần được cung cấp các công cụ để theo dõi đơn hàng, xử lý đơn hàng và tiếp nhận yêu cầu hỗ trợ khách hàng.
+[134] Hệ thống cần có giao diện quản lý rõ ràng, giúp nhân viên nhanh chóng kiểm tra thông tin và cập nhật trạng thái xử lý.
+[135] Về phía quản trị viên
+[136] Quản trị viên cần có khả năng quản lý tập trung các dữ liệu liên quan đến sản phẩm, tài khoản, nhà sản xuất, mã giảm giá và đơn hàng.
+[137] Ngoài ra, hệ thống cần cung cấp công cụ thống kê doanh thu, theo dõi hoạt động kinh doanh và xuất báo cáo để hỗ trợ quá trình quản lý.
+[138] Về mặt chức năng hệ thống
+[139] Qua phân tích, những nhóm chức năng cần ưu tiên triển khai bao gồm:
+[140] Quản lý tài khoản và phân quyền.
+[141] Quản lý danh mục và sản phẩm.
+[142] Tìm kiếm và xem chi tiết sản phẩm.
+[143] Quản lý giỏ hàng.
+[144] Đặt hàng và quản lý đơn hàng.
+[145] Quản lý khách hàng.
+[146] Quản lý khuyến mãi.
+[147] Thống kê và xuất báo cáo.
+[148] Cung cấp bài viết sức khỏe.
+[149] Hỗ trợ tư vấn và chatbot AI.
+[150] Về mặt chất lượng hệ thống
+[151] Website cần đáp ứng các yêu cầu về tính dễ sử dụng, tính chính xác, bảo mật dữ liệu, tốc độ phản hồi và khả năng hoạt động ổn định.
+[152] Đặc biệt, đối với website bán thuốc, hệ thống phải đảm bảo thông tin sản phẩm được trình bày đúng, hạn chế cung cấp thông tin gây hiểu nhầm và có cơ chế kiểm soát phù hợp đối với những sản phẩm cần tư vấn chuyên môn.
+[153] Bảng tổng hợp kết quả phân tích khảo sát
+[155] 2.2. Phân tích dữ liệu
+[156] Sau khi xác định được các nhóm dữ liệu cần quản lý, nhóm tiến hành phân tích mối quan hệ giữa người dùng, dữ liệu và các nghiệp vụ của website.
+[157] Mục tiêu của quá trình phân tích là trả lời ba câu hỏi chính:
+[158] Những đối tượng nào sử dụng hệ thống?
+[159] Mỗi đối tượng có thể thực hiện những chức năng nào?
+[160] Hệ thống cần đáp ứng những yêu cầu về hiệu năng, bảo mật và khả năng sử dụng như thế nào?
+[161] Từ đó, hệ thống được chia thành hai khu vực lớn.
+[162] Khu vực dành cho khách hàng tập trung vào việc tìm kiếm sản phẩm, xem thông tin sản phẩm, mua hàng, theo dõi đơn hàng, xem bài viết sức khỏe và nhận tư vấn.
+[163] Khu vực quản trị dành cho Admin và nhân viên, phục vụ công việc quản lý sản phẩm, đơn hàng, khách hàng, nhà sản xuất, voucher, bài viết và các hoạt động khác của website.
+[164] 2.2.1. Người dùng
+[165] Dựa vào chức năng thực tế của hệ thống, người dùng có thể được chia thành bốn nhóm: khách vãng lai, khách hàng, nhân viên và quản trị viên.
+[166] a.Khách vãng lai
+[167] Khách vãng lai là người truy cập website nhưng chưa đăng nhập.
+[168] Đối tượng này chủ yếu có nhu cầu tìm hiểu sản phẩm và tham khảo thông tin trước khi quyết định mua hàng.
+[169] Khách vãng lai có thể:
+[170] Truy cập trang chủ.
+[171] Xem danh sách sản phẩm.
+[172] Xem sản phẩm nổi bật.
+[173] Xem sản phẩm bán chạy.
+[174] Xem sản phẩm đang giảm giá.
+[175] Xem sản phẩm theo danh mục.
+[176] Tìm kiếm sản phẩm.
+[177] Sắp xếp sản phẩm theo giá.
+[178] Xem chi tiết sản phẩm.
+[179] Xem công dụng, thành phần và hướng dẫn sử dụng.
+[180] Xem đánh giá của khách hàng khác.
+[181] Xem bài viết tại Góc sức khỏe.
+[182] Xem video sức khỏe.
+[183] Sử dụng chatbot để tìm kiếm thông tin.
+[184] Để lại số điện thoại yêu cầu tư vấn.
+[185] Đăng ký nhận thông tin qua email.
+[186] Đăng ký tài khoản.
+[187] Đăng nhập hệ thống.
+[188] Khách vãng lai chưa có quyền truy cập vào các khu vực quản trị.
+[189] b.Khách hàng
+[190] Khách hàng là người đã đăng ký tài khoản hoặc sử dụng website để thực hiện quá trình mua hàng.
+[191] Ngoài các chức năng giống khách vãng lai, khách hàng còn có thể:
+[192] Thêm sản phẩm vào giỏ hàng.
+[193] Tăng hoặc giảm số lượng sản phẩm.
+[194] Xóa sản phẩm khỏi giỏ hàng.
+[195] Xem tổng giá trị giỏ hàng.
+[196] Nhập mã giảm giá.
+[197] Nhập thông tin nhận hàng.
+[198] Chọn phương thức thanh toán.
+[199] Xác nhận đặt hàng.
+[200] Xem hóa đơn.
+[201] Tra cứu đơn hàng.
+[202] Theo dõi trạng thái đơn hàng.
+[203] Hủy đơn hàng khi đơn vẫn đang chờ xử lý.
+[204] Gửi đánh giá sản phẩm.
+[205] Sử dụng chatbot để hỏi thông tin liên quan đến sản phẩm.
+[206] Đây là nhóm người dùng trực tiếp tạo ra các giao dịch mua bán trên website.
+[207] c.Nhân viên
+[208] Nhân viên là người hỗ trợ quản lý hoạt động hằng ngày của website.
+[209] Sau khi đăng nhập bằng tài khoản có quyền nhân viên, người dùng được chuyển vào khu vực quản trị dành cho nhân viên.
+[210] Nhân viên có thể thực hiện các công việc như:
+[211] Xem danh sách đơn hàng.
+[212] Xem chi tiết đơn hàng.
+[213] Duyệt đơn hàng.
+[214] Xóa đơn hàng khi cần thiết.
+[215] Quản lý danh sách khách hàng dựa trên đơn hàng.
+[216] Theo dõi tổng số sản phẩm.
+[217] Theo dõi số đơn hàng chưa xử lý.
+[218] Theo dõi số lượng khách hàng.
+[219] Quản lý yêu cầu tư vấn.
+[220] Chuyển trạng thái yêu cầu từ chưa liên hệ sang đã liên hệ.
+[221] Quản lý danh sách email đăng ký.
+[222] Quản lý một số thông tin sản phẩm.
+[223] Theo dõi các thông tin thống kê cơ bản.
+[224] Nhân viên không nên có toàn bộ quyền quản trị hệ thống như Admin.
+[225] d. Quản trị viên
+[226] Quản trị viên là người có quyền cao nhất.
+[227] Quản trị viên chịu trách nhiệm điều hành và quản lý toàn bộ dữ liệu của website.
+[228] Các quyền chính bao gồm:
+[229] Quản lý sản phẩm.
+[230] Thêm sản phẩm.
+[231] Chỉnh sửa sản phẩm.
+[232] Xóa sản phẩm.
+[233] Quản lý hình ảnh sản phẩm.
+[234] Quản lý nhà sản xuất.
+[235] Quản lý người dùng.
+[236] Tạo tài khoản.
+[237] Chỉnh sửa tài khoản.
+[238] Phân quyền Admin, nhân viên hoặc khách hàng.
+[239] Xóa tài khoản.
+[240] Quản lý đơn hàng.
+[241] Duyệt đơn hàng.
+[242] Xóa đơn hàng.
+[243] Theo dõi khách hàng.
+[244] Quản lý voucher.
+[245] Thêm voucher.
+[246] Sửa voucher.
+[247] Xóa voucher.
+[248] Quản lý bài viết sức khỏe.
+[249] Thêm bài viết.
+[250] Sửa bài viết.
+[251] Xóa bài viết.
+[252] Quản lý video.
+[253] Quản lý yêu cầu tư vấn.
+[254] Quản lý danh sách email đăng ký.
+[255] Theo dõi doanh thu.
+[256] Theo dõi tổng số đơn hàng.
+[257] Theo dõi đơn hàng mới.
+[258] Xem thống kê.
+[259] Xuất dữ liệu Excel.
+[260] Xuất báo cáo PDF.
+[261] Từ việc phân tích người dùng có thể xác định mô hình phân quyền như sau:
+[263] Trong đó Admin có quyền quản lý cao nhất.
+[264] 2.2.2. Yêu cầu chức năng
+[265] Yêu cầu chức năng mô tả những nghiệp vụ mà hệ thống phải thực hiện để đáp ứng nhu cầu của từng nhóm người dùng.
+[266] Chức năng đăng ký
+[267] Hệ thống cho phép người dùng tạo tài khoản khách hàng.
+[268] Người dùng nhập:
+[269] Họ tên.
+[270] Email.
+[271] Mật khẩu.
+[272] Hệ thống tiến hành kiểm tra email đã tồn tại hay chưa.
+[273] Nếu email chưa tồn tại, mật khẩu được xử lý và tài khoản mới được tạo với quyền khách hàng.
+[274] Nếu email đã tồn tại, hệ thống thông báo để người dùng sử dụng email khác.
+[275] Chức năng đăng nhập
+[276] Người dùng nhập email và mật khẩu.
+[277] Hệ thống tiến hành xác thực thông tin.
+[278] Nếu đăng nhập không thành công, hệ thống hiển thị thông báo lỗi.
+[279] Nếu thành công, hệ thống kiểm tra vai trò.
+[280] Nếu là:
+[281] Admin: chuyển đến trang quản trị Admin.
+[282] Nhân viên: chuyển đến trang quản trị nhân viên.
+[283] Khách hàng: chuyển đến khu vực mua hàng.
+[284] 🡪Chức năng này đồng thời đảm nhiệm vai trò phân quyền hệ thống.
+[285] Chức năng hiển thị sản phẩm
+[286] Website hiển thị các sản phẩm hiện có trong cơ sở dữ liệu.
+[287] Thông tin cơ bản gồm:
+[288] Hình ảnh.
+[289] Tên sản phẩm.
+[290] Giá bán.
+[291] Giá cũ.
+[292] Mức giảm giá.
+[293] Trạng thái sản phẩm.
+[294] Sản phẩm có thể được hiển thị theo các nhóm như sản phẩm nổi bật, sản phẩm bán chạy hoặc sản phẩm siêu ưu đãi.
+[295] Chức năng tìm kiếm sản phẩm
+[296] Khách hàng có thể nhập tên sản phẩm vào ô tìm kiếm.
+[297] Hệ thống nhận từ khóa và truy vấn các sản phẩm phù hợp.
+[298] Kết quả tìm kiếm được hiển thị dưới dạng danh sách sản phẩm.
+[299] Chức năng lọc sản phẩm
+[300] Khách hàng có thể lọc sản phẩm theo:
+[301] Danh mục.
+[302] Danh mục con.
+[303] Từ khóa.
+[304] Giá.
+[305] Hệ thống chỉ hiển thị những sản phẩm thỏa mãn điều kiện được chọn.
+[306] Chức năng sắp xếp
+[307] Website hỗ trợ sắp xếp sản phẩm theo:
+[308] Mới nhất.
+[309] Giá tăng dần.
+[310] Giá giảm dần.
+[311] Điều này giúp người dùng nhanh chóng lựa chọn sản phẩm phù hợp với ngân sách.
+[312] Chức năng xem chi tiết sản phẩm
+[313] Khi nhấn vào một sản phẩm, hệ thống hiển thị đầy đủ thông tin gồm:
+[314] Tên.
+[315] Giá.
+[316] Hình ảnh.
+[317] Bộ sưu tập ảnh.
+[318] Công dụng.
+[319] Thành phần.
+[320] Hướng dẫn sử dụng.
+[321] Tác dụng phụ.
+[322] Lưu ý.
+[323] Bảo quản.
+[324] Xuất xứ.
+[325] Nhà sản xuất.
+[326] Đánh giá.
+[327] Chức năng này giúp khách hàng có đủ thông tin trước khi đưa ra quyết định mua.
+[328] Chức năng giỏ hàng
+[329] Khách hàng có thể thêm sản phẩm vào giỏ hàng.
+[330] Trong giỏ hàng, hệ thống cho phép:
+[331] Thêm sản phẩm.
+[332] Tăng số lượng.
+[333] Giảm số lượng.
+[334] Xóa sản phẩm.
+[335] Tính tổng tiền.
+[336] Hiển thị số lượng sản phẩm trên biểu tượng giỏ hàng.
+[337] Giỏ hàng được lưu trong phiên làm việc của người dùng.
+[338] Chức năng sử dụng voucher
+[339] Khách hàng có thể nhập mã voucher.
+[340] Hệ thống kiểm tra:
+[341] Voucher có tồn tại không.
+[342] Voucher còn hạn không.
+[343] Tỷ lệ giảm giá.
+[344] Nếu hợp lệ, hệ thống tính lại tổng tiền.
+[345] Nếu không hợp lệ hoặc đã hết hạn, hệ thống thông báo lỗi.
+[346] Chức năng đặt hàng
+[347] Khi hoàn tất lựa chọn sản phẩm, khách hàng nhập:
+[348] Họ tên.
+[349] Số điện thoại.
+[350] Địa chỉ.
+[351] Phương thức thanh toán.
+[352] Hệ thống tổng hợp danh sách sản phẩm và tổng số tiền.
+[353] Sau khi khách hàng xác nhận, một bản ghi đơn hàng được tạo trong cơ sở dữ liệu.
+[354] Chức năng hóa đơn
+[355] Sau khi đơn hàng được tạo, hệ thống cho phép hiển thị hóa đơn.
+[356] Hóa đơn gồm:
+[357] Mã đơn.
+[358] Tên khách hàng.
+[359] Số điện thoại.
+[360] Địa chỉ.
+[361] Phương thức thanh toán.
+[362] Tổng tiền.
+[363] Chức năng tra cứu đơn hàng
+[364] Khách hàng có thể tra cứu bằng mã đơn hàng hoặc số điện thoại.
+[365] Hệ thống hiển thị:
+[366] Mã đơn.
+[367] Khách hàng.
+[368] Địa chỉ.
+[369] Thời gian đặt.
+[370] Tổng tiền.
+[371] Danh sách sản phẩm.
+[372] Trạng thái hiện tại.
+[373] Chức năng hủy đơn
+[374] Nếu đơn hàng vẫn ở trạng thái chờ xử lý, khách hàng có thể thực hiện hủy đơn.
+[375] Sau khi xác nhận, trạng thái đơn được chuyển sang đã hủy.
+[376] Các đơn đã được duyệt không nên tiếp tục cho phép khách tự hủy.
+[377] Chức năng quản lý đơn hàng
+[378] Admin và nhân viên có thể:
+[379] Xem danh sách đơn.
+[380] Xem chi tiết.
+[381] Duyệt đơn.
+[382] Xóa đơn.
+[383] Theo dõi trạng thái.
+[384] Theo dõi số đơn chưa xử lý.
+[385] Khi đơn được duyệt, trạng thái chuyển sang “Đã duyệt”.
+[386] Chức năng quản lý sản phẩm
+[387] Admin có thể:
+[388] Xem danh sách.
+[389] Thêm.
+[390] Sửa.
+[391] Xóa.
+[392] Cập nhật giá.
+[393] Cập nhật tồn kho.
+[394] Cập nhật danh mục.
+[395] Cập nhật mô tả.
+[396] Quản lý hình ảnh.
+[397] Đây là chức năng quan trọng để đảm bảo thông tin trên website luôn chính xác.
+[398] Chức năng quản lý nhà sản xuất
+[399] Admin có thể:
+[400] Thêm nhà sản xuất.
+[401] Sửa thông tin.
+[402] Xóa nhà sản xuất.
+[403] Xem danh sách.
+[404] Thông tin gồm tên, điện thoại, email, địa chỉ, website, logo và quốc gia.
+[405] Chức năng quản lý người dùng
+[406] Admin có thể:
+[407] Xem danh sách tài khoản.
+[408] Tạo tài khoản mới.
+[409] Chỉnh sửa thông tin.
+[410] Thay đổi vai trò.
+[411] Xóa tài khoản.
+[412] Các vai trò gồm:
+[413] Admin.
+[414] Staff.
+[415] Customer.
+[416] Chức năng quản lý voucher
+[417] Admin có thể:
+[418] Tạo mã giảm giá.
+[419] Chỉnh sửa phần trăm giảm.
+[420] Thiết lập ngày hết hạn.
+[421] Xóa mã.
+[422] Voucher sau đó được sử dụng trong quá trình thanh toán của khách hàng.
+[423] Chức năng đánh giá sản phẩm
+[424] Khách hàng có thể gửi đánh giá về sản phẩm.
+[425] Thông tin gồm nội dung và số sao.
+[426] Hệ thống cũng tính:
+[427] Tổng số lượt đánh giá.
+[428] Điểm đánh giá trung bình.
+[429] Số lượng đánh giá theo từng mức sao.
+[430] Điều này giúp tăng độ tin cậy của thông tin sản phẩm.
+[431] Chức năng Góc sức khỏe
+[432] Website cho phép khách hàng đọc các bài viết liên quan đến chăm sóc sức khỏe.
+[433] Hệ thống hiển thị:
+[434] Bài viết mới.
+[435] Chuyên mục.
+[436] Hình ảnh.
+[437] Video.
+[438] Nội dung chi tiết.
+[439] Chức năng quản lý bài viết
+[440] Admin có thể:
+[441] Thêm bài.
+[442] Chỉnh sửa.
+[443] Xóa.
+[444] Tìm kiếm theo tiêu đề.
+[445] Tìm theo chuyên mục.
+[446] Quản lý video đi kèm.
+[447] Chức năng yêu cầu tư vấn
+[448] Khách hàng nhập số điện thoại.
+[449] Hệ thống lưu yêu cầu với trạng thái ban đầu là chưa liên hệ.
+[450] Nhân viên hoặc Admin có thể xem danh sách và chuyển trạng thái sang đã liên hệ.
+[451] Chức năng đăng ký nhận thông tin
+[452] Khách hàng nhập email tại khu vực Newsletter.
+[453] Hệ thống lưu email để phục vụ việc gửi thông tin hoặc chương trình khuyến mãi trong tương lai.
+[454] Admin và nhân viên có thể quản lý danh sách email này.
+[455] Chức năng thống kê
+[456] Admin có thể xem các thông tin như:
+[457] Tổng doanh thu.
+[458] Tổng số đơn hàng.
+[459] Số đơn chưa xử lý.
+[460] Số đơn đã duyệt.
+[461] Số lượng sản phẩm.
+[462] Số lượng người đăng ký nhận thông tin.
+[463] Dữ liệu có thể được thể hiện dưới dạng số liệu và biểu đồ.
+[464] Chức năng xuất báo cáo
+[465] Hệ thống hỗ trợ:
+[466] Xuất Excel.
+[467] Xuất PDF.
+[468] Chức năng này phục vụ việc lưu trữ và báo cáo dữ liệu kinh doanh.
+[469] Chức năng chatbot AI tích hợp Gemini API
+[470] Website bán thuốc Viet Duc Pharmacy được tích hợp chức năng chatbot AI sử dụng Gemini API nhằm hỗ trợ khách hàng tra cứu thông tin sản phẩm, tìm hiểu các chương trình khuyến mãi và giải đáp những thắc mắc liên quan đến nội dung được cung cấp trên website. Chức năng này giúp người dùng tiếp cận thông tin nhanh chóng, tăng khả năng tương tác và nâng cao chất lượng dịch vụ chăm sóc khách hàng.
+[471] Chatbot được xây dựng với giao diện hội thoại trực tiếp trên website, cho phép người dùng nhập câu hỏi bằng ngôn ngữ tự nhiên. Các tệp chatbot_widget.php, chatbot.css và chatbot.js đảm nhiệm việc xây dựng giao diện và xử lý tương tác. Tệp ai_chat.php chịu trách nhiệm tiếp nhận, xử lý câu hỏi tại máy chủ; config/ai.php cung cấp cấu hình kết nối Gemini API và config/db.php thực hiện kết nối cơ sở dữ liệu.
+[472] Các chức năng chính của chatbot bao gồm:
+[473] Tra cứu thông tin sản phẩm: Hỗ trợ tìm kiếm tên sản phẩm, giá bán, số lượng tồn kho, thành phần, công dụng và những thông tin liên quan đến sản phẩm.
+[474] Tra cứu danh mục: Giúp khách hàng tìm hiểu các nhóm sản phẩm như dược phẩm, thực phẩm chức năng và sản phẩm chăm sóc sức khỏe.
+[475] Thông tin nhà sản xuất: Cung cấp thông tin về nhà sản xuất, nguồn gốc và xuất xứ của sản phẩm khi có dữ liệu phù hợp.
+[476] Thông tin khuyến mãi: Hỗ trợ tra cứu voucher, mã giảm giá và các chương trình ưu đãi được cập nhật trên website.
+[477] Thông tin đánh giá: Hỗ trợ cung cấp những thông tin liên quan đến đánh giá sản phẩm từ dữ liệu có sẵn.
+[478] Nội dung sức khỏe: Hỗ trợ giải đáp các câu hỏi mang tính tham khảo dựa trên những bài viết thuộc chuyên mục Góc sức khỏe.
+[479] Hỗ trợ hội thoại: Cho phép khách hàng tiếp tục đặt câu hỏi và nhận phản hồi trực tiếp ngay trên giao diện website.
+[480] Quy trình hoạt động: Khi người dùng gửi câu hỏi, hệ thống tiếp nhận nội dung và chuyển đến máy chủ để xử lý. Tại đây, câu hỏi được phân tích nhằm xác định các từ khóa liên quan. Dựa trên những từ khóa này, hệ thống thực hiện truy vấn cơ sở dữ liệu để tìm kiếm các thông tin phù hợp về sản phẩm, danh mục, nhà sản xuất, khuyến mãi, đánh giá hoặc bài viết sức khỏe.
+[481] Sau khi tìm được dữ liệu liên quan, hệ thống tổng hợp thông tin thành ngữ cảnh và gửi cùng câu hỏi đến Gemini API để tạo câu trả lời bằng ngôn ngữ tự nhiên. Kết quả phản hồi được chuyển về máy chủ và hiển thị trên giao diện chatbot, giúp khách hàng dễ dàng tiếp nhận thông tin.
+[482] Chatbot hoạt động theo cơ chế truy xuất dữ liệu bằng từ khóa kết hợp với mô hình AI tạo sinh, không phải mô hình được huấn luyện riêng hoặc sử dụng công nghệ tìm kiếm vector. Vì vậy, chất lượng câu trả lời phụ thuộc vào độ chính xác của dữ liệu, khả năng xác định từ khóa và kết quả xử lý từ Gemini API.
+[483] Trong quá trình hoạt động, hệ thống cần xử lý những trường hợp như câu hỏi không rõ ràng, không tìm thấy dữ liệu phù hợp hoặc Gemini API gặp lỗi kết nối. Đồng thời, chatbot phải đảm bảo quyền riêng tư, không đưa các thông tin nhạy cảm như tài khoản, mật khẩu hoặc dữ liệu đơn hàng cá nhân vào yêu cầu gửi đến AI khi không cần thiết.
+[484] Đặc biệt, đối với các câu hỏi liên quan đến thuốc và sức khỏe, chatbot chỉ đóng vai trò hỗ trợ tra cứu và cung cấp thông tin tham khảo, không thay thế việc tư vấn, chẩn đoán hoặc kê đơn của bác sĩ và dược sĩ có chuyên môn.
+[485] Nhìn chung, chức năng chatbot AI tích hợp Gemini API giúp nâng cao trải nghiệm người dùng, hỗ trợ tìm kiếm thông tin nhanh chóng và giảm bớt các yêu cầu giải đáp thông thường cho nhân viên. Qua đó, chức năng này góp phần nâng cao hiệu quả chăm sóc khách hàng và tăng tính tiện ích cho website Viet Duc Pharmacy.
+[487] 2.2.3. Yêu cầu phi chức năng
+[488] Yêu cầu phi chức năng mô tả các tiêu chí về chất lượng hoạt động của hệ thống. Website không chỉ cần thực hiện đúng chức năng mà còn phải đảm bảo dễ sử dụng, an toàn, ổn định và có khả năng mở rộng.
+[489] Yêu cầu về giao diện
+[490] Giao diện cần trực quan, dễ nhìn và phù hợp với website nhà thuốc.
+[491] Các nội dung quan trọng như:
+[492] Thanh tìm kiếm.
+[493] Danh mục sản phẩm.
+[494] Giá bán.
+[495] Nút thêm giỏ hàng.
+[496] Giỏ hàng.
+[497] Thông tin đặt hàng.
+[498] phải được bố trí rõ ràng.
+[499] Các chức năng quản trị cũng cần chia theo từng nhóm để Admin và nhân viên dễ thao tác.
+[500] Yêu cầu về tính dễ sử dụng
+[501] Người dùng không cần có kiến thức kỹ thuật vẫn có thể sử dụng website.
+[502] Quy trình mua hàng cần đơn giản:
+[503] Tìm sản phẩm → Xem sản phẩm → Thêm giỏ → Kiểm tra giỏ → Đặt hàng → Theo dõi đơn.
+[504] Các thao tác nên có thông báo rõ ràng khi thành công hoặc thất bại.
+[505] Yêu cầu về hiệu năng
+[506] Website cần phản hồi nhanh khi:
+[507] Tải sản phẩm.
+[508] Tìm kiếm.
+[509] Lọc sản phẩm.
+[510] Thêm giỏ hàng.
+[511] Áp dụng voucher.
+[512] Đặt hàng.
+[513] Tra cứu đơn.
+[514] Các truy vấn cơ sở dữ liệu cần được tối ưu để hạn chế thời gian chờ.
+[515] Yêu cầu về bảo mật
+[516] Hệ thống cần đảm bảo việc phân quyền chính xác.
+[517] Khách hàng không được truy cập trang quản trị.
+[518] Nhân viên không được thực hiện những chức năng chỉ dành cho Admin.
+[519] Mật khẩu người dùng phải được lưu dưới dạng đã mã hóa thay vì lưu trực tiếp.
+[520] Các dữ liệu nhập từ người dùng cần được kiểm tra trước khi xử lý để giảm nguy cơ tấn công vào cơ sở dữ liệu.
+[521] Các truy vấn quan trọng nên sử dụng câu lệnh có tham số.
+[522] Thông tin khóa API của chatbot không được đặt trực tiếp trong mã JavaScript phía trình duyệt.
+[523] Yêu cầu về tính chính xác
+[524] Giá sản phẩm, số lượng, mức giảm giá và tổng tiền phải được tính chính xác.
+[525] Khi khách hàng tăng hoặc giảm số lượng, tổng tiền phải cập nhật đúng.
+[526] Voucher chỉ được áp dụng khi còn hiệu lực.
+[527] Thông tin đơn hàng phải đúng với thông tin khách hàng đã nhập.
+[528] Yêu cầu về tính toàn vẹn dữ liệu
+[529] Khi thực hiện thêm, sửa hoặc xóa dữ liệu, hệ thống phải hạn chế xảy ra dữ liệu không nhất quán.
+[530] Ví dụ:
+[531] Không được tạo đơn hàng thiếu thông tin cần thiết.
+[532] Không nên cho phép số lượng sản phẩm nhỏ hơn 0.
+[533] Không nên áp dụng voucher đã hết hạn.
+[534] Không nên cho phép tài khoản không có quyền thực hiện chức năng quản trị.
+[535] Yêu cầu về tính ổn định
+[536] Website phải duy trì hoạt động ổn định trong quá trình sử dụng.
+[537] Khi xảy ra lỗi ở một chức năng, các dữ liệu khác không được bị ảnh hưởng.
+[538] Giỏ hàng và thông tin đặt hàng cần được xử lý cẩn thận để hạn chế mất dữ liệu.
+[539] Yêu cầu về khả năng tương thích
+[540] Website nên hoạt động trên các trình duyệt phổ biến như:
+[541] Google Chrome.
+[542] Microsoft Edge.
+[543] Giao diện cần thích ứng với nhiều kích thước màn hình khác nhau.
+[544] Yêu cầu về khả năng mở rộng
+[545] Cấu trúc hệ thống cần cho phép bổ sung các chức năng trong tương lai như:
+[546] Thanh toán trực tuyến.
+[547] Quản lý kho chi tiết.
+[548] Quản lý nhập hàng.
+[549] Quản lý đơn thuốc.
+[550] Thông báo trạng thái đơn hàng.
+[551] Tích điểm khách hàng.
+[552] Khuyến mãi nâng cao.
+[553] Chat trực tiếp với nhân viên.
+[554] Tích hợp vận chuyển.
+[555] Quản lý nhiều chi nhánh.
+[556] Yêu cầu về khả năng bảo trì
+[557] Mã nguồn cần được tổ chức theo từng chức năng.
+[558] Tên biến, tên bảng và tên trường cần rõ ràng.
+[559] Phần kết nối cơ sở dữ liệu nên được đặt riêng để dễ thay đổi.
+[560] Các phần giao diện, xử lý dữ liệu và cấu hình nên được tách hợp lý để thuận tiện cho việc sửa lỗi và nâng cấp sau này.
+[561] Yêu cầu về sao lưu dữ liệu
+[562] Cơ sở dữ liệu chứa thông tin tài khoản, đơn hàng và sản phẩm cần được sao lưu định kỳ.
+[563] Việc sao lưu giúp phục hồi hệ thống trong trường hợp:
+[564] Lỗi cơ sở dữ liệu.
+[565] Xóa nhầm dữ liệu.
+[566] Hỏng máy chủ.
+[567] Lỗi trong quá trình cập nhật chương trình.
+[568] Yêu cầu về độ tin cậy
+[569] Thông tin sản phẩm hiển thị trên website phải thống nhất với dữ liệu được quản lý trong cơ sở dữ liệu.
+[570] Các thông tin như giá bán, số lượng tồn và khuyến mãi cần được cập nhật kịp thời.
+[571] Đối với nội dung liên quan đến sức khỏe và chatbot, hệ thống cần thể hiện rõ rằng thông tin cung cấp chỉ có tính chất tham khảo và không thay thế cho tư vấn từ bác sĩ hoặc dược sĩ có chuyên môn.
+
+=== TABLE 0 ===
+R0: STT | Nội dung khảo sát | Mục đích
+R1: 1 | Nhu cầu mua hàng trực tuyến | Xác định nhu cầu sử dụng website
+R2: 2 | Tìm kiếm và phân loại sản phẩm | Xây dựng chức năng tìm kiếm, lọc
+R3: 3 | Thông tin chi tiết sản phẩm | Xác định dữ liệu cần hiển thị
+R4: 4 | Giỏ hàng và đặt hàng | Thiết kế quy trình mua hàng
+R5: 5 | Thanh toán và tra cứu đơn | Xây dựng chức năng xử lý đơn hàng
+R6: 6 | Quản lý sản phẩm | Xây dựng chức năng quản trị
+R7: 7 | Quản lý người dùng | Xác định các vai trò và quyền hạn
+R8: 8 | Quản lý đơn hàng | Hỗ trợ nhân viên xử lý đơn
+R9: 9 | Thống kê và báo cáo | Hỗ trợ quản lý hoạt động kinh doanh
+R10: 10 | Chatbot và tư vấn | Hỗ trợ giải đáp thông tin
+R11: 11 | Góc sức khỏe | Cung cấp thông tin chăm sóc sức khỏe
+R12: 12 | Bảo mật và giao diện | Xác định yêu cầu phi chức năng
+
+=== TABLE 1 ===
+R0: Nhóm đối tượng | Nhu cầu xác định | Giải pháp đề xuất
+R1: Khách hàng | Tìm kiếm sản phẩm nhanh | Tìm kiếm, lọc danh mục
+R2: Khách hàng | Xem đầy đủ thông tin | Trang chi tiết sản phẩm
+R3: Khách hàng | Mua hàng thuận tiện | Giỏ hàng, đặt hàng
+R4: Khách hàng | Theo dõi việc mua hàng | Tra cứu đơn hàng
+R5: Khách hàng | Được hỗ trợ thông tin | Chatbot, yêu cầu tư vấn
+R6: Nhân viên | Xử lý đơn hàng | Trang quản lý đơn
+R7: Nhân viên | Theo dõi khách hàng | Quản lý thông tin khách
+R8: Quản trị viên | Quản lý sản phẩm | Thêm, sửa, xóa sản phẩm
+R9: Quản trị viên | Quản lý tài khoản | Quản lý người dùng, phân quyền
+R10: Quản trị viên | Theo dõi kinh doanh | Thống kê, xuất Excel/PDF

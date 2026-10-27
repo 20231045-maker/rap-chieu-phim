@@ -1,0 +1,86 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-4 mb-5">
+    <div class="card bg-white border-0 p-4 rounded-4 shadow-sm mb-4 text-center">
+        <h3 class="text-dark fw-bold mb-2">BẢNG GIÁ VÉ & DỊCH VỤ RẠP CINESTAR</h3>
+        <p class="text-muted small mb-0">Áp dụng cho tất cả các suất chiếu và loại ghế tại cụm rạp</p>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <!-- Bảng Giá Vé Theo Định Dạng -->
+        <div class="col-lg-6">
+            <div class="card bg-white border p-4 rounded-4 shadow-sm h-100">
+                <h5 class="text-dark fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-film text-danger me-2"></i> Giá Vé Cơ Bản Theo Phòng Chiếu
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="text-secondary">
+                                <th>Định Dạng</th>
+                                <th>Ngày Thường (T2-T5)</th>
+                                <th>Cuối Tuần (T6-CN)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-light text-dark border">2D Digital</span></td>
+                                <td class="text-dark fw-bold">75.000 đ</td>
+                                <td class="text-danger fw-bold">85.000 đ</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-primary-subtle text-primary border border-primary">3D Atmos</span></td>
+                                <td class="text-dark fw-bold">95.000 đ</td>
+                                <td class="text-danger fw-bold">105.000 đ</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-danger-subtle text-danger border border-danger">IMAX Laser</span></td>
+                                <td class="text-dark fw-bold">110.000 đ</td>
+                                <td class="text-danger fw-bold">125.000 đ</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bảng Hệ Số Loại Ghế -->
+        <div class="col-lg-6">
+            <div class="card bg-white border p-4 rounded-4 shadow-sm h-100">
+                <h5 class="text-dark fw-bold mb-3 border-bottom pb-2">
+                    <i class="fa-solid fa-couch text-warning me-2"></i> Phụ Thu Theo Loại Ghế
+                </h5>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr class="text-secondary">
+                                <th>Loại Ghế</th>
+                                <th>Hệ Số Giá</th>
+                                <th>Mô Tả Tiện Ích</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="badge bg-light text-dark border">Regular</span></td>
+                                <td class="text-dark fw-bold">x1.00</td>
+                                <td class="text-muted small">Hàng A-B hoặc mép cánh, đệm da tiêu chuẩn</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-warning-subtle text-warning-emphasis border border-warning">VIP</span></td>
+                                <td class="text-dark fw-bold">x1.25</td>
+                                <td class="text-muted small">Tọa độ góc nhìn trung tâm vàng màn chiếu</td>
+                            </tr>
+                            <tr>
+                                <td><span class="badge bg-danger-subtle text-danger border border-danger">Sweetbox</span></td>
+                                <td class="text-dark fw-bold">x2.00</td>
+                                <td class="text-muted small">Ghế sofa đôi rộng rãi, vách ngăn riêng tư</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

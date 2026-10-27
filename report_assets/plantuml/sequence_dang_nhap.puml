@@ -1,0 +1,32 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":NguoiDung" as User
+boundary ":DangNhap" as UI
+control ":TaiKhoanController" as Ctrl
+entity ":TaiKhoan" as Model
+
+User -> UI: 1. Nhập thông tin đăng nhập (email, password)
+activate UI
+UI -> Ctrl: 2. Yêu cầu đăng nhập
+activate Ctrl
+Ctrl -> Model: 3. kiemTraTK(email, password)
+activate Model
+
+Model --> Ctrl: 4.1. Không tìm thấy thông tin hoặc sai mật khẩu
+Ctrl --> UI: 5. Thông báo "Đăng nhập thất bại"
+UI --> User: 6. Hiển thị thông báo lỗi
+
+Ctrl -> Model: 3. kiemTraTK(email, password)
+Model --> Ctrl: 4.2. Tìm thấy thông tin tài khoản hợp lệ
+Ctrl --> UI: 7. Thông báo "Đăng nhập thành công"
+UI --> User: 8. Hiển thị thông báo & chuyển hướng vào trang chủ
+deactivate UI
+deactivate Ctrl
+deactivate Model
+
+@enduml

@@ -1,0 +1,474 @@
+<!-- Modal Chọn Cụm Rạp (10 Cơ sở: 5 Hà Nội, 5 TP.HCM) -->
+<div class="modal fade" id="cinemaSelectModal" tabindex="-1" aria-labelledby="cinemaSelectModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <!-- Modal Header -->
+            <div class="modal-header bg-danger text-white py-3 px-4">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="bg-white text-danger rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 44px; height: 44px;">
+                        <i class="fa-solid fa-location-dot fs-5"></i>
+                    </div>
+                    <div>
+                        <h5 class="modal-title fw-bold mb-0" id="cinemaSelectModalLabel">CHỌN CỤM RẠP CỦA BẠN</h5>
+                        <p class="mb-0 text-white-50 small">Vui lòng chọn cơ sở rạp gần nhất để hiển thị lịch chiếu & giá vé chính xác</p>
+                    </div>
+                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close" id="cinemaModalCloseBtn"></button>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body p-4 bg-light">
+                <!-- City Tabs (Hà Nội vs TP.HCM) -->
+                <ul class="nav nav-pills nav-fill bg-white p-2 rounded-3 shadow-sm mb-4 border" id="cinemaCityTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active fw-bold py-2" id="tab-btn-hanoi" data-bs-toggle="tab" data-bs-target="#tab-content-hanoi" type="button" role="tab">
+                            <i class="fa-solid fa-landmark me-2 text-danger"></i> HÀ NỘI (5 cơ sở trung tâm)
+                        </button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link fw-bold py-2" id="tab-btn-hcm" data-bs-toggle="tab" data-bs-target="#tab-content-hcm" type="button" role="tab">
+                            <i class="fa-solid fa-city me-2 text-primary"></i> TP. HỒ CHÍ MINH (5 cơ sở)
+                        </button>
+                    </li>
+                </ul>
+
+                <!-- Tab Panes -->
+                <div class="tab-content" id="cinemaCityTabsContent">
+                    <!-- Tab Hà Nội (5 cơ sở: Cầu Giấy, Hoàn Kiếm, Thanh Xuân, Hai Bà Trưng, Đống Đa) -->
+                    <div class="tab-pane fade show active" id="tab-content-hanoi" role="tabpanel">
+                        <div class="d-flex flex-column gap-2">
+                            <!-- 1. Cầu Giấy -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="1" data-cinema-name="Cinestar Cầu Giấy" data-cinema-city="Hà Nội" onclick="selectCinema(1, 'Cinestar Cầu Giấy', 'Hà Nội', 'Tầng 5, Discovery Complex, 302 Cầu Giấy, Q. Cầu Giấy, Hà Nội')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-danger-subtle text-danger fw-bold border border-danger-subtle px-2 py-1">Cầu Giấy</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Cầu Giấy</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> Tầng 5, Discovery Complex, 302 Cầu Giấy, Q. Cầu Giấy, Hà Nội
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> IMAX Laser, 3D Atmos, 2D
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 2. Hoàn Kiếm -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="2" data-cinema-name="Cinestar Hoàn Kiếm" data-cinema-city="Hà Nội" onclick="selectCinema(2, 'Cinestar Hoàn Kiếm', 'Hà Nội', '24 Tràng Tiền, Q. Hoàn Kiếm, Hà Nội')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-danger-subtle text-danger fw-bold border border-danger-subtle px-2 py-1">Hoàn Kiếm</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Hoàn Kiếm</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> 24 Tràng Tiền, Q. Hoàn Kiếm, Hà Nội (Gần Hồ Gươm)
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> IMAX, 2D Standard
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 3. Thanh Xuân -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="3" data-cinema-name="Cinestar Thanh Xuân" data-cinema-city="Hà Nội" onclick="selectCinema(3, 'Cinestar Thanh Xuân', 'Hà Nội', 'Tầng 4, Tòa nhà Artemis, 3 Lê Trọng Tấn, Q. Thanh Xuân, Hà Nội')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-danger-subtle text-danger fw-bold border border-danger-subtle px-2 py-1">Thanh Xuân</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Thanh Xuân</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> Tầng 4, Tòa nhà Artemis, 3 Lê Trọng Tấn, Q. Thanh Xuân, Hà Nội
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Dolby Atmos, Ghế VIP
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 4. Hai Bà Trưng -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="4" data-cinema-name="Cinestar Hai Bà Trưng" data-cinema-city="Hà Nội" onclick="selectCinema(4, 'Cinestar Hai Bà Trưng', 'Hà Nội', 'Tầng 5, Vincom Center, 191 Bà Triệu, Q. Hai Bà Trưng, Hà Nội')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-danger-subtle text-danger fw-bold border border-danger-subtle px-2 py-1">Hai Bà Trưng</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Hai Bà Trưng</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> Tầng 5, Vincom Center, 191 Bà Triệu, Q. Hai Bà Trưng, Hà Nội
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Màn chiếu 4K Laser, Sweetbox
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 5. Đống Đa -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="5" data-cinema-name="Cinestar Đống Đa" data-cinema-city="Hà Nội" onclick="selectCinema(5, 'Cinestar Đống Đa', 'Hà Nội', 'Tầng 5, Mipec Tower, 229 Tây Sơn, Q. Đống Đa, Hà Nội')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-danger-subtle text-danger fw-bold border border-danger-subtle px-2 py-1">Đống Đa</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Đống Đa</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> Tầng 5, Mipec Tower, 229 Tây Sơn, Q. Đống Đa, Hà Nội
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Trung tâm Ngã Tư Sở, 2D Digital
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tab TP.HCM (5 cơ sở: Quận 1, Quận 3, Quận 4, Quận 5, Quận 10) -->
+                    <div class="tab-pane fade" id="tab-content-hcm" role="tabpanel">
+                        <div class="d-flex flex-column gap-2">
+                            <!-- 6. Quận 1 -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="6" data-cinema-name="Cinestar Quận 1 (Hai Bà Trưng)" data-cinema-city="TP.HCM" onclick="selectCinema(6, 'Cinestar Quận 1 (Hai Bà Trưng)', 'TP.HCM', '135 Hai Bà Trưng, Phường Bến Nghé, Quận 1, TP.HCM')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-primary-subtle text-primary fw-bold border border-primary-subtle px-2 py-1">Quận 1</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Quận 1 (Hai Bà Trưng)</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> 135 Hai Bà Trưng, Phường Bến Nghé, Quận 1, TP.HCM
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Cụm rạp trung tâm Sài Gòn, Sweetbox
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 7. Quận 3 -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="7" data-cinema-name="Cinestar Quận 3 (Quốc Thanh)" data-cinema-city="TP.HCM" onclick="selectCinema(7, 'Cinestar Quận 3 (Quốc Thanh)', 'TP.HCM', '271 Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 3, TP.HCM')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-primary-subtle text-primary fw-bold border border-primary-subtle px-2 py-1">Quận 3</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Quận 3 (Quốc Thanh)</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> 271 Nguyễn Trãi, Phường Nguyễn Cư Trinh, Quận 3, TP.HCM
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Rạp Quốc Thanh nổi tiếng, Âm thanh vòm
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 8. Quận 4 -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="8" data-cinema-name="Cinestar Quận 4 (Gold View)" data-cinema-city="TP.HCM" onclick="selectCinema(8, 'Cinestar Quận 4 (Gold View)', 'TP.HCM', '346 Bến Vân Đồn, Phường 1, Quận 4, TP.HCM')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-primary-subtle text-primary fw-bold border border-primary-subtle px-2 py-1">Quận 4</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Quận 4 (Gold View)</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> 346 Bến Vân Đồn, Phường 1, Quận 4, TP.HCM (The Gold View)
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> View sông Bến Vân Đồn, Ghế VIP da
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 9. Quận 5 -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="9" data-cinema-name="Cinestar Quận 5 (Hùng Vương Plaza)" data-cinema-city="TP.HCM" onclick="selectCinema(9, 'Cinestar Quận 5 (Hùng Vương Plaza)', 'TP.HCM', '126 Hồng Bàng, Phường 12, Quận 5, TP.HCM')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-primary-subtle text-primary fw-bold border border-primary-subtle px-2 py-1">Quận 5</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Quận 5 (Hùng Vương Plaza)</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> 126 Hồng Bàng, Phường 12, Quận 5, TP.HCM
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Trung tâm Chợ Lớn sầm uất, 2D Digital
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- 10. Quận 10 -->
+                            <div class="cinema-option-card p-3 rounded-3 shadow-sm" data-cinema-id="10" data-cinema-name="Cinestar Quận 10 (Vạn Hạnh Mall)" data-cinema-city="TP.HCM" onclick="selectCinema(10, 'Cinestar Quận 10 (Vạn Hạnh Mall)', 'TP.HCM', 'Tầng 6, Vạn Hạnh Mall, 11 Sư Vạn Hạnh, Phường 12, Quận 10, TP.HCM')">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="flex-grow-1">
+                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                            <span class="badge bg-primary-subtle text-primary fw-bold border border-primary-subtle px-2 py-1">Quận 10</span>
+                                            <strong class="text-dark fs-6 cinema-name-title">Cinestar Quận 10 (Vạn Hạnh Mall)</strong>
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle" style="font-size: 0.7rem;"><i class="fa-solid fa-circle-check"></i> Đang mở cửa</span>
+                                        </div>
+                                        <div class="text-secondary small mb-1">
+                                            <i class="fa-solid fa-location-dot text-danger me-1"></i> Tầng 6, Vạn Hạnh Mall, 11 Sư Vạn Hạnh, Phường 12, Quận 10, TP.HCM
+                                        </div>
+                                        <div class="text-muted small">
+                                            <i class="fa-solid fa-phone text-secondary me-1"></i> Hotline: <strong>1900 6017</strong> • <i class="fa-solid fa-film text-secondary ms-1 me-1"></i> Siêu trung tâm Vạn Hạnh Mall, IMAX
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold cinema-choose-btn ms-3">
+                                        Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="modal-footer bg-white py-2 px-4 d-flex justify-content-between align-items-center">
+                <span class="text-muted small">
+                    <i class="fa-solid fa-shield-halved text-danger me-1"></i> Giá vé đồng nhất trên toàn hệ thống 10 cụm rạp Cinestar.
+                </span>
+                <button type="button" class="btn btn-secondary btn-sm rounded-pill px-4" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Toast Thông báo Đổi Rạp Thành Công -->
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index: 9999;">
+    <div id="cinemaToast" class="toast align-items-center text-white bg-danger border-0 shadow-lg rounded-3" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="d-flex">
+            <div class="toast-body d-flex align-items-center gap-2">
+                <i class="fa-solid fa-circle-check fs-5"></i>
+                <span id="cinemaToastMsg">Đã chọn cụm rạp thành công!</span>
+            </div>
+            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Logic Quản lý Chọn Địa chỉ Cụm Rạp (10 cơ sở: 5 HN, 5 HCM)
+    function getCinemaModal() {
+        const el = document.getElementById('cinemaSelectModal');
+        if (el && typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+            return bootstrap.Modal.getOrCreateInstance(el);
+        }
+        return null;
+    }
+
+    window.openCinemaModal = function() {
+        const modal = getCinemaModal();
+        if (modal) {
+            modal.show();
+        }
+    };
+
+    function updateCinemaUI(id, name, city) {
+        // Cập nhật Topbar
+        const topbarEl = document.getElementById('topbarCinemaName');
+        if (topbarEl) {
+            topbarEl.textContent = name + ' (' + city + ')';
+        }
+
+        // Cập nhật Navbar (Desktop & Mobile)
+        const navEl = document.getElementById('navCinemaName');
+        if (navEl) {
+            navEl.textContent = name;
+        }
+        const navMobEl = document.getElementById('navCinemaNameMobile');
+        if (navMobEl) {
+            navMobEl.textContent = name.replace('Cinestar ', '');
+        }
+
+        // Cập nhật Home Badge
+        const homeBadgeEl = document.getElementById('homeCinemaBadge');
+        if (homeBadgeEl) {
+            homeBadgeEl.textContent = 'Cụm rạp: ' + name + ' (' + city + ')';
+        }
+
+        // Highlight thẻ rạp trong modal
+        document.querySelectorAll('.cinema-option-card').forEach(card => {
+            const cardId = card.getAttribute('data-cinema-id');
+            const btn = card.querySelector('.cinema-choose-btn');
+            if (String(cardId) === String(id)) {
+                card.classList.add('selected-cinema');
+                if (btn) btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Đang chọn';
+            } else {
+                card.classList.remove('selected-cinema');
+                if (btn) btn.innerHTML = 'Chọn rạp <i class="fa-solid fa-chevron-right ms-1"></i>';
+            }
+        });
+
+        // Tự động chuyển tab tương ứng thành phố
+        if (city === 'TP.HCM') {
+            const hcmTabBtn = document.getElementById('tab-btn-hcm');
+            if (hcmTabBtn && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+                bootstrap.Tab.getOrCreateInstance(hcmTabBtn).show();
+            }
+        } else {
+            const hnTabBtn = document.getElementById('tab-btn-hanoi');
+            if (hnTabBtn && typeof bootstrap !== 'undefined' && bootstrap.Tab) {
+                bootstrap.Tab.getOrCreateInstance(hnTabBtn).show();
+            }
+        }
+    }
+
+    function selectCinema(id, name, city, address) {
+        try {
+            // Yêu cầu: Không lưu cơ sở khi đóng web -> dùng sessionStorage và session cookie
+            sessionStorage.setItem('selectedCinemaId', String(id));
+            sessionStorage.setItem('selectedCinemaName', name);
+            sessionStorage.setItem('selectedCinemaCity', city);
+            sessionStorage.setItem('selectedCinemaAddress', address || '');
+            sessionStorage.setItem('cinemaPromptDismissed', 'true');
+
+            // Xóa triệt để khỏi localStorage (để không lưu vĩnh viễn khi đóng web)
+            localStorage.removeItem('selectedCinemaId');
+            localStorage.removeItem('selectedCinemaName');
+            localStorage.removeItem('selectedCinemaCity');
+            localStorage.removeItem('selectedCinemaAddress');
+
+            // Ghi session cookie (không có max-age, tự hủy khi đóng trình duyệt)
+            document.cookie = "selectedCinemaId=" + id + "; path=/;";
+        } catch (e) {
+            console.warn(e);
+        }
+
+        updateCinemaUI(id, name, city);
+
+        const modalEl = document.getElementById('cinemaSelectModal');
+        const modal = getCinemaModal();
+        if (modal) {
+            modal.hide();
+        }
+
+        // Hiển thị toast thông báo
+        const toastEl = document.getElementById('cinemaToast');
+        const toastMsg = document.getElementById('cinemaToastMsg');
+        if (toastEl && toastMsg && typeof bootstrap !== 'undefined' && bootstrap.Toast) {
+            toastMsg.textContent = 'Bạn đã chọn cụm rạp: ' + name + ' (' + city + ')';
+            const toast = new bootstrap.Toast(toastEl, { delay: 3500 });
+            toast.show();
+        }
+
+        // Đợi modal đóng hoàn tất rồi mới tải lại trang (chống kẹt backdrop)
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function onHidden() {
+                modalEl.removeEventListener('hidden.bs.modal', onHidden);
+                window.location.reload();
+            }, { once: true });
+            setTimeout(() => {
+                window.location.reload();
+            }, 350);
+        } else {
+            window.location.reload();
+        }
+    }
+
+    // Yêu cầu: "hiện chọn cơ sở mỗi khi truy cập web, không lưu cơ sở khi đóng web"
+    document.addEventListener('DOMContentLoaded', function() {
+        // Dọn sạch dữ liệu cũ trong localStorage (nếu có từ các phiên trước)
+        try {
+            localStorage.removeItem('selectedCinemaId');
+            localStorage.removeItem('selectedCinemaName');
+            localStorage.removeItem('selectedCinemaCity');
+            localStorage.removeItem('selectedCinemaAddress');
+        } catch (e) {}
+
+        // Kiểm tra trong phiên hiện tại (sessionStorage)
+        const savedId = sessionStorage.getItem('selectedCinemaId');
+        const savedName = sessionStorage.getItem('selectedCinemaName');
+        const savedCity = sessionStorage.getItem('selectedCinemaCity');
+        const dismissed = sessionStorage.getItem('cinemaPromptDismissed');
+
+        // Gắn sự kiện: khi modal bị ẩn (do bấm Đóng, bấm ra ngoài hoặc ấn ESC), đánh dấu đã đóng để không popup lại liên tục
+        const modalEl = document.getElementById('cinemaSelectModal');
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function() {
+                sessionStorage.setItem('cinemaPromptDismissed', 'true');
+                // Tự động dọn sạch backdrop tồn đọng nếu không còn modal nào mở
+                setTimeout(() => {
+                    if (!document.querySelector('.modal.show')) {
+                        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                        document.body.classList.remove('modal-open');
+                        document.body.style.removeProperty('overflow');
+                        document.body.style.removeProperty('padding-right');
+                    }
+                }, 100);
+            });
+        }
+
+        // Không tự động popup trên các trang nội bộ/nghiệp vụ: staff, admin, manager, auth
+        const path = window.location.pathname;
+        const isRestrictedPath = path.startsWith('/staff') || path.startsWith('/admin') || path.startsWith('/manager') || path.startsWith('/auth');
+
+        if (savedId && savedName) {
+            // Đã chọn rạp trong phiên duyệt web hiện tại -> cập nhật hiển thị
+            updateCinemaUI(savedId, savedName, savedCity || 'Hà Nội');
+        } else if (!dismissed && !isRestrictedPath && path === '/') {
+            // Chỉ tự động hiện modal trên Trang chủ khi người dùng mới vào phiên web lần đầu
+            setTimeout(function() {
+                const modal = getCinemaModal();
+                if (modal) {
+                    modal.show();
+                }
+            }, 350);
+        }
+    });
+
+    // Dọn sạch backdrop mồ côi toàn cục khi bất kỳ modal nào đóng lại
+    document.addEventListener('hidden.bs.modal', function () {
+        setTimeout(function() {
+            if (!document.querySelector('.modal.show')) {
+                document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+                document.body.classList.remove('modal-open');
+                document.body.style.removeProperty('overflow');
+                document.body.style.removeProperty('padding-right');
+            }
+        }, 100);
+    });
+</script>

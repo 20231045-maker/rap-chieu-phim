@@ -1,0 +1,41 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện Báo cáo & Thống kê doanh thu;
+
+:Chọn khoảng thời gian thống kê (Hôm nay, 7 ngày, Tháng này, Tùy chọn);
+:Chọn tiêu chí phân tích:
+- Doanh thu theo phim chiếu
+- Doanh thu theo phòng chiếu
+- Doanh thu dịch vụ combo bắp nước F&B
+- Tỷ lệ lấp đầy ghế ngồi (Occupancy Rate);
+
+:Hệ thống truy vấn cơ sở dữ liệu tổng hợp:
+- Tổng số đơn vé thanh toán thành công (bookings.payment_status='paid')
+- Tổng số lượng vé đã phát hành
+- Tổng ghế khả dụng của các suất chiếu trong kỳ;
+
+:Tính toán các chỉ số kinh doanh:
+Doanh thu tổng = Tiền vé + Tiền bắp nước;
+Tỷ lệ lấp đầy = (Tổng vé đã bán / Tổng ghế khả dụng) * 100;
+
+:Trực quan hóa dữ liệu qua biểu đồ hình cột và tròn;
+:Hiển thị bảng chi tiết top các phim đạt doanh thu cao nhất;
+
+if () then ([Xuất báo cáo tài chính])
+    :Nhấn nút "Xuất file báo cáo";
+    :Tạo file định dạng Excel (.xlsx) hoặc PDF;
+    :Tải file báo cáo về máy quản lý;
+    stop
+else ([Xem trực tuyến])
+    stop
+endif
+
+@enduml

@@ -1,0 +1,75 @@
+    </main>
+
+    <!-- Footer (Giao diện sáng chuẩn Beta Cinemas & CGV) -->
+    <footer>
+        <div class="container">
+            <div class="row g-4 mb-4">
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="fw-bold d-flex align-items-center gap-2 mb-3 text-dark">
+                        <div class="bg-danger text-white rounded-2 px-2 py-1 fs-6">
+                            <i class="fa-solid fa-film"></i>
+                        </div>
+                        <span>CINE<span class="text-danger">STAR</span> CINEMA COMPLEX</span>
+                    </h5>
+                    <p class="small text-muted mb-3">
+                        Hệ thống cụm rạp chiếu phim hiện đại chuẩn quốc tế. Cung cấp trải nghiệm điện ảnh công nghệ đỉnh cao (IMAX Laser, Dolby Atmos) và hệ thống đặt vé trực tuyến 30 giây tiện lợi.
+                    </p>
+                    <div class="d-flex gap-3">
+                        <a href="#" class="btn btn-sm btn-light border rounded-circle text-primary"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" class="btn btn-sm btn-light border rounded-circle text-danger"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" class="btn btn-sm btn-light border rounded-circle text-dark"><i class="fa-brands fa-tiktok"></i></a>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6">
+                    <h6 class="fw-bold mb-3 text-dark text-uppercase" style="font-size: 0.9rem; letter-spacing: 0.5px;">ĐỒ ÁN CHUYÊN NGÀNH CÔNG NGHỆ PHẦN MỀM</h6>
+                    <ul class="list-unstyled small text-secondary">
+                        <li class="mb-2"><strong class="text-dark">Lớp học phần:</strong> Đồ án chuyên ngành CNPM-1-1-26(N05)</li>
+                        <li class="mb-2"><strong class="text-dark">Lớp hành chính:</strong> DCCNTT.14.3</li>
+                        <li class="mb-2"><strong class="text-danger fw-bold">Nhóm 11 - Sinh viên thực hiện:</strong></li>
+                        <li class="mb-1 ms-3"><i class="fa-solid fa-circle-check me-2 text-danger"></i> Nguyễn Mạnh Quyết (MSV: 20231053)</li>
+                        <li class="mb-1 ms-3"><i class="fa-solid fa-circle-check me-2 text-danger"></i> Hà Thái Bảo (MSV: 20231045)</li>
+                    </ul>
+                </div>
+
+                <div class="col-lg-4 col-md-12">
+                    <h6 class="fw-bold mb-3 text-dark text-uppercase" style="font-size: 0.9rem; letter-spacing: 0.5px;">TÀI KHOẢN MẪU ĐĂNG NHẬP (4 VAI TRÒ)</h6>
+                    <div class="card bg-white border p-3 small shadow-sm rounded-3">
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <div><span class="badge bg-danger me-1">Admin</span> <code class="text-dark">admin@cinema.com</code></div>
+                            <span class="badge bg-light text-secondary border">admin123</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <div><span class="badge bg-primary me-1">Manager</span> <code class="text-dark">manager@cinema.com</code></div>
+                            <span class="badge bg-light text-secondary border">manager123</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                            <div><span class="badge bg-warning text-dark me-1">Staff</span> <code class="text-dark">staff@cinema.com</code></div>
+                            <span class="badge bg-light text-secondary border">staff123</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div><span class="badge bg-success me-1">Client</span> <code class="text-dark">client@cinema.com</code></div>
+                            <span class="badge bg-light text-secondary border">client123</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom d-flex flex-column flex-md-row justify-content-between align-items-center gap-2">
+                <div>© 2026 CINESTAR CINEMA - Đồ Án Chuyên Ngành CNPM Nhóm 11. All rights reserved.</div>
+                <div class="d-flex gap-3 text-muted small">
+                    <span>Cơ sở dữ liệu: MySQL 8 (3NF)</span>
+                    <span>•</span>
+                    <span>Backend: Node.js & Express MVC</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Modal & Script Chọn Cụm Rạp (10 Cơ Sở Hà Nội & TP.HCM) -->
+    <%- include('../partials/cinema-modal') %>
+</body>
+</html>

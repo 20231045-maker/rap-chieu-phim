@@ -1,0 +1,25 @@
+<mxfile host="app.diagrams.net" modified="2026-10-13T16:00:00.000Z" agent="Antigravity" version="24.0.0">
+  <diagram id="UC_General" name="Biểu đồ Use Case tổng quát">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1654" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="sys_boundary" value="HỆ THỐNG ĐẶT VÉ VÀ QUẢN LÝ SUẤT CHIẾU CINESTAR" style="shape=rect;whiteSpace=wrap;html=1;verticalAlign=top;fontStyle=1;fontSize=14;strokeColor=#000000;fillColor=#ffffff;strokeWidth=2;" vertex="1" parent="1">
+          <mxGeometry x="380" y="60" width="860" height="980" as="geometry" />
+        </mxCell>
+        <mxCell id="act_client" value="Khách hàng&#xa;(Client)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="240" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="act_staff" value="Nhân viên quầy&#xa;(Staff)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="200" y="680" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="act_mgr" value="Quản lý rạp&#xa;(Manager)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="240" width="50" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="act_adm" value="Quản trị viên&#xa;(Admin)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;strokeColor=#000000;fillColor=#ffffff;strokeWidth=1.5;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="1380" y="680" width="50" height="100" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

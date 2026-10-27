@@ -1,0 +1,402 @@
+<%- include('../layouts/header') %>
+
+<!-- Hero Carousel Banner (Phong cách CGV & Beta Cinemas) -->
+<div class="container mt-4">
+    <div id="heroCarousel" class="carousel slide carousel-fade shadow-sm rounded-4 overflow-hidden" data-bs-ride="carousel" data-bs-interval="5000">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="3"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="4"></button>
+        </div>
+        <div class="carousel-inner" style="max-height: 480px;">
+            <!-- Slide 1: Đào, Phở và Piano -->
+            <div class="carousel-item active" data-bs-interval="5000">
+                <div style="background: linear-gradient(to right, rgba(15,23,42,0.92) 20%, rgba(15,23,42,0.35) 100%), url('/images/banners/banner-1.jpg?v=20261013_theatrical') center/cover no-repeat; height: 480px;" class="d-flex align-items-center position-relative">
+                    <div class="container px-md-5" style="position: relative; z-index: 10;">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <span class="badge bg-danger mb-2 px-3 py-2 text-uppercase fw-bold shadow-sm">
+                                    <i class="fa-solid fa-fire me-1"></i> Hiện Tượng Điện Ảnh Việt Nam
+                                </span>
+                                <h1 class="display-5 fw-extrabold text-white mb-2">Đào, Phở và Piano</h1>
+                                <p class="text-light opacity-90 mb-4" style="font-size: 1.05rem;">
+                                    Khắc họa tinh thần quật cường của quân dân Hà Nội trong 60 ngày đêm khói lửa mùa đông năm 1946 cùng thiên tình sử lãng mạn đầy xúc động.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2 gap-sm-3 position-relative" style="z-index: 20;">
+                                    <a href="/movies/1#showtimes" class="btn btn-danger px-3 px-sm-4 py-2 rounded-pill fw-bold shadow">
+                                        <i class="fa-solid fa-ticket me-1 me-sm-2"></i> Đặt Vé Ngay
+                                    </a>
+                                    <button class="btn btn-outline-light px-3 px-sm-4 py-2 rounded-pill fw-bold" onclick="openTrailerModal('https://www.youtube.com/embed/qn1t_biQigc', 'Đào, Phở và Piano')">
+                                        <i class="fa-solid fa-circle-play me-1 me-sm-2"></i> Xem Trailer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 2: Mai -->
+            <div class="carousel-item" data-bs-interval="5000">
+                <div style="background: linear-gradient(to right, rgba(15,23,42,0.92) 20%, rgba(15,23,42,0.35) 100%), url('/images/banners/banner-2.jpg?v=20261013_theatrical') center/cover no-repeat; height: 480px;" class="d-flex align-items-center position-relative">
+                    <div class="container px-md-5" style="position: relative; z-index: 10;">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <span class="badge bg-warning text-dark mb-2 px-3 py-2 text-uppercase fw-bold shadow-sm">
+                                    <i class="fa-solid fa-trophy me-1"></i> Kỷ Lục Phòng Vé 520 Tỷ VNĐ
+                                </span>
+                                <h1 class="display-5 fw-extrabold text-white mb-2">Mai</h1>
+                                <p class="text-light opacity-90 mb-4" style="font-size: 1.05rem;">
+                                    Bộ phim điện ảnh ăn khách nhất lịch sử rạp Việt của đạo diễn Trấn Thành. Trải nghiệm hình ảnh chân thực với âm thanh Dolby Atmos.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2 gap-sm-3 position-relative" style="z-index: 20;">
+                                    <a href="/movies/2#showtimes" class="btn btn-danger px-3 px-sm-4 py-2 rounded-pill fw-bold shadow">
+                                        <i class="fa-solid fa-ticket me-1 me-sm-2"></i> Đặt Vé Ngay
+                                    </a>
+                                    <button class="btn btn-outline-light px-3 px-sm-4 py-2 rounded-pill fw-bold" onclick="openTrailerModal('https://www.youtube.com/embed/EX6clvId19s', 'Mai')">
+                                        <i class="fa-solid fa-circle-play me-1 me-sm-2"></i> Xem Trailer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 3: Lật Mặt 7 -->
+            <div class="carousel-item" data-bs-interval="5000">
+                <div style="background: linear-gradient(to right, rgba(15,23,42,0.92) 20%, rgba(15,23,42,0.35) 100%), url('/images/banners/banner-3.jpg?v=20261013_theatrical') center/cover no-repeat; height: 480px;" class="d-flex align-items-center position-relative">
+                    <div class="container px-md-5" style="position: relative; z-index: 10;">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <span class="badge bg-primary mb-2 px-3 py-2 text-uppercase fw-bold shadow-sm">
+                                    <i class="fa-solid fa-heart me-1"></i> Tuyệt Phẩm Tình Cảm Gia Đình
+                                </span>
+                                <h1 class="display-5 fw-extrabold text-white mb-2">Lật Mặt 7: Một Điều Ước</h1>
+                                <p class="text-light opacity-90 mb-4" style="font-size: 1.05rem;">
+                                    Tác phẩm chạm đến trái tim hàng triệu khán giả của đạo diễn Lý Hải. Đặt vé ghế VIP & Sweetbox cùng gia đình thưởng thức ngay hôm nay.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2 gap-sm-3 position-relative" style="z-index: 20;">
+                                    <a href="/movies/3#showtimes" class="btn btn-danger px-3 px-sm-4 py-2 rounded-pill fw-bold shadow">
+                                        <i class="fa-solid fa-ticket me-1 me-sm-2"></i> Đặt Vé Ngay
+                                    </a>
+                                    <button class="btn btn-outline-light px-3 px-sm-4 py-2 rounded-pill fw-bold" onclick="openTrailerModal('https://www.youtube.com/embed/0J51aUryra4', 'Lật Mặt 7: Một Điều Ước')">
+                                        <i class="fa-solid fa-circle-play me-1 me-sm-2"></i> Xem Trailer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 4: Nhà Bà Nữ -->
+            <div class="carousel-item" data-bs-interval="5000">
+                <div style="background: linear-gradient(to right, rgba(15,23,42,0.92) 20%, rgba(15,23,42,0.35) 100%), url('/images/banners/banner-4.jpg?v=20261013_theatrical') center/cover no-repeat; height: 480px;" class="d-flex align-items-center position-relative">
+                    <div class="container px-md-5" style="position: relative; z-index: 10;">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <span class="badge bg-danger mb-2 px-3 py-2 text-uppercase fw-bold shadow-sm">
+                                    <i class="fa-solid fa-trophy me-1"></i> Doanh Thu Phòng Vé 475 Tỷ VNĐ
+                                </span>
+                                <h1 class="display-5 fw-extrabold text-white mb-2">Nhà Bà Nữ</h1>
+                                <p class="text-light opacity-90 mb-4" style="font-size: 1.05rem;">
+                                    Câu chuyện gia đình đa thế hệ đầy kịch tính và cảm xúc của đạo diễn Trấn Thành, chạm vào góc khuất tâm lý của hàng triệu người xem.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2 gap-sm-3 position-relative" style="z-index: 20;">
+                                    <a href="/movies/4#showtimes" class="btn btn-danger px-3 px-sm-4 py-2 rounded-pill fw-bold shadow">
+                                        <i class="fa-solid fa-ticket me-1 me-sm-2"></i> Đặt Vé Ngay
+                                    </a>
+                                    <button class="btn btn-outline-light px-3 px-sm-4 py-2 rounded-pill fw-bold" onclick="openTrailerModal('https://www.youtube.com/embed/rG_5c82gQZg', 'Nhà Bà Nữ')">
+                                        <i class="fa-solid fa-circle-play me-1 me-sm-2"></i> Xem Trailer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 5: Bố Già -->
+            <div class="carousel-item" data-bs-interval="5000">
+                <div style="background: linear-gradient(to right, rgba(15,23,42,0.92) 20%, rgba(15,23,42,0.35) 100%), url('/images/banners/banner-5.jpg?v=20261013_theatrical') center/cover no-repeat; height: 480px;" class="d-flex align-items-center position-relative">
+                    <div class="container px-md-5" style="position: relative; z-index: 10;">
+                        <div class="row">
+                            <div class="col-lg-7">
+                                <span class="badge bg-warning text-dark mb-2 px-3 py-2 text-uppercase fw-bold shadow-sm">
+                                    <i class="fa-solid fa-award me-1"></i> Tuyệt Tác Cảm Xúc Gia Đình
+                                </span>
+                                <h1 class="display-5 fw-extrabold text-white mb-2">Bố Già</h1>
+                                <p class="text-light opacity-90 mb-4" style="font-size: 1.05rem;">
+                                    Bộ phim điện ảnh lấy đi nước mắt của hàng triệu khán giả về tình phụ tử sâu sắc nơi con hẻm lao động nghèo giữa lòng Sài Gòn.
+                                </p>
+                                <div class="d-flex flex-wrap gap-2 gap-sm-3 position-relative" style="z-index: 20;">
+                                    <a href="/movies/5#showtimes" class="btn btn-danger px-3 px-sm-4 py-2 rounded-pill fw-bold shadow">
+                                        <i class="fa-solid fa-ticket me-1 me-sm-2"></i> Đặt Vé Ngay
+                                    </a>
+                                    <button class="btn btn-outline-light px-3 px-sm-4 py-2 rounded-pill fw-bold" onclick="openTrailerModal('https://www.youtube.com/embed/jluSu8Rw6YE', 'Bố Già')">
+                                        <i class="fa-solid fa-circle-play me-1 me-sm-2"></i> Xem Trailer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+</div>
+
+<!-- Container Nội dung chính -->
+<div class="container my-5">
+    <!-- Suất chiếu hôm nay (Quick Showtimes Section - Chuẩn Beta / CGV) -->
+    <% if (todayShowtimes && todayShowtimes.length > 0) { %>
+        <div class="card border-0 p-4 mb-5 rounded-4 shadow-sm bg-white">
+            <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-3">
+                <div class="d-flex align-items-center gap-2">
+                    <div class="bg-danger-subtle text-danger p-2 rounded-circle d-flex align-items-center justify-content-center" style="width: 38px; height: 38px;">
+                        <i class="fa-solid fa-bolt fs-5"></i>
+                    </div>
+                    <div>
+                        <h5 class="fw-bold text-dark mb-0">Suất Chiếu Nhanh Hôm Nay</h5>
+                        <div class="small text-muted"><%= todayStr %> • <span id="homeCinemaBadge" class="text-danger fw-semibold"><%= (typeof currentCinema !== 'undefined' && currentCinema) ? ('Cụm rạp: ' + currentCinema.name + ' (' + currentCinema.city + ')') : 'Hệ thống 10 Cụm Rạp Toàn Quốc' %></span></div>
+                    </div>
+                </div>
+                <a href="/movies" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                    Xem tất cả lịch chiếu <i class="fa-solid fa-angle-right ms-1"></i>
+                </a>
+            </div>
+            <div class="row g-3">
+                <% todayShowtimes.forEach(st => { %>
+                    <div class="col-6 col-md-4 col-lg-3 col-xl-2">
+                        <a href="/booking/seats/<%= st.id %>" class="showtime-pill h-100 shadow-sm">
+                            <div class="fw-bold text-dark small text-truncate w-100 text-center mb-1"><%= st.movie_title %></div>
+                            <div class="d-flex align-items-center justify-content-center gap-2 mt-1">
+                                <span class="badge bg-danger fs-6 px-2 py-1"><%= formatTime(st.start_time) %></span>
+                                <span class="badge bg-light text-secondary border" style="font-size: 0.7rem;"><%= st.screen_type %></span>
+                            </div>
+                            <div class="text-danger fw-semibold mt-1 text-truncate w-100 text-center" style="font-size: 0.72rem;"><i class="fa-solid fa-location-dot me-1"></i><%= st.cinema_name ? st.cinema_name.replace('Cinestar ', '') : '' %></div>
+                            <div class="text-muted text-truncate w-100 text-center" style="font-size: 0.68rem;"><%= st.room_name %></div>
+                        </a>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    <% } %>
+
+    <!-- Tabs Phim Đang Chiếu vs Phim Sắp Chiếu (Chuẩn Beta Cinemas & CGV) -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <ul class="nav nav-pills nav-pills-cinema gap-2" id="movieTab" role="tablist">
+            <li class="nav-item">
+                <button class="nav-link active px-4 py-2" id="now-showing-tab" data-bs-toggle="pill" data-bs-target="#now-showing">
+                    <i class="fa-solid fa-film me-2"></i> PHIM ĐANG CHIẾU (<%= nowShowing.length %>)
+                </button>
+            </li>
+            <li class="nav-item">
+                <button class="nav-link px-4 py-2" id="coming-soon-tab" data-bs-toggle="pill" data-bs-target="#coming-soon">
+                    <i class="fa-solid fa-hourglass-half me-2"></i> PHIM SẮP CHIẾU (<%= comingSoon.length %>)
+                </button>
+            </li>
+        </ul>
+        <a href="/movies" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-semibold">
+            Xem toàn bộ kho phim <i class="fa-solid fa-arrow-right ms-1"></i>
+        </a>
+    </div>
+
+    <div class="tab-content" id="movieTabContent">
+        <!-- Tab 1: Phim Đang Chiếu -->
+        <div class="tab-pane fade show active" id="now-showing">
+            <div class="row g-4">
+                <% nowShowing.forEach(movie => { %>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="movie-card">
+                            <div class="movie-poster-wrap">
+                                <img src="<%= movie.poster_url %>?v=20261013_theatrical" alt="<%= movie.title %>" class="movie-poster" loading="lazy">
+                                <span class="badge-rating rating-<%= movie.age_rating %>"><%= movie.age_rating %></span>
+                                <% if (movie.trailer_url) { %>
+                                    <button class="btn-play-trailer" onclick="openTrailerModal('<%= movie.trailer_url %>', '<%= movie.title %>')" title="Xem Trailer <%= movie.title %>">
+                                        <i class="fa-solid fa-play"></i>
+                                    </button>
+                                <% } %>
+                            </div>
+                            <div class="movie-content">
+                                <h6 class="movie-title" title="<%= movie.title %>"><%= movie.title %></h6>
+                                <div class="movie-meta">
+                                    <div><i class="fa-regular fa-clock me-1 text-danger"></i> <%= movie.duration %> phút</div>
+                                    <div class="text-truncate"><i class="fa-solid fa-tag me-1 text-primary"></i> <%= movie.genre %></div>
+                                </div>
+                                <div class="mt-auto d-flex gap-2">
+                                    <a href="/movies/<%= movie.id %>" class="btn btn-outline-secondary btn-sm rounded-pill flex-grow-1 fw-semibold">
+                                        Chi tiết
+                                    </a>
+                                    <a href="/movies/<%= movie.id %>" class="btn btn-danger btn-sm rounded-pill flex-grow-1 fw-bold shadow-sm">
+                                        <i class="fa-solid fa-ticket me-1"></i> Mua vé
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+
+        <!-- Tab 2: Phim Sắp Chiếu -->
+        <div class="tab-pane fade" id="coming-soon">
+            <div class="row g-4">
+                <% comingSoon.forEach(movie => { %>
+                    <div class="col-6 col-md-4 col-lg-3">
+                        <div class="movie-card">
+                            <div class="movie-poster-wrap">
+                                <img src="<%= movie.poster_url %>?v=20261013_theatrical" alt="<%= movie.title %>" class="movie-poster" loading="lazy">
+                                <span class="badge-rating rating-<%= movie.age_rating %>"><%= movie.age_rating %></span>
+                                <% if (movie.trailer_url) { %>
+                                    <button class="btn-play-trailer" onclick="openTrailerModal('<%= movie.trailer_url %>', '<%= movie.title %>')" title="Xem Trailer <%= movie.title %>">
+                                        <i class="fa-solid fa-play"></i>
+                                    </button>
+                                <% } %>
+                            </div>
+                            <div class="movie-content">
+                                <h6 class="movie-title" title="<%= movie.title %>"><%= movie.title %></h6>
+                                <div class="movie-meta">
+                                    <div><i class="fa-regular fa-calendar-days me-1 text-info"></i> Khởi chiếu: <%= movie.release_date %></div>
+                                    <div class="text-truncate"><i class="fa-solid fa-tag me-1 text-primary"></i> <%= movie.genre %></div>
+                                </div>
+                                <div class="mt-auto">
+                                    <a href="/movies/<%= movie.id %>" class="btn btn-outline-danger w-100 rounded-pill btn-sm fw-bold">
+                                        <i class="fa-solid fa-circle-info me-1"></i> Thông Tin Chi Tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Giới thiệu Dịch Vụ Rạp Chuẩn Quốc Tế -->
+    <div class="row g-4 mt-5 pt-4 border-top">
+        <div class="col-md-3 text-center">
+            <div class="card p-4 border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="bg-danger-subtle text-danger rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
+                    <i class="fa-solid fa-tv fs-4"></i>
+                </div>
+                <h6 class="fw-bold text-dark">Phòng Chiếu IMAX Laser</h6>
+                <p class="text-muted small mb-0">Màn chiếu khổng lồ uốn cong, độ phân giải sắc nét cùng công nghệ hình ảnh đỉnh cao.</p>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card p-4 border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="bg-warning-subtle text-warning rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
+                    <i class="fa-solid fa-volume-high fs-4"></i>
+                </div>
+                <h6 class="fw-bold text-dark">Dolby Atmos Đa Chiều</h6>
+                <p class="text-muted small mb-0">Hệ thống loa vòm đa tầng sống động mang lại cảm giác chân thực trong từng cảnh phim.</p>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card p-4 border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="bg-info-subtle text-info rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
+                    <i class="fa-solid fa-qrcode fs-4"></i>
+                </div>
+                <h6 class="fw-bold text-dark">Vé Điện Tử QR Code</h6>
+                <p class="text-muted small mb-0">Đặt vé trực tuyến 30 giây, quét mã QR vào thẳng phòng chiếu không cần xếp hàng đổi vé.</p>
+            </div>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="card p-4 border-0 shadow-sm rounded-4 h-100 bg-white">
+                <div class="bg-success-subtle text-success rounded-circle d-inline-flex align-items-center justify-content-center mb-3 mx-auto" style="width: 60px; height: 60px;">
+                    <i class="fa-solid fa-burger fs-4"></i>
+                </div>
+                <h6 class="fw-bold text-dark">Bắp Nước Hảo Hạng</h6>
+                <p class="text-muted small mb-0">Đa dạng hương vị bắp rang bơ, bắp phô mai, caramel thơm lừng kết hợp thức uống mát lạnh.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Trailer Popup Toàn Cục -->
+<div class="modal fade" id="globalTrailerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header bg-white py-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-brands fa-youtube text-danger fs-5"></i>
+                    <h6 class="modal-title fw-bold text-dark mb-0" id="globalTrailerTitle">Trailer Chính Thức</h6>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a id="globalTrailerDirectLink" href="#" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold">
+                        <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Xem trên YouTube
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+            </div>
+            <div class="modal-body p-0 bg-black">
+                <div class="ratio ratio-16x9">
+                    <iframe id="globalTrailerIframe" src="" title="Trailer Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="p-2 bg-dark text-white-50 text-center small border-top border-secondary">
+                    <i class="fa-solid fa-circle-info me-1 text-warning"></i>
+                    Nếu video không phát được trong khung, vui lòng bấm <strong class="text-white">"Xem trên YouTube"</strong> ở góc phải trên.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTrailerModal(urlOrId, title) {
+        if (!urlOrId) return;
+        let videoId = '';
+        
+        if (urlOrId.includes('watch?v=')) {
+            videoId = urlOrId.split('watch?v=')[1].split('&')[0];
+        } else if (urlOrId.includes('embed/')) {
+            videoId = urlOrId.split('embed/')[1].split('?')[0];
+        } else if (urlOrId.includes('youtu.be/')) {
+            videoId = urlOrId.split('youtu.be/')[1].split('?')[0];
+        } else if (!urlOrId.startsWith('http')) {
+            videoId = urlOrId.trim();
+        }
+
+        const embedUrl = videoId ? ('https://www.youtube-nocookie.com/embed/' + videoId) : urlOrId;
+        const watchUrl = videoId ? ('https://www.youtube.com/watch?v=' + videoId) : urlOrId;
+
+        document.getElementById('globalTrailerTitle').innerText = 'Trailer: ' + (title || 'Chính Thức');
+        document.getElementById('globalTrailerDirectLink').href = watchUrl;
+        document.getElementById('globalTrailerIframe').src = embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1&rel=0&enablejsapi=1';
+
+        const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('globalTrailerModal'));
+        modal.show();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalEl = document.getElementById('globalTrailerModal');
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function() {
+                document.getElementById('globalTrailerIframe').src = '';
+            });
+        }
+
+        // Tự động chuyển phim nổi bật sau đúng 5 giây (5000ms)
+        const heroEl = document.getElementById('heroCarousel');
+        if (heroEl && typeof bootstrap !== 'undefined' && bootstrap.Carousel) {
+            const heroCarousel = new bootstrap.Carousel(heroEl, {
+                interval: 5000,
+                ride: 'carousel',
+                wrap: true
+            });
+            heroCarousel.cycle();
+        }
+    });
+</script>
+
+<%- include('../layouts/footer') %>

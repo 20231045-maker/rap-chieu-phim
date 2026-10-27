@@ -1,0 +1,72 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="text-white fw-bold mb-1">Quản Lý Danh Mục Phim</h4>
+        <p class="text-secondary small mb-0">Thêm, sửa, xóa và cập nhật trạng thái các bộ phim chiếu rạp</p>
+    </div>
+    <a href="/manager/movies/create" class="btn btn-danger rounded-pill px-4">
+        <i class="fa-solid fa-plus me-1"></i> Thêm Phim Mới
+    </a>
+</div>
+
+<div class="card bg-card border-secondary rounded-4 shadow overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-dark table-borderless align-middle mb-0">
+            <thead>
+                <tr class="border-bottom border-secondary text-secondary small">
+                    <th style="width: 80px;">POSTER</th>
+                    <th>TÊN PHIM</th>
+                    <th>THỂ LOẠI</th>
+                    <th>THỜI LƯỢNG</th>
+                    <th>ĐỘ TUỔI</th>
+                    <th>KHỞI CHIẾU</th>
+                    <th>TRẠNG THÁI</th>
+                    <th class="text-end">THAO TÁC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (movies && movies.length > 0) { %>
+                    <% movies.forEach(m => { %>
+                        <tr class="border-bottom border-secondary border-opacity-25">
+                            <td>
+                                <img src="<%= m.poster_url %>?v=20261013_theatrical" alt="<%= m.title %>" class="rounded" style="width: 50px; height: 70px; object-fit: cover;">
+                            </td>
+                            <td>
+                                <div class="fw-bold text-white"><%= m.title %></div>
+                                <div class="small text-secondary"><%= m.original_title %></div>
+                            </td>
+                            <td class="small text-secondary"><%= m.genre %></td>
+                            <td class="small text-secondary"><%= m.duration %> phút</td>
+                            <td><span class="badge-rating rating-<%= m.age_rating %> position-static"><%= m.age_rating %></span></td>
+                            <td class="small text-secondary"><%= m.release_date %></td>
+                            <td>
+                                <% if (m.status === 'now_showing') { %>
+                                    <span class="badge bg-success">Đang chiếu</span>
+                                <% } else if (m.status === 'coming_soon') { %>
+                                    <span class="badge bg-primary">Sắp chiếu</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">Ngừng chiếu</span>
+                                <% } %>
+                            </td>
+                            <td class="text-end">
+                                <a href="/manager/movies/edit/<%= m.id %>" class="btn btn-outline-warning btn-sm me-1" title="Sửa phim">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <form action="/manager/movies/delete/<%= m.id %>" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa bộ phim này?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Xóa phim">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr><td colspan="8" class="text-center text-secondary py-4">Chưa có bộ phim nào trong danh mục</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../layouts/admin-footer') %>

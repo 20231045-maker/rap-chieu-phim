@@ -1,0 +1,46 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="card bg-card border-secondary p-4 rounded-4 shadow mb-4">
+    <div class="border-bottom border-secondary pb-3 mb-4">
+        <h4 class="text-white fw-bold mb-1">Cấu Hình Toàn Bộ Hệ Thống Rạp</h4>
+        <p class="text-secondary small mb-0">Thiết lập các thông số hoạt động, quy định thời gian đệm và giữ chỗ</p>
+    </div>
+
+    <form action="/admin/settings" method="POST">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Tên cụm rạp</label>
+                <input type="text" name="cinema_name" class="form-control bg-dark border-secondary text-white" value="<%= settings.cinema_name || 'CINESTAR CINEMA COMPLEX' %>" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Hotline liên hệ</label>
+                <input type="text" name="hotline" class="form-control bg-dark border-secondary text-white" value="<%= settings.hotline || '1900 6868' %>">
+            </div>
+
+            <div class="col-12">
+                <label class="form-label text-light small fw-bold">Địa chỉ rạp chiếu</label>
+                <input type="text" name="address" class="form-control bg-dark border-secondary text-white" value="<%= settings.address || '' %>">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Thời gian đệm dọn dẹp & vệ sinh phòng chiếu (Phút)</label>
+                <input type="number" name="buffer_time" class="form-control bg-dark border-secondary text-white" min="5" max="60" value="<%= settings.buffer_time || '15' %>" required>
+                <div class="form-text text-secondary small">Dùng cho Thuật toán kiểm tra xung đột suất chiếu [Start, End + Buffer].</div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Thời gian khóa giữ ghế tạm thời khi thanh toán (Phút)</label>
+                <input type="number" name="seat_lock_time" class="form-control bg-dark border-secondary text-white" min="1" max="15" value="<%= settings.seat_lock_time || '5' %>" required>
+                <div class="form-text text-secondary small">Dùng cho Kỹ thuật khóa giữ ghế tạm thời (Race Condition Prevention).</div>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-top border-secondary text-end">
+            <button type="submit" class="btn btn-danger rounded-pill px-4 fw-bold">
+                <i class="fa-solid fa-floppy-disk me-1"></i> Lưu Cấu Hình Hệ Thống
+            </button>
+        </div>
+    </form>
+</div>
+
+<%- include('../layouts/admin-footer') %>

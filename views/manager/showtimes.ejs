@@ -1,0 +1,102 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="text-white fw-bold mb-1">Quản Lý Suất Chiếu & Xếp Lịch</h4>
+        <p class="text-secondary small mb-0">Hệ thống tự động kiểm tra xung đột giờ chiếu và thời gian đệm dọn phòng</p>
+    </div>
+    <a href="/manager/showtimes/create" class="btn btn-danger rounded-pill px-4">
+        <i class="fa-solid fa-calendar-plus me-1"></i> Xếp Lịch Suất Chiếu Mới
+    </a>
+</div>
+
+<!-- Lọc theo ngày -->
+<div class="card bg-card border-secondary p-3 rounded-4 shadow mb-4">
+    <form action="/manager/showtimes" method="GET" class="row g-2 align-items-center">
+        <div class="col-auto">
+            <span class="text-secondary small fw-bold">Lọc theo ngày:</span>
+        </div>
+        <div class="col-auto">
+            <input type="date" name="date" class="form-control form-control-sm bg-dark border-secondary text-white" value="<%= filterDate %>">
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-outline-light btn-sm rounded-pill px-3">Lọc</button>
+            <% if (filterDate) { %>
+                <a href="/manager/showtimes" class="btn btn-outline-secondary btn-sm rounded-pill px-3">Xem tất cả</a>
+            <% } %>
+        </div>
+    </form>
+</div>
+
+<!-- Bảng Suất Chiếu -->
+<div class="card bg-card border-secondary rounded-4 shadow overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-dark table-borderless align-middle mb-0">
+            <thead>
+                <tr class="border-bottom border-secondary text-secondary small">
+                    <th>ID</th>
+                    <th>TÊN PHIM</th>
+                    <th>PHÒNG CHIẾU</th>
+                    <th>BẮT ĐẦU</th>
+                    <th>KẾT THÚC (+ĐỆM)</th>
+                    <th>GIÁ VÉ GỐC</th>
+                    <th>VÉ ĐÃ BÁN</th>
+                    <th>TRẠNG THÁI</th>
+                    <th class="text-end">THAO TÁC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (showtimes && showtimes.length > 0) { %>
+                    <% showtimes.forEach(st => { %>
+                        <tr class="border-bottom border-secondary border-opacity-25">
+                            <td class="text-secondary">#<%= st.id %></td>
+                            <td>
+                                <strong class="text-white"><%= st.movie_title %></strong>
+                                <div class="small text-secondary"><%= st.duration %> phút</div>
+                            </td>
+                            <td>
+                                <div class="text-white"><%= st.room_name %></div>
+                                <span class="badge bg-secondary" style="font-size: 0.65rem;"><%= st.screen_type %></span>
+                            </td>
+                            <td><span class="badge bg-danger fs-6"><%= formatDateTime(st.start_time) %></span></td>
+                            <td class="small text-secondary"><%= formatDateTime(st.end_time) %></td>
+                            <td class="text-warning fw-bold"><%= Number(st.base_price).toLocaleString('vi-VN') %> đ</td>
+                            <td>
+                                <span class="badge bg-dark border border-secondary text-white">
+                                    <%= st.booked_seats %> / <%= st.total_seats %> vé
+                                </span>
+                            </td>
+                            <td>
+                                <% if (st.status === 'scheduled') { %>
+                                    <span class="badge bg-success">Đang mở bán</span>
+                                <% } else if (st.status === 'cancelled') { %>
+                                    <span class="badge bg-danger">Đã hủy</span>
+                                <% } else { %>
+                                    <span class="badge bg-secondary">Hoàn tất</span>
+                                <% } %>
+                            </td>
+                            <td class="text-end">
+                                <% if (st.status === 'scheduled') { %>
+                                    <form action="/manager/showtimes/cancel/<%= st.id %>" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn hủy suất chiếu này?');">
+                                        <button type="submit" class="btn btn-outline-warning btn-sm" title="Hủy suất chiếu">
+                                            <i class="fa-solid fa-ban"></i>
+                                        </button>
+                                    </form>
+                                <% } %>
+                                <form action="/manager/showtimes/delete/<%= st.id %>" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa hẳn suất chiếu này?');">
+                                    <button type="submit" class="btn btn-outline-danger btn-sm" title="Xóa suất chiếu">
+                                        <i class="fa-solid fa-trash-can"></i>
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr><td colspan="9" class="text-center text-secondary py-4">Không có suất chiếu nào phù hợp</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../layouts/admin-footer') %>

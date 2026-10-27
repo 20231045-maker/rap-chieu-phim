@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện quản lý thông tin tài khoản;
+
+if () then ([Sửa thông tin cá nhân])
+    :Giao diện sửa thông tin cá nhân;
+    repeat
+        :Nhập họ tên, số điện thoại, ảnh đại diện;
+        :Nhấn nút "Lưu thay đổi";
+    repeat while (Kiểm tra định dạng dữ liệu?) is (Thất bại) not (Thành công)
+    :Cập nhật thông tin thành công;
+else ([Đổi mật khẩu])
+    :Giao diện đổi mật khẩu;
+    repeat
+        :Nhập mật khẩu cũ, mật khẩu mới, xác nhận mật khẩu;
+        :Nhấn nút "Đổi mật khẩu";
+    repeat while (Khớp mật khẩu cũ & mật khẩu mới hợp lệ?) is (Thất bại) not (Thành công)
+    :Cập nhật mật khẩu mới thành công;
+endif
+
+stop
+
+@enduml

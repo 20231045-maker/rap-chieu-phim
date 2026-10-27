@@ -1,0 +1,160 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 11
+skinparam linetype ortho
+skinparam roundCorner 0
+skinparam dpi 300
+skinparam classAttributeIconSize 0
+
+title BIỂU ĐỒ LỚP KIẾN TRÚC MVC - PHÂN HỆ MODEL & THỰC THỂ CSDL
+
+class Role {
+  + id: Integer
+  + name: String
+  + display_name: String
+  + description: String
+  + getAll(): List<Role>
+  + getById(id): Role
+}
+
+class User {
+  + id: Integer
+  + role_id: Integer
+  + full_name: String
+  + email: String
+  + phone: String
+  + password_hash: String
+  + status: String
+  + created_at: DateTime
+  + findByEmail(email): User
+  + create(userData): Integer
+  + update(id, userData): Boolean
+  + checkPassword(plain, hash): Boolean
+}
+
+class Movie {
+  + id: Integer
+  + title: String
+  + original_title: String
+  + genre: String
+  + duration: Integer
+  + release_date: Date
+  + age_rating: String
+  + director: String
+  + status: String
+  + getNowShowing(): List<Movie>
+  + getComingSoon(): List<Movie>
+  + getById(id): Movie
+  + create(movieData): Integer
+  + update(id, movieData): Boolean
+}
+
+class Room {
+  + id: Integer
+  + room_name: String
+  + screen_type: String
+  + total_rows: Integer
+  + seats_per_row: Integer
+  + total_seats: Integer
+  + status: String
+  + getAll(): List<Room>
+  + getById(id): Room
+  + getSeats(roomId): List<Seat>
+}
+
+class Seat {
+  + id: Integer
+  + room_id: Integer
+  + seat_row: String
+  + seat_number: Integer
+  + seat_code: String
+  + seat_type: String
+  + price_multiplier: Float
+  + status: String
+  + getByRoom(roomId): List<Seat>
+  + updateType(seatId, type): Boolean
+}
+
+class Showtime {
+  + id: Integer
+  + movie_id: Integer
+  + room_id: Integer
+  + start_time: DateTime
+  + end_time: DateTime
+  + buffer_minutes: Integer
+  + base_price: Integer
+  + status: String
+  + getByDate(date): List<Showtime>
+  + getDetail(id): Showtime
+  + create(showtimeData): Integer
+}
+
+class SeatLock {
+  + id: Integer
+  + showtime_id: Integer
+  + seat_id: Integer
+  + session_id: String
+  + user_id: Integer
+  + expires_at: DateTime
+  + lockSeats(showtimeId, seatIds, sessionId, minutes): Result
+  + isSeatAvailable(showtimeId, seatId): Boolean
+  + releaseSession(showtimeId, sessionId): Boolean
+  + cleanExpiredLocks(): Integer
+}
+
+class Booking {
+  + id: Integer
+  + booking_code: String
+  + user_id: Integer
+  + showtime_id: Integer
+  + total_amount: Integer
+  + payment_method: String
+  + payment_status: String
+  + booking_status: String
+  + booking_type: String
+  + create(bookingData): Integer
+  + getById(id): Booking
+  + getDashboardStats(): Object
+}
+
+class Ticket {
+  + id: Integer
+  + ticket_code: String
+  + booking_id: Integer
+  + showtime_id: Integer
+  + seat_id: Integer
+  + price: Integer
+  + qr_data: String
+  + status: String
+  + checked_in_at: DateTime
+  + checked_in_by: Integer
+  + createTickets(bookingId, tickets): Boolean
+  + checkIn(ticketCode, staffId): Result
+  + getByBooking(bookingId): List<Ticket>
+}
+
+class Combo {
+  + id: Integer
+  + name: String
+  + description: String
+  + price: Integer
+  + status: String
+  + getAllActive(): List<Combo>
+}
+
+Role "1" -- "0..*" User : has
+User "1" -- "0..*" Booking : places
+Movie "1" -- "0..*" Showtime : schedules
+Room "1" -- "0..*" Showtime : hosts
+Room "1" -- "1..*" Seat : contains
+Showtime "1" -- "0..*" Booking : reserves
+Showtime "1" -- "0..*" SeatLock : locks
+Showtime "1" -- "0..*" Ticket : issues
+Seat "1" -- "0..*" SeatLock : targets
+Seat "1" -- "0..*" Ticket : assigns
+Booking "1" -- "1..*" Ticket : includes
+Booking "0..*" -- "0..*" Combo : orders
+
+@enduml

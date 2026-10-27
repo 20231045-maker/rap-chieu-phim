@@ -1,0 +1,68 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-4 mb-5">
+    <div class="card bg-white border-0 p-4 rounded-4 shadow-sm mb-4">
+        <h4 class="text-dark fw-bold mb-1 d-flex align-items-center gap-2">
+            <i class="fa-solid fa-ticket text-danger"></i>
+            <span>LỊCH SỬ ĐẶT VÉ CỦA TÔI</span>
+        </h4>
+        <p class="text-muted small mb-0">Quản lý các vé xem phim đã đặt và xuất trình mã QR vào phòng chiếu</p>
+    </div>
+
+    <% if (bookings && bookings.length > 0) { %>
+        <div class="row g-4">
+            <% bookings.forEach(b => { %>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card bg-white border rounded-4 overflow-hidden h-100 shadow-sm d-flex flex-column hover-shadow">
+                        <div class="position-relative" style="height: 140px; overflow: hidden; background-color: #f1f5f9;">
+                            <img src="<%= b.poster_url %>?v=20261013_theatrical" alt="<%= b.movie_title %>" class="w-100 h-100 object-fit-cover">
+                            <span class="badge bg-danger position-absolute top-0 end-0 m-2 shadow-sm">
+                                <%= b.booking_code %>
+                            </span>
+                        </div>
+                        <div class="p-3 flex-grow-1 d-flex flex-column">
+                            <h6 class="text-dark fw-bold mb-1 text-truncate"><%= b.movie_title %></h6>
+                            <div class="small text-secondary mb-2">
+                                <div><i class="fa-solid fa-door-open text-primary me-1"></i> <%= b.room_name %></div>
+                                <div><i class="fa-regular fa-clock text-info me-1"></i> <%= formatDateTime(b.start_time) %></div>
+                                <div><i class="fa-solid fa-chair text-danger me-1"></i> Số lượng: <%= b.ticket_count %> vé</div>
+                                <div class="mt-1">
+                                    <% if (b.payment_method === 'mbbank_qr' || b.payment_method === 'vnpay') { %>
+                                        <span class="badge bg-primary-subtle text-primary border border-primary-subtle" style="font-size: 0.72rem;">
+                                            <i class="fa-solid fa-qrcode me-1"></i> MBBank (033320012005)
+                                        </span>
+                                    <% } else { %>
+                                        <span class="badge bg-light text-muted border" style="font-size: 0.72rem;">
+                                            <%= b.payment_method %>
+                                        </span>
+                                    <% } %>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                                <div>
+                                    <span class="small text-muted">Tổng tiền:</span>
+                                    <div class="text-danger fw-bold"><%= Number(b.total_amount).toLocaleString('vi-VN') %> đ</div>
+                                </div>
+                                <a href="/booking/success/<%= b.booking_code %>" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold">
+                                    <i class="fa-solid fa-qrcode me-1"></i> Xem Vé QR
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="card bg-white border-0 text-center py-5 rounded-4 shadow-sm">
+            <i class="fa-solid fa-ticket-simple text-muted display-3 mb-3"></i>
+            <h5 class="text-dark fw-bold">Bạn chưa có đơn đặt vé nào!</h5>
+            <p class="text-muted small mb-3">Hãy chọn bộ phim yêu thích và trải nghiệm đặt vé trực tuyến ngay hôm nay.</p>
+            <div>
+                <a href="/movies" class="btn btn-danger rounded-pill px-4 fw-bold shadow-sm">Khám phá phim ngay</a>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<%- include('../layouts/footer') %>

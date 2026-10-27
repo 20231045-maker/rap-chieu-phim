@@ -1,0 +1,49 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện phân hệ Nhân viên quầy;
+
+if () then ([Bán vé trực tiếp tại quầy POS])
+    :Tra cứu phim và chọn suất chiếu theo yêu cầu khách;
+    :Hiển thị sơ đồ ghế phòng chiếu;
+    :Chọn vị trí ghế theo mong muốn của khách;
+    if () then ([Khách mua thêm bắp nước])
+        :Chọn combo bắp nước F&B;
+    else ([Không mua bắp nước])
+    endif
+    :Xác nhận tổng tiền thanh toán;
+    :Thu tiền mặt hoặc quẹt thẻ POS ngân hàng;
+    :Hệ thống tạo đơn vé và lưu vé vào cơ sở dữ liệu;
+    :In vé giấy xem phim kèm mã vạch / QR Code;
+    :Giao vé và hóa đơn cho khách hàng;
+else ([Soát vé vào phòng chiếu])
+    :Nhân viên bật chức năng quét mã QR;
+    :Khách hàng xuất trình mã vé (điện tử hoặc in giấy);
+    :Quét mã QR qua máy quét hoặc camera chuyên dụng;
+    :Hệ thống giải mã và truy vấn cơ sở dữ liệu;
+    
+    if () then ([Mã vé không tồn tại hoặc sai suất chiếu])
+        :Cảnh báo: "Vé không hợp lệ!";
+        :Từ chối khách vào phòng chiếu;
+    elseif () then ([Vé đã được sử dụng trước đó])
+        :Phát chuông báo động: "Vé đã sử dụng lúc [giờ]!";
+        :Cảnh báo nguy cơ gian lận vé;
+        :Nhân viên đối chiếu thông tin người mua;
+    else ([Vé hợp lệ & chưa sử dụng])
+        :Hiển thị tích xanh: "Vé hợp lệ - Mời vào phòng";
+        :Hiển thị chi tiết: Tên phim, Phòng chiếu, Số ghế;
+        :Tự động cập nhật trạng thái vé thành 'used';
+        :Ghi nhận thời gian soát vé vào Audit Log;
+    endif
+endif
+
+stop
+
+@enduml

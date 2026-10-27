@@ -1,0 +1,59 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-4 mb-5">
+    <div class="card bg-card border-secondary p-3 rounded-4 mb-4 shadow">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center gap-3">
+                <i class="fa-solid fa-clock-rotate-left text-info fs-2"></i>
+                <div>
+                    <h4 class="text-white fw-bold mb-0">LỊCH SỬ SOÁT VÉ HÔM NAY</h4>
+                    <div class="small text-secondary">Danh sách tất cả các lượt vé đã được quét và xác nhận vào rạp</div>
+                </div>
+            </div>
+            <div>
+                <a href="/staff/scan" class="btn btn-outline-info rounded-pill btn-sm">
+                    <i class="fa-solid fa-qrcode me-1"></i> Quay Lại Soát Vé
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="card bg-card border-secondary p-4 rounded-4 shadow">
+        <div class="table-responsive">
+            <table class="table table-dark table-borderless align-middle mb-0">
+                <thead>
+                    <tr class="border-bottom border-secondary text-secondary small">
+                        <th>MÃ VÉ</th>
+                        <th>PHIM</th>
+                        <th>PHÒNG</th>
+                        <th>GHẾ</th>
+                        <th>THỜI GIAN SOÁT</th>
+                        <th>NHÂN VIÊN SOÁT</th>
+                        <th>TRẠNG THÁI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (scannedTickets && scannedTickets.length > 0) { %>
+                        <% scannedTickets.forEach(s => { %>
+                            <tr>
+                                <td><code><%= s.ticket_code %></code></td>
+                                <td class="fw-bold text-white"><%= s.movie_title %></td>
+                                <td><%= s.room_name %></td>
+                                <td><span class="badge bg-danger"><%= s.seat_code %></span></td>
+                                <td class="text-secondary small"><%= s.checked_in_at %></td>
+                                <td><span class="badge bg-dark border border-secondary text-white"><%= s.staff_name || 'Nhân viên' %></span></td>
+                                <td><span class="badge bg-success">Đã soát</span></td>
+                            </tr>
+                        <% }) %>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="7" class="text-center text-secondary py-4">Chưa có lượt soát vé nào trong ngày hôm nay</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

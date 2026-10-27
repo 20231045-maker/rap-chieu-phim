@@ -1,0 +1,49 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện Quản lý phim;
+:Hiển thị danh sách các phim trong hệ thống;
+
+if () then ([Thêm phim mới])
+    :Nhấn nút "Thêm phim mới";
+    repeat
+        :Nhập tiêu đề, thể loại, thời lượng, đạo diễn, tóm tắt;
+        :Chọn phân loại độ tuổi (P, K, T13, T16, T18);
+        :Tải lên ảnh poster và banner;
+        :Nhập đường dẫn trailer YouTube;
+        :Chọn trạng thái: Đang chiếu hoặc Sắp chiếu;
+        :Nhấn nút "Lưu thông tin phim";
+    repeat while (Kiểm tra dữ liệu bắt buộc?) is (Thiếu dữ liệu) not (Hợp lệ)
+    :Thêm phim vào hệ thống thành công;
+else ([Sửa / Xóa / Tìm kiếm phim])
+    :Chọn một bộ phim trong danh sách;
+    if () then ([Sửa thông tin])
+        :Mở form cập nhật phim;
+        :Chỉnh sửa thông tin cần thay đổi;
+        :Nhấn nút "Cập nhật";
+        :Cập nhật dữ liệu phim thành công;
+    elseif () then ([Xóa phim])
+        :Nhấn nút "Xóa phim";
+        :Kiểm tra phim có suất chiếu đang hoạt động hay không;
+        if () then ([Có suất chiếu liên quan])
+            :Cảnh báo không thể xóa phim đang có lịch chiếu;
+        else ([Không có suất chiếu])
+            :Xác nhận xóa phim;
+            :Xóa thông tin phim khỏi cơ sở dữ liệu;
+        endif
+    else ([Tìm kiếm phim])
+        :Nhập từ khóa tìm kiếm (tên phim, thể loại);
+        :Hệ thống lọc và hiển thị kết quả tìm kiếm;
+    endif
+endif
+
+stop
+
+@enduml

@@ -1,0 +1,98 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="text-white fw-bold mb-1">Quản Lý Phòng Chiếu & Sơ Đồ Ghế</h4>
+        <p class="text-secondary small mb-0">Quản lý các phòng chiếu, định dạng màn hình và cấu hình sơ đồ ghế theo phòng</p>
+    </div>
+    <button class="btn btn-danger rounded-pill px-4" data-bs-toggle="modal" data-bs-target="#createRoomModal">
+        <i class="fa-solid fa-plus me-1"></i> Thêm Phòng Chiếu
+    </button>
+</div>
+
+<div class="row g-4">
+    <% rooms.forEach(room => { %>
+        <div class="col-md-6 col-xl-4">
+            <div class="card bg-card border-secondary p-4 rounded-4 shadow h-100 d-flex flex-column">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h5 class="text-white fw-bold mb-1"><%= room.room_name %></h5>
+                        <span class="badge bg-danger"><%= room.screen_type %></span>
+                    </div>
+                    <span class="badge <%= room.status === 'active' ? 'bg-success' : 'bg-secondary' %>">
+                        <%= room.status === 'active' ? 'Hoạt động' : 'Bảo trì' %>
+                    </span>
+                </div>
+
+                <div class="bg-dark p-3 rounded-3 border border-secondary mb-3 small text-secondary">
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Cấu trúc hàng ghế:</span>
+                        <strong class="text-white"><%= room.total_rows %> hàng (A - <%= String.fromCharCode(64 + room.total_rows) %>)</strong>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <span>Số ghế mỗi hàng:</span>
+                        <strong class="text-white"><%= room.seats_per_row %> ghế/hàng</strong>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <span>Tổng số ghế thiết kế:</span>
+                        <strong class="text-warning fs-6"><%= room.total_seats %> ghế</strong>
+                    </div>
+                </div>
+
+                <div class="mt-auto pt-3 border-top border-secondary text-end">
+                    <a href="/manager/rooms/<%= room.id %>" class="btn btn-outline-info btn-sm rounded-pill px-3">
+                        <i class="fa-solid fa-couch me-1"></i> Sơ Đồ Ghế & Cấu Hình
+                    </a>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+</div>
+
+<!-- Modal Thêm Phòng Mới -->
+<div class="modal fade" id="createRoomModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-dark border-secondary">
+            <div class="modal-header border-secondary">
+                <h5 class="modal-title text-white fw-bold">Thêm Phòng Chiếu Mới</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <form action="/manager/rooms/create" method="POST">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label text-light small fw-bold">Tên phòng chiếu <span class="text-danger">*</span></label>
+                        <input type="text" name="room_name" class="form-control bg-dark border-secondary text-white" placeholder="VD: Phòng Chiếu 04 (4DX)" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-light small fw-bold">Định dạng màn hình <span class="text-danger">*</span></label>
+                        <select name="screen_type" class="form-select bg-dark border-secondary text-white">
+                            <option value="2D">2D Digital</option>
+                            <option value="3D">3D Dolby Atmos</option>
+                            <option value="IMAX">IMAX Laser</option>
+                            <option value="4DX">4DX Motion</option>
+                        </select>
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <label class="form-label text-light small fw-bold">Số hàng ghế (A, B...)</label>
+                            <input type="number" name="total_rows" class="form-control bg-dark border-secondary text-white" min="3" max="15" value="7" required>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label text-light small fw-bold">Số ghế mỗi hàng</label>
+                            <input type="number" name="seats_per_row" class="form-control bg-dark border-secondary text-white" min="6" max="20" value="12" required>
+                        </div>
+                    </div>
+                    <div class="form-text text-secondary small mt-2">
+                        Hệ thống sẽ tự động khởi tạo danh sách ghế và phân bổ khu vực Ghế thường, VIP, Sweetbox tương ứng.
+                    </div>
+                </div>
+                <div class="modal-footer border-secondary">
+                    <button type="button" class="btn btn-outline-light rounded-pill px-3" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" class="btn btn-danger rounded-pill px-4 fw-bold">Tạo Phòng Chiếu</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/admin-footer') %>

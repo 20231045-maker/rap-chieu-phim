@@ -1,0 +1,64 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-6">
+            <div class="card bg-white border-0 shadow-lg rounded-4 overflow-hidden">
+                <div class="card-header bg-light border-bottom text-center py-4">
+                    <div class="bg-danger text-white rounded-3 p-2 d-inline-flex align-items-center justify-content-center mb-2 shadow-sm">
+                        <i class="fa-solid fa-user-plus fs-3"></i>
+                    </div>
+                    <h4 class="text-dark fw-bold mb-0">Đăng Ký Tài Khoản</h4>
+                    <p class="text-muted small mb-0">Trở thành thành viên để nhận ưu đãi và đặt vé dễ dàng</p>
+                </div>
+                <div class="card-body p-4 p-md-5">
+                    <% if (typeof error !== 'undefined' && error) { %>
+                        <div class="alert alert-danger py-2 small mb-3">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i> <%= error %>
+                        </div>
+                    <% } %>
+
+                    <form action="/auth/register" method="POST">
+                        <input type="hidden" name="returnTo" value="<%= typeof returnTo !== 'undefined' ? returnTo : '' %>">
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Họ và tên <span class="text-danger">*</span></label>
+                            <input type="text" name="full_name" class="form-control" value="<%= typeof formData !== 'undefined' && formData.full_name ? formData.full_name : '' %>" placeholder="Nguyễn Văn A" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Địa chỉ Email <span class="text-danger">*</span></label>
+                            <input type="email" name="email" class="form-control" value="<%= typeof formData !== 'undefined' && formData.email ? formData.email : '' %>" placeholder="name@example.com" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold">Số điện thoại</label>
+                            <input type="tel" name="phone" class="form-control" value="<%= typeof formData !== 'undefined' && formData.phone ? formData.phone : '' %>" placeholder="0912345678">
+                        </div>
+
+                        <div class="row mb-4">
+                            <div class="col-md-6 mb-3 mb-md-0">
+                                <label class="form-label small fw-bold">Mật khẩu <span class="text-danger">*</span></label>
+                                <input type="password" name="password" class="form-control" placeholder="Tối thiểu 6 ký tự" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label small fw-bold">Xác nhận mật khẩu <span class="text-danger">*</span></label>
+                                <input type="password" name="confirm_password" class="form-control" placeholder="Nhập lại mật khẩu" required>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn btn-danger w-100 py-2 fw-bold rounded-pill mb-3 shadow-sm">
+                            <i class="fa-solid fa-user-check me-2"></i> Hoàn Tất Đăng Ký
+                        </button>
+                    </form>
+
+                    <div class="text-center mt-3 text-muted small">
+                        Đã có tài khoản? <a href="/auth/login<%= typeof returnTo !== 'undefined' && returnTo ? '?redirect=' + encodeURIComponent(returnTo) : '' %>" class="text-danger fw-bold text-decoration-none">Đăng nhập</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

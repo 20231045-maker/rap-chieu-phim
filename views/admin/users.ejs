@@ -1,0 +1,85 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h4 class="text-white fw-bold mb-1">Quản Lý Tài Khoản & Phân Quyền (RBAC)</h4>
+        <p class="text-secondary small mb-0">Quản trị toàn bộ tài khoản người dùng, phân cấp quyền hạn: Admin, Manager, Staff, Client</p>
+    </div>
+    <a href="/admin/users/create" class="btn btn-danger rounded-pill px-4">
+        <i class="fa-solid fa-user-plus me-1"></i> Tạo Tài Khoản Mới
+    </a>
+</div>
+
+<div class="card bg-card border-secondary rounded-4 shadow overflow-hidden">
+    <div class="table-responsive">
+        <table class="table table-dark table-borderless align-middle mb-0">
+            <thead>
+                <tr class="border-bottom border-secondary text-secondary small">
+                    <th>HỌ VÀ TÊN</th>
+                    <th>EMAIL</th>
+                    <th>SỐ ĐIỆN THOẠI</th>
+                    <th>VAI TRÒ (ROLE)</th>
+                    <th>TRẠNG THÁI</th>
+                    <th>NGÀY TẠO</th>
+                    <th class="text-end">THAO TÁC</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (users && users.length > 0) { %>
+                    <% users.forEach(u => { %>
+                        <tr class="border-bottom border-secondary border-opacity-25">
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="rounded-circle bg-dark border border-secondary text-white d-flex align-items-center justify-content-center fw-bold" style="width: 34px; height: 34px;">
+                                        <%= u.full_name ? u.full_name.charAt(0).toUpperCase() : 'U' %>
+                                    </div>
+                                    <strong class="text-white"><%= u.full_name %></strong>
+                                </div>
+                            </td>
+                            <td><code><%= u.email %></code></td>
+                            <td class="text-secondary"><%= u.phone || 'Chưa cập nhật' %></td>
+                            <td>
+                                <% if (u.role_name === 'admin') { %>
+                                    <span class="badge bg-danger">Quản trị viên</span>
+                                <% } else if (u.role_name === 'manager') { %>
+                                    <span class="badge bg-primary">Quản lý rạp</span>
+                                <% } else if (u.role_name === 'staff') { %>
+                                    <span class="badge bg-warning text-dark">Nhân viên</span>
+                                <% } else { %>
+                                    <span class="badge bg-success">Khách hàng</span>
+                                <% } %>
+                            </td>
+                            <td>
+                                <span class="badge <%= u.status === 'active' ? 'bg-success' : 'bg-danger' %>">
+                                    <%= u.status === 'active' ? 'Hoạt động' : 'Đã khóa' %>
+                                </span>
+                            </td>
+                            <td class="small text-secondary"><%= u.created_at %></td>
+                            <td class="text-end">
+                                <a href="/admin/users/edit/<%= u.id %>" class="btn btn-outline-warning btn-sm me-1" title="Sửa thông tin / Đổi quyền">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <form action="/admin/users/toggle-status/<%= u.id %>" method="POST" class="d-inline" title="Khóa / Mở khóa">
+                                    <button type="submit" class="btn <%= u.status === 'active' ? 'btn-outline-secondary' : 'btn-outline-success' %> btn-sm me-1">
+                                        <i class="fa-solid <%= u.status === 'active' ? 'fa-lock' : 'fa-lock-open' %>"></i>
+                                    </button>
+                                </form>
+                                <% if (u.role_name !== 'admin' || users.filter(x => x.role_name === 'admin').length > 1) { %>
+                                    <form action="/admin/users/delete/<%= u.id %>" method="POST" class="d-inline" onsubmit="return confirm('Bạn có chắc chắn muốn xóa tài khoản này?');">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm" title="Xóa tài khoản">
+                                            <i class="fa-solid fa-trash-can"></i>
+                                        </button>
+                                    </form>
+                                <% } %>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr><td colspan="7" class="text-center text-secondary py-4">Chưa có người dùng nào</td></tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include('../layouts/admin-footer') %>

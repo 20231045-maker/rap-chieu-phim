@@ -1,0 +1,146 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="card bg-card border-secondary p-4 rounded-4 shadow mb-4">
+    <div class="d-flex justify-content-between align-items-center border-bottom border-secondary pb-3 mb-4">
+        <div>
+            <h4 class="text-white fw-bold mb-1">Lập Lịch Suất Chiếu Mới</h4>
+            <p class="text-secondary small mb-0">Hệ thống kích hoạt <strong>Thuật toán kiểm tra xung đột suất chiếu</strong> để tránh trùng giờ và phòng</p>
+        </div>
+        <a href="/manager/showtimes" class="btn btn-outline-light rounded-pill btn-sm">
+            <i class="fa-solid fa-arrow-left me-1"></i> Danh Sách Suất Chiếu
+        </a>
+    </div>
+
+    <!-- Hộp Cảnh Báo Xung Đột Thời Gian Thực (Conflict Notification Box) -->
+    <div id="conflictAlertBox" class="conflict-box">
+        <div class="d-flex align-items-center gap-3">
+            <i id="conflictIcon" class="fs-3"></i>
+            <div>
+                <strong id="conflictTitle">...</strong>
+                <div id="conflictMessage" class="small mt-1">...</div>
+            </div>
+        </div>
+    </div>
+
+    <form action="/manager/showtimes/create" method="POST" id="showtimeForm">
+        <div class="row g-3">
+            <!-- 1. Chọn Phim -->
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Chọn Phim Chiếu <span class="text-danger">*</span></label>
+                <select name="movie_id" id="stMovieSelect" class="form-select bg-dark border-secondary text-white" required onchange="triggerConflictCheck()">
+                    <option value="">-- Chọn bộ phim --</option>
+                    <% movies.forEach(m => { %>
+                        <option value="<%= m.id %>" data-duration="<%= m.duration %>" data-title="<%= m.title %>">
+                            <%= m.title %> (<%= m.duration %> phút) - [<%= m.age_rating %>]
+                        </option>
+                    <% }) %>
+                </select>
+                <div class="form-text text-secondary small" id="movieDurationHint">Thời lượng phim sẽ dùng để tính thời gian kết thúc suất chiếu.</div>
+            </div>
+
+            <!-- 2. Chọn Phòng -->
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Chọn Phòng Chiếu <span class="text-danger">*</span></label>
+                <select name="room_id" id="stRoomSelect" class="form-select bg-dark border-secondary text-white" required onchange="triggerConflictCheck()">
+                    <option value="">-- Chọn phòng chiếu --</option>
+                    <% rooms.forEach(r => { %>
+                        <option value="<%= r.id %>" data-name="<%= r.room_name %>">
+                            <%= r.room_name %> (<%= r.screen_type %> - <%= r.total_seats %> ghế)
+                        </option>
+                    <% }) %>
+                </select>
+            </div>
+
+            <!-- 3. Giờ Bắt Đầu -->
+            <div class="col-md-4">
+                <label class="form-label text-light small fw-bold">Thời Gian Bắt Đầu (Giờ Chiếu) <span class="text-danger">*</span></label>
+                <input type="datetime-local" name="start_time" id="stStartTime" class="form-control bg-dark border-secondary text-white" required onchange="triggerConflictCheck()">
+            </div>
+
+            <!-- 4. Thời Gian Đệm Dọn Phòng -->
+            <div class="col-md-4">
+                <label class="form-label text-light small fw-bold">Thời Gian Đệm Dọn Phòng (Phút)</label>
+                <input type="number" name="buffer_minutes" id="stBuffer" class="form-control bg-dark border-secondary text-white" min="0" max="60" value="15" onchange="triggerConflictCheck()">
+                <div class="form-text text-secondary small">Vệ sinh & chuẩn bị đón khách cho suất kế tiếp.</div>
+            </div>
+
+            <!-- 5. Giá Vé Gốc -->
+            <div class="col-md-4">
+                <label class="form-label text-light small fw-bold">Giá Vé Gốc (VND) <span class="text-danger">*</span></label>
+                <input type="number" name="base_price" class="form-control bg-dark border-secondary text-white" step="5000" min="40000" value="80000" required>
+            </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-top border-secondary text-end">
+            <a href="/manager/showtimes" class="btn btn-outline-light rounded-pill px-4 me-2">Hủy Bỏ</a>
+            <button type="submit" id="btnSubmitShowtime" class="btn btn-danger rounded-pill px-4 fw-bold" disabled>
+                <i class="fa-solid fa-calendar-check me-1"></i> Lưu & Mở Bán Suất Chiếu
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Script Thuật Toán Kiểm Tra Xung Đột Thời Gian Thực (AJAX) -->
+<script>
+// Thiết lập mặc định thời gian bắt đầu là hôm nay 10:00
+const now = new Date();
+now.setHours(now.getHours() + 2);
+now.setMinutes(0);
+const offset = now.getTimezoneOffset() * 60000;
+const localISOTime = (new Date(now - offset)).toISOString().slice(0, 16);
+document.getElementById('stStartTime').value = localISOTime;
+
+async function triggerConflictCheck() {
+    const movieSelect = document.getElementById('stMovieSelect');
+    const roomSelect = document.getElementById('stRoomSelect');
+    const startTimeInp = document.getElementById('stStartTime');
+    const bufferInp = document.getElementById('stBuffer');
+    const alertBox = document.getElementById('conflictAlertBox');
+    const icon = document.getElementById('conflictIcon');
+    const title = document.getElementById('conflictTitle');
+    const msg = document.getElementById('conflictMessage');
+    const btnSubmit = document.getElementById('btnSubmitShowtime');
+
+    const movieId = movieSelect.value;
+    const roomId = roomSelect.value;
+    const startTime = startTimeInp.value;
+    const buffer = bufferInp.value || 15;
+
+    if (!movieId || !roomId || !startTime) {
+        alertBox.className = 'conflict-box';
+        btnSubmit.disabled = true;
+        return;
+    }
+
+    const selectedOption = movieSelect.options[movieSelect.selectedIndex];
+    const duration = selectedOption.dataset.duration;
+
+    // Chuẩn hóa format: 'YYYY-MM-DD HH:MM:SS'
+    const formattedStartTime = startTime.replace('T', ' ') + ':00';
+
+    try {
+        const res = await fetch(`/manager/api/check-conflict?room_id=${roomId}&start_time=${encodeURIComponent(formattedStartTime)}&duration=${duration}&buffer_minutes=${buffer}`);
+        const data = await res.json();
+
+        alertBox.className = 'conflict-box active ' + (data.hasConflict ? 'conflict-danger' : 'conflict-success');
+
+        if (data.hasConflict) {
+            icon.className = 'fa-solid fa-triangle-exclamation text-danger fs-2';
+            title.innerText = 'XUNG ĐỘT SUẤT CHIẾU!';
+            title.className = 'text-danger fw-bold fs-5';
+            msg.innerText = data.message;
+            btnSubmit.disabled = true;
+        } else {
+            icon.className = 'fa-solid fa-circle-check text-success fs-2';
+            title.innerText = 'KHUNG GIỜ HỢP LỆ!';
+            title.className = 'text-success fw-bold fs-5';
+            msg.innerText = `Suất chiếu dự kiến kết thúc lúc ${data.calculatedEndTime} (bao gồm ${data.bufferMinutes} phút dọn phòng). Không trùng với bất kỳ suất chiếu nào khác trong phòng!`;
+            btnSubmit.disabled = false;
+        }
+    } catch (e) {
+        console.error('Lỗi kiểm tra xung đột:', e);
+    }
+}
+</script>
+
+<%- include('../layouts/admin-footer') %>

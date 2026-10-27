@@ -1,0 +1,100 @@
+<%- include('../layouts/admin-header') %>
+
+<div class="card bg-card border-secondary p-4 rounded-4 shadow mb-4">
+    <div class="d-flex justify-content-between align-items-center border-bottom border-secondary pb-3 mb-4">
+        <div>
+            <h4 class="text-white fw-bold mb-1"><%= isEdit ? 'Cập Nhật Thông Tin Phim' : 'Thêm Phim Mới' %></h4>
+            <p class="text-secondary small mb-0"><%= isEdit ? movie.title : 'Điền đầy đủ thông tin để khởi tạo bộ phim mới trong hệ thống' %></p>
+        </div>
+        <a href="/manager/movies" class="btn btn-outline-light rounded-pill btn-sm">
+            <i class="fa-solid fa-arrow-left me-1"></i> Quay Lại
+        </a>
+    </div>
+
+    <form action="<%= isEdit ? '/manager/movies/edit/' + movie.id : '/manager/movies/create' %>" method="POST" enctype="multipart/form-data">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Tên phim (Tiếng Việt) <span class="text-danger">*</span></label>
+                <input type="text" name="title" class="form-control bg-dark border-secondary text-white" value="<%= isEdit ? movie.title : '' %>" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Tên gốc (Tiếng Anh / Quốc tế)</label>
+                <input type="text" name="original_title" class="form-control bg-dark border-secondary text-white" value="<%= isEdit ? movie.original_title : '' %>">
+            </div>
+
+            <div class="col-md-4">
+                <label class="form-label text-light small fw-bold">Thể loại <span class="text-danger">*</span></label>
+                <input type="text" name="genre" class="form-control bg-dark border-secondary text-white" placeholder="Hành động, Viễn tưởng,..." value="<%= isEdit ? movie.genre : '' %>" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-light small fw-bold">Thời lượng (Phút) <span class="text-danger">*</span></label>
+                <input type="number" name="duration" class="form-control bg-dark border-secondary text-white" min="1" placeholder="120" value="<%= isEdit ? movie.duration : '' %>" required>
+            </div>
+            <div class="col-md-4">
+                <label class="form-label text-light small fw-bold">Độ tuổi phân loại <span class="text-danger">*</span></label>
+                <select name="age_rating" class="form-select bg-dark border-secondary text-white">
+                    <option value="P" <%= isEdit && movie.age_rating === 'P' ? 'selected' : '' %>>P - Phổ biến cho mọi độ tuổi</option>
+                    <option value="K" <%= isEdit && movie.age_rating === 'K' ? 'selected' : '' %>>K - Khán giả dưới 13 tuổi có người giám hộ</option>
+                    <option value="T13" <%= isEdit && movie.age_rating === 'T13' ? 'selected' : '' %>>T13 - Khán giả từ 13 tuổi trở lên</option>
+                    <option value="T16" <%= isEdit && movie.age_rating === 'T16' ? 'selected' : '' %>>T16 - Khán giả từ 16 tuổi trở lên</option>
+                    <option value="T18" <%= isEdit && movie.age_rating === 'T18' ? 'selected' : '' %>>T18 - Khán giả từ 18 tuổi trở lên</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Ngày khởi chiếu <span class="text-danger">*</span></label>
+                <input type="date" name="release_date" class="form-control bg-dark border-secondary text-white" value="<%= isEdit ? movie.release_date : '' %>" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Trạng thái phát hành <span class="text-danger">*</span></label>
+                <select name="status" class="form-select bg-dark border-secondary text-white">
+                    <option value="now_showing" <%= isEdit && movie.status === 'now_showing' ? 'selected' : '' %>>Đang chiếu</option>
+                    <option value="coming_soon" <%= isEdit && movie.status === 'coming_soon' ? 'selected' : '' %>>Sắp chiếu</option>
+                    <option value="ended" <%= isEdit && movie.status === 'ended' ? 'selected' : '' %>>Ngừng chiếu</option>
+                </select>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Đạo diễn</label>
+                <input type="text" name="director" class="form-control bg-dark border-secondary text-white" value="<%= isEdit ? movie.director : '' %>">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Diễn viên</label>
+                <input type="text" name="cast" class="form-control bg-dark border-secondary text-white" value="<%= isEdit ? movie.cast : '' %>">
+            </div>
+
+            <div class="col-12">
+                <label class="form-label text-light small fw-bold">Tóm tắt nội dung phim</label>
+                <textarea name="description" rows="3" class="form-control bg-dark border-secondary text-white"><%= isEdit ? movie.description : '' %></textarea>
+            </div>
+
+            <!-- Poster URL hoặc Upload File -->
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">URL Ảnh Poster (Hoặc tải file dưới)</label>
+                <input type="url" name="poster_url" class="form-control bg-dark border-secondary text-white" placeholder="https://..." value="<%= isEdit ? movie.poster_url : '' %>">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Tải lên Poster từ máy tính</label>
+                <input type="file" name="poster_file" class="form-control bg-dark border-secondary text-white" accept="image/*">
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">URL Trailer (YouTube Embed hoặc link)</label>
+                <input type="text" name="trailer_url" class="form-control bg-dark border-secondary text-white" placeholder="https://www.youtube.com/embed/..." value="<%= isEdit ? movie.trailer_url : '' %>">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label text-light small fw-bold">Ngôn ngữ / Phiên bản</label>
+                <input type="text" name="language" class="form-control bg-dark border-secondary text-white" placeholder="Phụ đề Tiếng Việt / Lồng tiếng" value="<%= isEdit ? movie.language : 'Phụ đề Tiếng Việt' %>">
+            </div>
+        </div>
+
+        <div class="mt-4 pt-3 border-top border-secondary text-end">
+            <a href="/manager/movies" class="btn btn-outline-light rounded-pill px-4 me-2">Hủy Bỏ</a>
+            <button type="submit" class="btn btn-danger rounded-pill px-4 fw-bold">
+                <i class="fa-solid fa-floppy-disk me-1"></i> <%= isEdit ? 'Lưu Thay Đổi' : 'Thêm Phim Mới' %>
+            </button>
+        </div>
+    </form>
+</div>
+
+<%- include('../layouts/admin-footer') %>

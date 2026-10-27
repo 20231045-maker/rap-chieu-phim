@@ -1,0 +1,564 @@
+<%- include('../layouts/header') %>
+
+<div class="container-fluid px-4 py-4 mb-5">
+    <!-- Top Header POS -->
+    <div class="card bg-white border p-3 rounded-4 mb-4 shadow-sm">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+            <div class="d-flex align-items-center gap-3">
+                <div class="bg-danger-subtle text-danger p-2 rounded-circle d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                    <i class="fa-solid fa-cash-register fs-4"></i>
+                </div>
+                <div>
+                    <h4 class="text-dark fw-bold mb-1">HỆ THỐNG BÁN VÉ TẠI QUẦY (POS COUNTER)</h4>
+                    <div class="small text-secondary d-flex flex-wrap align-items-center gap-2">
+                        <span>Nhân viên: <strong class="text-dark"><%= staffUser ? staffUser.full_name : 'Staff Quầy' %></strong></span>
+                        <span class="text-muted">•</span>
+                        <span>Ngày: <strong class="text-danger"><%= todayStr %></strong></span>
+                        <span class="text-muted">•</span>
+                        <span class="d-inline-flex align-items-center gap-1">
+                            <i class="fa-solid fa-location-dot text-danger"></i>
+                            <select id="posCinemaSelect" class="form-select form-select-sm bg-white border text-dark fw-bold shadow-sm" style="width: auto; min-width: 220px; max-width: 100%; font-size: 0.875rem; color: #0f172a !important;" onchange="onPosBranchChange(this.value)">
+                                <% if (typeof cinemas !== 'undefined' && cinemas.length > 0) { %>
+                                    <% cinemas.forEach(c => { %>
+                                        <option value="<%= c.id %>" <%= (Number(selectedCinemaId) === Number(c.id)) ? 'selected' : '' %>>
+                                            <%= c.name %> (<%= c.city %>)
+                                        </option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+                <% if (currentCinema) { %>
+                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle px-3 py-2 text-truncate d-none d-lg-inline" style="max-width: 380px;">
+                        <i class="fa-solid fa-map-pin me-1"></i> <%= currentCinema.address %>
+                    </span>
+                <% } %>
+                <a href="/staff/scan" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold shadow-sm">
+                    <i class="fa-solid fa-qrcode me-1"></i> Chuyển Sang Soát Vé
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <!-- Cột Trái: Chọn Phim & Suất Chiếu Hôm Nay -->
+        <div class="col-lg-4">
+            <div class="card bg-white border p-3 rounded-4 shadow-sm h-100 d-flex flex-column">
+                <h5 class="text-dark fw-bold mb-3 border-bottom pb-2 d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-film text-danger"></i> 1. Chọn Suất Chiếu Hôm Nay
+                </h5>
+
+                <div class="mb-3">
+                    <label class="form-label text-secondary small fw-bold mb-1">Lọc Theo Tên Phim</label>
+                    <select id="posMovieSelect" class="form-select form-select-sm bg-white border text-dark fw-semibold shadow-sm" style="color: #0f172a !important;" onchange="filterShowtimes()">
+                        <option value="">-- Tất cả phim đang chiếu tại cơ sở --</option>
+                        <% movies.forEach(m => { %>
+                            <option value="<%= m.id %>"><%= m.title %></option>
+                        <% }) %>
+                    </select>
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <label class="form-label text-secondary small fw-bold mb-0">Danh Sách Suất Chiếu (<%= showtimes.length %>)</label>
+                    <span class="badge bg-light text-secondary border small">Cơ sở: <%= currentCinema ? currentCinema.name.replace('Cinestar ', '') : '' %></span>
+                </div>
+
+                <div class="d-flex flex-column gap-2 flex-grow-1 overflow-auto pe-1" style="max-height: 520px;" id="posShowtimesList">
+                    <% if (showtimes && showtimes.length > 0) { %>
+                        <% showtimes.forEach(st => { %>
+                            <div class="p-3 bg-light border rounded-3 cursor-pointer showtime-card hover-shadow transition-all" 
+                                 data-movie-id="<%= st.movie_id %>"
+                                 data-showtime-id="<%= st.id %>"
+                                 data-movie-title="<%= st.movie_title %>"
+                                 data-room-name="<%= st.room_name %>"
+                                 data-time="<%= formatTime(st.start_time) %>"
+                                 data-format="<%= st.screen_type %>"
+                                 onclick="selectPosShowtime(this)">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <span class="badge bg-danger fs-6 fw-bold px-2 py-1"><%= formatTime(st.start_time) %></span>
+                                    <span class="badge bg-white text-secondary border fw-bold"><%= st.screen_type %></span>
+                                </div>
+                                <div class="fw-bold text-dark text-truncate fs-6"><%= st.movie_title %></div>
+                                <div class="d-flex justify-content-between align-items-center text-muted small mt-1">
+                                    <span class="text-truncate" style="max-width: 180px;"><i class="fa-solid fa-door-open me-1 text-primary"></i><%= st.room_name %></span>
+                                    <span class="text-danger fw-semibold"><i class="fa-solid fa-location-dot me-1"></i><%= st.cinema_name ? st.cinema_name.replace('Cinestar ', '') : '' %></span>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } else { %>
+                        <div class="text-secondary text-center py-5">
+                            <i class="fa-solid fa-calendar-xmark fs-2 text-muted mb-2"></i>
+                            <div>Chưa có suất chiếu nào cho cơ sở này hôm nay</div>
+                        </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột Giữa: Sơ Đồ Chọn Ghế Của Suất Chiếu Được Chọn -->
+        <div class="col-lg-5">
+            <div class="card bg-white border p-3 rounded-4 shadow-sm h-100 d-flex flex-column text-center">
+                <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
+                    <h5 class="text-dark fw-bold mb-0 text-start d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-couch text-warning"></i> 2. Chọn Ghế Ngồi Cho Khách
+                    </h5>
+                    <button type="button" class="btn btn-outline-secondary btn-sm rounded-pill py-0 px-2" style="font-size: 0.75rem;" onclick="reloadCurrentShowtimeSeats()" title="Làm mới ghế">
+                        <i class="fa-solid fa-rotate-right me-1"></i> Làm mới
+                    </button>
+                </div>
+
+                <div id="posShowtimeInfo" class="small text-secondary mb-2 text-start p-2 bg-light rounded border">
+                    <i class="fa-solid fa-circle-info text-primary me-1"></i> Vui lòng chọn suất chiếu ở cột bên trái trước
+                </div>
+
+                <!-- Màn Hình Chiếu -->
+                <div class="cinema-screen-wrap my-2">
+                    <div class="cinema-screen" style="max-width: 480px; margin: 0 auto; height: 10px; border-radius: 50% 50% 0 0; background: linear-gradient(180deg, #dc2626 0%, #fca5a5 100%); box-shadow: 0 4px 15px rgba(220, 38, 38, 0.4);"></div>
+                    <div class="screen-text text-secondary fw-bold mt-1" style="font-size: 0.72rem; letter-spacing: 2px;">MÀN HÌNH CHIẾU</div>
+                </div>
+
+                <!-- Vùng Hiển Thị Ghế Ngồi (Horizontal rows) -->
+                <div id="posSeatMapArea" class="flex-grow-1 overflow-auto py-2 d-flex flex-column align-items-center justify-content-center" style="min-height: 320px;">
+                    <div class="text-secondary py-5">
+                        <i class="fa-solid fa-arrow-left text-warning fs-2 mb-2"></i>
+                        <div>Chọn suất chiếu bên trái để hiển thị sơ đồ ghế</div>
+                    </div>
+                </div>
+
+                <!-- Chú thích nhanh chuẩn màu -->
+                <div class="d-flex justify-content-center flex-wrap gap-3 pt-3 border-top small text-secondary">
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="legend-box seat-regular" style="width: 18px; height: 18px; border-radius: 4px; display: inline-block;"></span> 
+                        <span class="fw-semibold">Thường</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="legend-box seat-vip" style="width: 18px; height: 18px; border-radius: 4px; display: inline-block;"></span> 
+                        <span class="fw-semibold">VIP</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="legend-box seat-sweetbox" style="width: 18px; height: 18px; border-radius: 4px; display: inline-block;"></span> 
+                        <span class="fw-semibold">Đôi</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="legend-box seat-selected" style="width: 18px; height: 18px; border-radius: 4px; display: inline-block;"></span> 
+                        <span class="fw-semibold">Đang chọn</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="legend-box seat-locked d-inline-flex align-items-center justify-content-center" style="width: 18px; height: 18px; border-radius: 4px; background-color: #3b82f6; color: white;">
+                            <i class="fa-solid fa-lock" style="font-size: 0.65rem;"></i>
+                        </span> 
+                        <span class="fw-semibold">Đang giữ</span>
+                    </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <span class="legend-box seat-booked d-inline-flex align-items-center justify-content-center p-0 overflow-hidden" style="width: 20px; height: 20px; border-radius: 4px;">
+                            <img src="/images/icon.jpg" alt="Đã đặt" style="width: 100%; height: 100%; object-fit: cover; border-radius: 3px;">
+                        </span> 
+                        <span class="fw-semibold">Đã đặt</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cột Phải: Bắp Nước, Thông Tin Khách & Thanh Toán POS -->
+        <div class="col-lg-3">
+            <div class="card bg-white border p-3 rounded-4 shadow-sm h-100 d-flex flex-column">
+                <h5 class="text-dark fw-bold mb-3 border-bottom pb-2 d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-receipt text-danger"></i> 3. Đơn Hàng & Thu Tiền
+                </h5>
+
+                <!-- Khách hàng -->
+                <div class="mb-3">
+                    <label class="form-label text-secondary small fw-bold mb-1">Tên Khách Hàng (Quầy)</label>
+                    <input type="text" id="posCustomerName" class="form-control form-control-sm bg-light border text-dark fw-semibold" value="Khách vãng lai">
+                </div>
+
+                <!-- Ghế đã chọn -->
+                <div class="mb-3">
+                    <div class="small text-secondary fw-bold mb-1">Ghế đã chọn:</div>
+                    <div id="posSelectedSeatsBadge" class="d-flex flex-wrap gap-1 p-2 bg-light rounded border min-height-40">
+                        <span class="text-muted small fst-italic">Chưa chọn ghế</span>
+                    </div>
+                </div>
+
+                <!-- Combo thêm -->
+                <div class="mb-3">
+                    <div class="small text-secondary fw-bold mb-1">Thêm Bắp & Nước (Combo):</div>
+                    <div class="d-flex flex-column gap-2" style="max-height: 180px; overflow-y: auto;">
+                        <% combos.forEach(c => { %>
+                            <div class="d-flex align-items-center justify-content-between p-2 bg-light rounded border small">
+                                <div class="text-truncate me-2" style="max-width: 120px;" title="<%= c.name %>">
+                                    <strong class="text-dark"><%= c.name %></strong>
+                                    <div class="text-muted" style="font-size: 0.72rem;"><%= Number(c.price).toLocaleString('vi-VN') %> đ</div>
+                                </div>
+                                <div class="input-group input-group-sm" style="width: 90px;">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="posChangeCombo(<%= c.id %>, -1)">-</button>
+                                    <input type="text" id="posCombo-<%= c.id %>" class="form-control text-center bg-white text-dark border-secondary pos-combo-inp fw-bold" value="0" readonly data-id="<%= c.id %>" data-price="<%= c.price %>">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="posChangeCombo(<%= c.id %>, 1)">+</button>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+
+                <!-- Hình thức thu tiền -->
+                <div class="mb-3">
+                    <label class="form-label text-secondary small fw-bold mb-1">Hình Thức Thanh Toán</label>
+                    <select id="posPaymentMethod" class="form-select form-select-sm bg-white border text-dark fw-semibold mb-2 shadow-sm" style="color: #0f172a !important;" onchange="onPosPaymentMethodChange()">
+                        <option value="mbbank_qr" selected>QR MBBank (033320012005 - NGUYEN MANH QUYET)</option>
+                        <option value="cash">Tiền mặt tại quầy</option>
+                        <option value="card">Quẹt thẻ ngân hàng (POS)</option>
+                        <option value="vnpay">Cổng VNPAY</option>
+                    </select>
+                    <button type="button" class="btn btn-outline-danger btn-sm w-100 fw-bold shadow-sm" id="btnShowPosQr" onclick="showPosQrModal()">
+                        <i class="fa-solid fa-qrcode me-1"></i> Hiển thị QR MBBank cho khách
+                    </button>
+                </div>
+
+                <!-- Tổng tiền & Nút Bán vé -->
+                <div class="mt-auto border-top pt-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="text-dark fw-bold">Tổng Thu Tiền:</span>
+                        <span class="fs-4 fw-extrabold text-danger" id="posGrandTotal">0 đ</span>
+                    </div>
+                    <button class="btn btn-danger w-100 py-2 rounded-pill fw-bold shadow" id="btnPosCheckout" disabled onclick="handlePosCheckout()">
+                        <i class="fa-solid fa-print me-2"></i> XUẤT VÉ & IN NGAY
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Thông Báo In Vé POS Thành Công -->
+<div class="modal fade" id="posSuccessModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-white text-dark border-0 rounded-4 shadow-lg">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title text-dark fw-bold d-flex align-items-center gap-2">
+                    <i class="fa-solid fa-circle-check text-success"></i> Xuất Vé Thành Công!
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div class="rounded-circle bg-success-subtle text-success d-inline-flex align-items-center justify-content-center mb-3" style="width: 72px; height: 72px;">
+                    <i class="fa-solid fa-check fs-1"></i>
+                </div>
+                <div class="text-muted small text-uppercase">MÃ ĐƠN HÀNG:</div>
+                <h3 class="text-danger fw-extrabold mb-2" id="posSuccessBookingCode">BKG-...</h3>
+                <p class="text-secondary small mb-4">Đã ghi nhận thanh toán và sinh mã vé QR cho khách hàng.</p>
+                
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="#" id="posViewTicketLink" class="btn btn-danger px-4 rounded-pill fw-bold shadow" target="_self">
+                        <i class="fa-solid fa-print me-1"></i> Xem & In Vé QR
+                    </a>
+                    <button type="button" class="btn btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal" onclick="resetPos()">
+                        Bán Đơn Mới
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Hiển Thị Mã QR MBBank Tại Quầy POS -->
+<div class="modal fade" id="posQrModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-white text-dark border-0 rounded-4 shadow-lg">
+            <div class="modal-header border-bottom">
+                <h5 class="modal-title fw-bold text-dark d-flex align-items-center gap-2">
+                    <span class="badge text-white px-2 py-1" style="background: linear-gradient(135deg, #0033a0 0%, #1e40af 100%);">
+                        <i class="fa-solid fa-qrcode me-1"></i> MB BANK
+                    </span>
+                    <span>Quét Mã Thanh Toán Tại Quầy POS</span>
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-center py-4">
+                <div class="bg-white p-2 rounded-3 border d-inline-block shadow-sm mb-3">
+                    <img id="posQrImg" src="https://img.vietqr.io/image/MB-033320012005-compact2.png?amount=0&addInfo=POS%20VE&accountName=NGUYEN%20MANH%20QUYET" alt="QR MBBank" class="img-fluid rounded" style="max-width: 240px;">
+                </div>
+                <div class="text-dark fw-bold fs-5 mb-1">NGUYEN MANH QUYET</div>
+                <div class="text-primary fw-bold font-monospace fs-5 mb-2">033320012005</div>
+                <div class="text-muted small mb-3">Ngân hàng TMCP Quân đội (MB)</div>
+                <div class="p-2 bg-light rounded border d-inline-block px-4 mb-3">
+                    <span class="text-muted small me-2">Số tiền cần thu:</span>
+                    <span class="fs-4 fw-extrabold text-danger" id="posQrAmount">0 đ</span>
+                </div>
+                <div class="text-muted small">Khách hàng mở app ngân hàng bất kỳ để quét mã</div>
+            </div>
+            <div class="modal-footer border-top justify-content-center">
+                <button type="button" class="btn btn-secondary rounded-pill px-4" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let currentPosShowtimeId = null;
+let currentPosSeats = [];
+let lastBookingCode = null;
+
+function onPosBranchChange(cinemaId) {
+    // Đổi cơ sở bán vé trực tiếp trên POS
+    try {
+        sessionStorage.setItem('selectedCinemaId', String(cinemaId));
+        document.cookie = "selectedCinemaId=" + cinemaId + "; path=/;";
+    } catch (e) {}
+    window.location.href = '/staff/pos?cinema_id=' + cinemaId;
+}
+
+function filterShowtimes() {
+    const movieId = document.getElementById('posMovieSelect').value;
+    document.querySelectorAll('.showtime-card').forEach(el => {
+        if (!movieId || el.dataset.movieId === movieId) {
+            el.style.display = 'block';
+        } else {
+            el.style.display = 'none';
+        }
+    });
+}
+
+async function selectPosShowtime(el) {
+    document.querySelectorAll('.showtime-card').forEach(c => {
+        c.classList.remove('border-danger', 'bg-danger-subtle');
+        c.classList.add('bg-light');
+    });
+    el.classList.remove('bg-light');
+    el.classList.add('border-danger', 'bg-danger-subtle');
+
+    currentPosShowtimeId = el.dataset.showtimeId;
+    currentPosSeats = [];
+
+    document.getElementById('posShowtimeInfo').innerHTML = `
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <strong class="text-dark fs-6">${el.dataset.movieTitle}</strong>
+                <span class="badge bg-danger ms-2">${el.dataset.format || '2D'}</span>
+            </div>
+            <div class="text-muted small">
+                <i class="fa-regular fa-clock text-danger me-1"></i>${el.dataset.time} • ${el.dataset.roomName}
+            </div>
+        </div>
+    `;
+
+    // Tải sơ đồ ghế của suất chiếu
+    await loadPosSeatMap(currentPosShowtimeId);
+    updatePosSummary();
+}
+
+async function reloadCurrentShowtimeSeats() {
+    if (!currentPosShowtimeId) return;
+    await loadPosSeatMap(currentPosShowtimeId);
+    updatePosSummary();
+}
+
+async function loadPosSeatMap(showtimeId) {
+    const seatArea = document.getElementById('posSeatMapArea');
+    seatArea.innerHTML = '<div class="text-secondary py-5"><i class="fa-solid fa-spinner fa-spin fs-4 text-danger mb-2"></i><div>Đang tải sơ đồ ghế...</div></div>';
+
+    try {
+        const res = await fetch(`/staff/api/pos-seats/${showtimeId}`);
+        const data = await res.json();
+        
+        if (data.success) {
+            renderPosSeats(data.seatsByRow);
+        } else {
+            seatArea.innerHTML = '<div class="text-danger py-4">Không thể tải sơ đồ ghế!</div>';
+        }
+    } catch (e) {
+        seatArea.innerHTML = '<div class="text-danger py-4">Lỗi mạng khi tải sơ đồ ghế!</div>';
+    }
+}
+
+function renderPosSeats(seatsByRow) {
+    const container = document.getElementById('posSeatMapArea');
+    let html = '<div class="seat-grid py-2" style="width: 100%; overflow-x: auto; text-align: center; -webkit-overflow-scrolling: touch;"><div style="min-width: 480px; display: inline-block; padding: 4px;">';
+
+    Object.keys(seatsByRow).forEach(row => {
+        html += `<div class="seat-row-wrapper d-flex align-items-center justify-content-center gap-2 mb-2">
+            <span class="row-label fw-bold text-secondary" style="width: 24px; text-align: center;">${row}</span>`;
+        
+        seatsByRow[row].forEach(s => {
+            const isBooked = s.current_status === 'booked';
+            const isLocked = s.current_status === 'locked';
+            let seatTypeClass = 'seat-regular';
+            if (s.seat_type === 'vip') seatTypeClass = 'seat-vip';
+            else if (s.seat_type === 'sweetbox') seatTypeClass = 'seat-sweetbox';
+
+            html += `
+                <div class="seat-item ${seatTypeClass} ${isBooked ? 'seat-booked' : (isLocked ? 'seat-locked' : '')}" 
+                     data-seat-id="${s.id}" 
+                     data-seat-code="${s.seat_code}"
+                     data-seat-price="${s.calculated_price}"
+                     data-booked="${isBooked || isLocked}"
+                     title="Ghế ${s.seat_code} (${s.seat_type.toUpperCase()}) - ${Number(s.calculated_price).toLocaleString('vi-VN')} đ"
+                     onclick="togglePosSeat(this)">
+                     ${isBooked ? '<img src="/images/icon.jpg" alt="Đã đặt" style="width: 100%; height: 100%; object-fit: cover; border-radius: 4px; pointer-events: none;">' : (isLocked ? '<i class="fa-solid fa-lock" style="font-size: 0.75rem;"></i>' : s.seat_number)}
+                </div>
+            `;
+        });
+
+        html += `<span class="row-label fw-bold text-secondary" style="width: 24px; text-align: center;">${row}</span></div>`;
+    });
+
+    html += '</div></div>';
+    container.innerHTML = html;
+}
+
+function togglePosSeat(el) {
+    if (el.dataset.booked === 'true') return;
+
+    const seatId = Number(el.dataset.seatId);
+    const seatCode = el.dataset.seatCode;
+    const seatPrice = Number(el.dataset.seatPrice);
+
+    const idx = currentPosSeats.findIndex(s => s.id === seatId);
+    if (idx > -1) {
+        currentPosSeats.splice(idx, 1);
+        el.classList.remove('seat-selected');
+    } else {
+        currentPosSeats.push({ id: seatId, code: seatCode, price: seatPrice });
+        el.classList.add('seat-selected');
+    }
+
+    updatePosSummary();
+}
+
+function posChangeCombo(id, delta) {
+    const inp = document.getElementById('posCombo-' + id);
+    let val = parseInt(inp.value) || 0;
+    val = Math.max(0, val + delta);
+    inp.value = val;
+    updatePosSummary();
+}
+
+function updatePosSummary() {
+    const badgeContainer = document.getElementById('posSelectedSeatsBadge');
+    const grandTotalEl = document.getElementById('posGrandTotal');
+    const btnCheckout = document.getElementById('btnPosCheckout');
+
+    // Ghế
+    let seatTotal = 0;
+    if (currentPosSeats.length === 0) {
+        badgeContainer.innerHTML = '<span class="text-muted small fst-italic">Chưa chọn ghế</span>';
+    } else {
+        badgeContainer.innerHTML = currentPosSeats.map(s => {
+            seatTotal += s.price;
+            return `<span class="badge bg-danger">${s.code}</span>`;
+        }).join(' ');
+    }
+
+    // Combo
+    let comboTotal = 0;
+    document.querySelectorAll('.pos-combo-inp').forEach(inp => {
+        const qty = parseInt(inp.value) || 0;
+        if (qty > 0) {
+            comboTotal += qty * Number(inp.dataset.price);
+        }
+    });
+
+    const grand = seatTotal + comboTotal;
+    grandTotalEl.innerText = grand.toLocaleString('vi-VN') + ' đ';
+
+    btnCheckout.disabled = (currentPosSeats.length === 0 || !currentPosShowtimeId);
+}
+
+// Xem & in vé ở NGUYÊN 1 TAB DUY NHẤT (tuyệt đối không mở tab mới)
+function openTicketSameTab(e, url) {
+    if (e && e.preventDefault) e.preventDefault();
+    if (!url || url === '#' || url.endsWith('#')) {
+        if (lastBookingCode) url = `/booking/success/${lastBookingCode}`;
+        else return;
+    }
+    // Ở nguyên 1 tab hiện tại
+    window.location.href = url;
+}
+
+async function handlePosCheckout() {
+    if (!currentPosShowtimeId || currentPosSeats.length === 0) return;
+
+    const combos = [];
+    document.querySelectorAll('.pos-combo-inp').forEach(inp => {
+        const qty = parseInt(inp.value) || 0;
+        if (qty > 0) {
+            combos.push({ id: Number(inp.dataset.id), quantity: qty });
+        }
+    });
+
+    const payload = {
+        showtime_id: currentPosShowtimeId,
+        seat_ids: JSON.stringify(currentPosSeats.map(s => s.id)),
+        combos: JSON.stringify(combos),
+        customer_name: document.getElementById('posCustomerName').value || 'Khách vãng lai (Quầy)',
+        customer_phone: '',
+        payment_method: document.getElementById('posPaymentMethod').value
+    };
+
+    const btn = document.getElementById('btnPosCheckout');
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin me-2"></i> Đang xuất vé...';
+
+    try {
+        const res = await fetch('/staff/api/pos-checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(payload)
+        });
+
+        const data = await res.json();
+        if (data.success) {
+            lastBookingCode = data.bookingCode;
+            const ticketUrl = `/booking/success/${data.bookingCode}`;
+
+            document.getElementById('posSuccessBookingCode').innerText = data.bookingCode;
+            const viewLink = document.getElementById('posViewTicketLink');
+            viewLink.href = ticketUrl;
+            viewLink.target = "_self";
+            viewLink.onclick = function(e) {
+                openTicketSameTab(e, ticketUrl);
+            };
+
+            const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('posSuccessModal'));
+            modal.show();
+        } else {
+            alert('Lỗi xuất vé: ' + data.message);
+        }
+    } catch (e) {
+        alert('Có lỗi mạng xảy ra khi bán vé!');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-print me-2"></i> XUẤT VÉ & IN NGAY';
+    }
+}
+
+function resetPos() {
+    window.location.reload();
+}
+
+function showPosQrModal() {
+    let grand = 0;
+    currentPosSeats.forEach(s => grand += s.price);
+    document.querySelectorAll('.pos-combo-inp').forEach(inp => {
+        const qty = parseInt(inp.value) || 0;
+        if (qty > 0) grand += qty * Number(inp.dataset.price);
+    });
+    const qrUrl = `https://img.vietqr.io/image/MB-033320012005-compact2.png?amount=${grand}&addInfo=POS%20VE&accountName=NGUYEN%20MANH%20QUYET`;
+    document.getElementById('posQrImg').src = qrUrl;
+    document.getElementById('posQrAmount').innerText = grand.toLocaleString('vi-VN') + ' đ';
+    const m = bootstrap.Modal.getOrCreateInstance(document.getElementById('posQrModal'));
+    m.show();
+}
+
+function onPosPaymentMethodChange() {
+    const method = document.getElementById('posPaymentMethod').value;
+    const btn = document.getElementById('btnShowPosQr');
+    if (btn) {
+        btn.style.display = (method === 'mbbank_qr') ? 'block' : 'none';
+    }
+}
+</script>
+
+<%- include('../layouts/footer') %>

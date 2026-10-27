@@ -1,0 +1,311 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-4 mb-5">
+    <!-- Countdown Timer Banner (Khóa Giữ Ghế Tạm Thời 5 Phút - Light Style) -->
+    <div class="alert alert-danger d-flex flex-column flex-sm-row align-items-sm-center justify-content-between gap-3 p-3 rounded-4 mb-4 shadow-sm border-danger-subtle">
+        <div class="d-flex align-items-center gap-3">
+            <div class="bg-danger text-white rounded-circle p-2 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                <i class="fa-solid fa-stopwatch fs-5"></i>
+            </div>
+            <div>
+                <strong class="text-danger fs-6">Ghế của bạn đang được giữ tạm thời!</strong>
+                <div class="small text-secondary">Vui lòng hoàn tất thanh toán trước khi thời gian đếm ngược kết thúc để tránh mất ghế.</div>
+            </div>
+        </div>
+        <div class="badge bg-danger fs-5 px-3 py-2 shadow-sm rounded-pill align-self-start align-self-sm-center text-nowrap">
+            <i class="fa-regular fa-clock me-1"></i>
+            <span id="countdownTimer">05:00</span>
+        </div>
+    </div>
+
+    <form action="/booking/process-payment" method="POST" id="checkoutForm">
+        <input type="hidden" name="showtime_id" value="<%= showtime.id %>">
+
+        <div class="row g-4">
+            <!-- Cột Trái: Thông tin người nhận vé & Phương thức thanh toán -->
+            <div class="col-lg-7">
+                <!-- Thông tin người nhận vé -->
+                <div class="card bg-white border-0 p-4 rounded-4 shadow-sm mb-4">
+                    <h5 class="text-dark fw-bold mb-3 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-id-card text-danger"></i>
+                        <span>1. Thông Tin Nhận Vé Điện Tử</span>
+                    </h5>
+
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Họ và tên <span class="text-danger">*</span></label>
+                            <input type="text" name="customer_name" class="form-control" value="<%= currentUser ? currentUser.full_name : '' %>" placeholder="Nguyễn Văn A" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label small fw-bold">Số điện thoại <span class="text-danger">*</span></label>
+                            <input type="tel" name="customer_phone" class="form-control" value="<%= currentUser ? currentUser.phone : '' %>" placeholder="0912345678" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label small fw-bold">Email nhận mã vé QR <span class="text-danger">*</span></label>
+                            <input type="email" name="customer_email" class="form-control" value="<%= currentUser ? currentUser.email : '' %>" placeholder="email@example.com" required>
+                            <div class="form-text small text-muted">Mã vé điện tử và QR Code sẽ được gửi qua email và hiển thị ngay sau thanh toán.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Phương thức thanh toán (Phong cách CGV & Beta) -->
+                <div class="card bg-white border-0 p-4 rounded-4 shadow-sm">
+                    <h5 class="text-dark fw-bold mb-3 d-flex align-items-center gap-2">
+                        <i class="fa-solid fa-credit-card text-danger"></i>
+                        <span>2. Chọn Phương Thức Thanh Toán</span>
+                    </h5>
+
+                    <div class="d-flex flex-column gap-3">
+                        <!-- 1. MBBank VietQR 24/7 (STK: 033320012005 - NGUYEN MANH QUYET) -->
+                        <label class="payment-option-card border-primary" style="background-color: #f8faff; border-width: 2px;">
+                            <input class="form-check-input" type="radio" name="payment_method" value="mbbank_qr" checked onchange="togglePaymentDetails()">
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="badge text-white px-2 py-1 fw-bold shadow-sm" style="background: linear-gradient(135deg, #0033a0 0%, #1e40af 100%); letter-spacing: 0.5px;">
+                                    <i class="fa-solid fa-qrcode me-1"></i> MB BANK
+                                </span>
+                                <div>
+                                    <div class="text-dark fw-bold">Chuyển Khoản Mã QR Ngân Hàng MB (VietQR Napas 24/7)</div>
+                                    <div class="text-muted small">STK: <strong class="text-primary font-monospace">033320012005</strong> • Chủ TK: <strong class="text-dark">NGUYEN MANH QUYET</strong> • Miễn phí 24/7</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- Khối Hiển Thị Chi Tiết Quét Mã QR MBBank -->
+                        <div id="mbQrBox" class="p-3 p-md-4 rounded-4 border bg-white shadow-sm mt-1 mb-2">
+                            <div class="row align-items-center g-4">
+                                <div class="col-md-5 text-center">
+                                    <div class="bg-white p-2 rounded-3 border d-inline-block shadow-sm position-relative">
+                                        <img src="https://img.vietqr.io/image/MB-033320012005-compact2.png?amount=<%= grandTotal %>&addInfo=DATVE%20<%= showtime.id %>&accountName=NGUYEN%20MANH%20QUYET" 
+                                             alt="Mã QR MBBank NGUYEN MANH QUYET" 
+                                             class="img-fluid rounded mx-auto" 
+                                             style="max-width: 220px; width: 100%;"
+                                             id="mbQrImage">
+                                    </div>
+                                    <div class="small text-muted mt-2 fw-semibold">
+                                        <i class="fa-solid fa-camera text-primary me-1"></i> Mở app ngân hàng bất kỳ để quét mã
+                                    </div>
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="badge bg-primary px-2 py-1">MB</span>
+                                            <h6 class="text-dark fw-bold mb-0">Ngân hàng TMCP Quân đội (MBBank)</h6>
+                                        </div>
+                                        <span class="badge bg-success-subtle text-success border border-success-subtle small">
+                                            <i class="fa-solid fa-bolt me-1"></i> Xử lý tức thì
+                                        </span>
+                                    </div>
+
+                                    <!-- STK -->
+                                    <div class="p-2 mb-2 rounded bg-light border">
+                                        <div class="text-muted small">Số tài khoản (STK):</div>
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-1">
+                                            <span class="fs-5 fw-extrabold text-primary font-monospace" id="stkValue">033320012005</span>
+                                            <button type="button" class="btn btn-outline-primary btn-sm py-1 px-3 fw-bold copy-btn" onclick="copyToClipboard('033320012005', this)">
+                                                <i class="fa-regular fa-copy me-1"></i> Sao chép STK
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Chủ tài khoản -->
+                                    <div class="p-2 mb-2 rounded bg-light border">
+                                        <div class="text-muted small">Chủ tài khoản:</div>
+                                        <div class="fw-bold text-dark text-uppercase fs-6">NGUYEN MANH QUYET</div>
+                                    </div>
+
+                                    <!-- Số tiền -->
+                                    <div class="p-2 mb-2 rounded bg-light border">
+                                        <div class="text-muted small">Số tiền cần thanh toán:</div>
+                                        <div class="fw-extrabold text-danger fs-5"><%= grandTotal.toLocaleString('vi-VN') %> đ</div>
+                                    </div>
+
+                                    <!-- Nội dung chuyển khoản -->
+                                    <div class="p-2 mb-3 rounded bg-light border">
+                                        <div class="text-muted small">Nội dung chuyển khoản (Memo):</div>
+                                        <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-1">
+                                            <span class="fw-bold text-dark font-monospace text-break" id="memoValue">DATVE <%= showtime.id %> <%= (currentUser && currentUser.phone ? currentUser.phone : '') %></span>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm py-1 px-3 fw-bold copy-btn" onclick="copyToClipboard(document.getElementById('memoValue').innerText, this)">
+                                                <i class="fa-regular fa-copy me-1"></i> Sao chép
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <div class="alert alert-info py-2 px-3 small mb-0 rounded-3">
+                                        <i class="fa-solid fa-circle-check text-info me-1"></i> Sau khi quét mã thành công, hãy bấm <strong>"XÁC NHẬN THANH TOÁN"</strong> bên dưới để hoàn tất và nhận vé ngay!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Cổng VNPAY -->
+                        <label class="payment-option-card">
+                            <input class="form-check-input" type="radio" name="payment_method" value="vnpay" onchange="togglePaymentDetails()">
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="badge bg-primary px-2 py-1">VNPAY</span>
+                                <div>
+                                    <div class="text-dark fw-bold">Cổng VNPAY / Thẻ ATM Nội Địa</div>
+                                    <div class="text-muted small">Hỗ trợ tất cả ứng dụng Mobile Banking & Ví điện tử</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- 3. Ví MoMo -->
+                        <label class="payment-option-card">
+                            <input class="form-check-input" type="radio" name="payment_method" value="momo" onchange="togglePaymentDetails()">
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="badge bg-danger px-2 py-1">MOMO</span>
+                                <div>
+                                    <div class="text-dark fw-bold">Ví Điện Tử MoMo</div>
+                                    <div class="text-muted small">Thanh toán tức thì qua ứng dụng MoMo</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- 4. Thẻ ATM / Visa -->
+                        <label class="payment-option-card">
+                            <input class="form-check-input" type="radio" name="payment_method" value="card" onchange="togglePaymentDetails()">
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="badge bg-warning text-dark px-2 py-1">VISA / ATM</span>
+                                <div>
+                                    <div class="text-dark fw-bold">Thẻ Quốc Tế (Visa, MasterCard, JCB)</div>
+                                    <div class="text-muted small">Bảo mật thanh toán quốc tế 3D-Secure</div>
+                                </div>
+                            </div>
+                        </label>
+
+                        <!-- 5. Tiền mặt tại quầy -->
+                        <label class="payment-option-card">
+                            <input class="form-check-input" type="radio" name="payment_method" value="cash" onchange="togglePaymentDetails()">
+                            <div class="d-flex align-items-center gap-2 flex-grow-1">
+                                <span class="badge bg-success px-2 py-1">TIỀN MẶT</span>
+                                <div>
+                                    <div class="text-dark fw-bold">Thanh Toán Trực Tiếp Tại Quầy (Nhận Vé)</div>
+                                    <div class="text-muted small">Áp dụng cho nhân viên quầy POS hoặc nhận vé tại rạp</div>
+                                </div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cột Phải: Tóm tắt đơn hàng & Nút Xác nhận -->
+            <div class="col-lg-5">
+                <div class="card bg-white border-0 p-4 rounded-4 shadow-sm sticky-top" style="top: 80px;">
+                    <h5 class="text-dark fw-bold mb-3 border-bottom pb-2">
+                        <i class="fa-solid fa-film text-danger me-2"></i> Chi Tiết Vé Xem Phim
+                    </h5>
+
+                    <div class="mb-3">
+                        <div class="text-muted small">Phim:</div>
+                        <div class="text-dark fw-bold fs-5"><%= showtime.movie_title %></div>
+                    </div>
+
+                    <div class="row g-2 mb-3 small">
+                        <div class="col-6">
+                            <div class="text-muted">Rạp / Phòng:</div>
+                            <div class="text-dark fw-semibold"><%= showtime.room_name %> (<%= showtime.screen_type %>)</div>
+                        </div>
+                        <div class="col-6">
+                            <div class="text-muted">Suất chiếu:</div>
+                            <div class="text-dark fw-semibold"><%= formatDateTime(showtime.start_time) %></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 border-top pt-2">
+                        <div class="text-muted small mb-1">Ghế ngồi (<%= selectedSeats.length %> vé):</div>
+                        <div class="d-flex flex-wrap gap-1 mb-2">
+                            <% selectedSeats.forEach(s => { %>
+                                <span class="badge bg-danger"><%= s.seat_code %></span>
+                            <% }) %>
+                        </div>
+                        <div class="d-flex justify-content-between text-secondary small">
+                            <span>Tiền vé:</span>
+                            <strong class="text-dark"><%= seatTotal.toLocaleString('vi-VN') %> đ</strong>
+                        </div>
+                    </div>
+
+                    <% if (selectedCombos && selectedCombos.length > 0) { %>
+                        <div class="mb-3 border-top pt-2">
+                            <div class="text-muted small mb-1">Bắp nước & Combo:</div>
+                            <% selectedCombos.forEach(c => { %>
+                                <div class="d-flex justify-content-between small text-secondary mb-1">
+                                    <span><%= c.name %> x<%= c.quantity %></span>
+                                    <span><%= c.total.toLocaleString('vi-VN') %> đ</span>
+                                </div>
+                            <% }) %>
+                            <div class="d-flex justify-content-between text-secondary small mt-1">
+                                <span>Tiền bắp nước:</span>
+                                <strong class="text-dark"><%= comboTotal.toLocaleString('vi-VN') %> đ</strong>
+                            </div>
+                        </div>
+                    <% } %>
+
+                    <div class="border-top pt-3 mb-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="fs-5 text-dark fw-bold">Tổng thanh toán:</span>
+                            <span class="fs-3 fw-extrabold text-danger"><%= grandTotal.toLocaleString('vi-VN') %> đ</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-danger w-100 py-3 rounded-pill fw-bold fs-5 shadow-sm">
+                        <i class="fa-solid fa-lock me-2"></i> XÁC NHẬN THANH TOÁN
+                    </button>
+                    <div class="text-center text-muted small mt-2">
+                        <i class="fa-solid fa-shield-halved text-success me-1"></i> Giao dịch bảo mật 256-bit SSL
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Countdown & Payment Scripts -->
+<script>
+let remainingSeconds = <%= remainingSeconds %>;
+const timerEl = document.getElementById('countdownTimer');
+
+function formatTimer(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return (m < 10 ? '0' : '') + m + ':' + (s < 10 ? '0' : '') + s;
+}
+
+const timerInterval = setInterval(() => {
+    if (remainingSeconds <= 0) {
+        clearInterval(timerInterval);
+        alert('Đã hết thời gian giữ ghế tạm thời (5 phút)! Hệ thống sẽ đưa bạn quay lại bước chọn ghế.');
+        window.location.href = '/booking/seats/<%= showtime.id %>';
+        return;
+    }
+    remainingSeconds--;
+    timerEl.innerText = formatTimer(remainingSeconds);
+}, 1000);
+
+function togglePaymentDetails() {
+    const selected = document.querySelector('input[name="payment_method"]:checked');
+    const qrBox = document.getElementById('mbQrBox');
+    if (qrBox) {
+        if (selected && selected.value === 'mbbank_qr') {
+            qrBox.style.display = 'block';
+        } else {
+            qrBox.style.display = 'none';
+        }
+    }
+}
+
+function copyToClipboard(text, btn) {
+    navigator.clipboard.writeText(text).then(() => {
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check me-1"></i> Đã sao chép!';
+        btn.classList.add('btn-success');
+        setTimeout(() => {
+            btn.innerHTML = originalHtml;
+            btn.classList.remove('btn-success');
+        }, 2000);
+    }).catch(() => {
+        prompt('Sao chép thông tin:', text);
+    });
+}
+</script>
+
+<%- include('../layouts/footer') %>

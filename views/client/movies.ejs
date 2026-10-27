@@ -1,0 +1,184 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-4">
+    <!-- CGV Category Tabs (media_1791900552504.png) -->
+    <div class="cgv-movies-header mb-4">
+        <div class="d-flex align-items-center justify-content-between border-bottom pb-2 flex-wrap gap-3">
+            <div class="cgv-nav-tabs d-flex gap-3 gap-md-4 overflow-auto pb-1" style="max-width: 100%; white-space: nowrap; -webkit-overflow-scrolling: touch;">
+                <a href="/movies?status=now_showing" class="cgv-nav-link <%= currentStatus === 'now_showing' ? 'active' : '' %>">
+                    PHIM ĐANG CHIẾU
+                </a>
+                <a href="/movies?status=coming_soon" class="cgv-nav-link <%= currentStatus === 'coming_soon' ? 'active' : '' %>">
+                    PHIM SẮP CHIẾU
+                </a>
+                <a href="/movies" class="cgv-nav-link <%= !currentStatus ? 'active' : '' %>">
+                    TOÀN BỘ PHIM
+                </a>
+            </div>
+            <div class="text-muted small">
+                Hiển thị <strong><%= movies ? movies.length : 0 %></strong> bộ phim
+            </div>
+        </div>
+    </div>
+
+    <!-- Header & Bộ lọc Tìm kiếm -->
+    <div class="card bg-white border-0 p-3 p-md-4 rounded-4 mb-4 shadow-sm">
+        <div class="row align-items-center g-3">
+            <div class="col-lg-4">
+                <h4 class="text-dark fw-bold mb-1">
+                    <i class="fa-solid fa-clapperboard text-danger me-2"></i> Danh Sách Phim Chiếu Rạp
+                </h4>
+                <p class="text-muted small mb-0">Tìm kiếm bộ phim yêu thích và chọn suất chiếu ngay</p>
+            </div>
+            <div class="col-lg-8">
+                <form action="/movies" method="GET" class="row g-2">
+                    <div class="col-12 col-md-5">
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-secondary-subtle text-muted">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </span>
+                            <input type="text" name="keyword" class="form-control" placeholder="Tên phim, diễn viên, đạo diễn..." value="<%= currentKeyword %>">
+                        </div>
+                    </div>
+                    <div class="col-6 col-md-3">
+                        <select name="genre" class="form-select">
+                            <option value="">Tất cả thể loại</option>
+                            <% genres.forEach(g => { %>
+                                <option value="<%= g %>" <%= currentGenre === g ? 'selected' : '' %>><%= g %></option>
+                            <% }) %>
+                        </select>
+                    </div>
+                    <div class="col-6 col-md-2">
+                        <select name="status" class="form-select">
+                            <option value="">Tất cả trạng thái</option>
+                            <option value="now_showing" <%= currentStatus === 'now_showing' ? 'selected' : '' %>>Đang chiếu</option>
+                            <option value="coming_soon" <%= currentStatus === 'coming_soon' ? 'selected' : '' %>>Sắp chiếu</option>
+                        </select>
+                    </div>
+                    <div class="col-12 col-md-2">
+                        <button type="submit" class="btn btn-danger w-100 fw-bold">
+                            <i class="fa-solid fa-filter me-1"></i> Lọc
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Danh sách phim -->
+    <% if (movies && movies.length > 0) { %>
+        <div class="row g-4 mb-5">
+            <% movies.forEach(movie => { %>
+                <div class="col-6 col-md-4 col-lg-3">
+                    <div class="movie-card">
+                        <div class="movie-poster-wrap">
+                            <img src="<%= movie.poster_url %>?v=20261013_theatrical" alt="<%= movie.title %>" class="movie-poster" loading="lazy">
+                            <span class="badge-rating rating-<%= movie.age_rating %>"><%= movie.age_rating %></span>
+                            <% if (movie.trailer_url) { %>
+                                <button class="btn-play-trailer" onclick="openTrailerModal('<%= movie.trailer_url %>', '<%= movie.title %>')" title="Xem Trailer <%= movie.title %>">
+                                    <i class="fa-solid fa-play"></i>
+                                </button>
+                            <% } %>
+                        </div>
+                        <div class="movie-content">
+                            <h6 class="movie-title" title="<%= movie.title %>"><%= movie.title %></h6>
+                            <div class="movie-meta">
+                                <div><i class="fa-regular fa-clock me-1 text-danger"></i> <%= movie.duration %> phút</div>
+                                <div class="text-truncate"><i class="fa-solid fa-tag me-1 text-primary"></i> <%= movie.genre %></div>
+                                <div class="small mt-1">
+                                    <span class="badge <%= movie.status === 'now_showing' ? 'bg-success' : 'bg-secondary' %>">
+                                        <%= movie.status === 'now_showing' ? 'Đang chiếu' : 'Sắp chiếu' %>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mt-auto d-flex gap-2">
+                                <a href="/movies/<%= movie.id %>" class="btn btn-outline-secondary btn-sm rounded-pill flex-grow-1 fw-semibold">
+                                    Chi tiết
+                                </a>
+                                <a href="/movies/<%= movie.id %>" class="btn btn-danger btn-sm rounded-pill flex-grow-1 fw-bold shadow-sm">
+                                    <i class="fa-solid fa-ticket me-1"></i> <%= movie.status === 'now_showing' ? 'Đặt Vé' : 'Xem Thêm' %>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+    <% } else { %>
+        <div class="card bg-white border-0 text-center py-5 rounded-4 shadow-sm">
+            <i class="fa-solid fa-film text-muted display-3 mb-3"></i>
+            <h5 class="text-dark fw-bold">Không tìm thấy bộ phim nào phù hợp!</h5>
+            <p class="text-muted small mb-3">Vui lòng thử tìm kiếm với từ khóa hoặc bộ lọc khác.</p>
+            <div>
+                <a href="/movies" class="btn btn-outline-danger btn-sm rounded-pill px-4 fw-bold">Xem tất cả phim</a>
+            </div>
+        </div>
+    <% } %>
+</div>
+
+<!-- Modal Trailer Toàn Cục -->
+<div class="modal fade" id="globalTrailerModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+            <div class="modal-header bg-white py-3">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="fa-brands fa-youtube text-danger fs-5"></i>
+                    <h6 class="modal-title fw-bold text-dark mb-0" id="globalTrailerTitle">Trailer Chính Thức</h6>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <a id="globalTrailerDirectLink" href="#" target="_blank" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-semibold">
+                        <i class="fa-solid fa-arrow-up-right-from-square me-1"></i> Xem trên YouTube
+                    </a>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+            </div>
+            <div class="modal-body p-0 bg-black">
+                <div class="ratio ratio-16x9">
+                    <iframe id="globalTrailerIframe" src="" title="Trailer Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+                <div class="p-2 bg-dark text-white-50 text-center small border-top border-secondary">
+                    <i class="fa-solid fa-circle-info me-1 text-warning"></i>
+                    Nếu video không phát được trong khung, vui lòng bấm <strong class="text-white">"Xem trên YouTube"</strong> ở góc phải trên.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTrailerModal(urlOrId, title) {
+        if (!urlOrId) return;
+        let videoId = '';
+        
+        if (urlOrId.includes('watch?v=')) {
+            videoId = urlOrId.split('watch?v=')[1].split('&')[0];
+        } else if (urlOrId.includes('embed/')) {
+            videoId = urlOrId.split('embed/')[1].split('?')[0];
+        } else if (urlOrId.includes('youtu.be/')) {
+            videoId = urlOrId.split('youtu.be/')[1].split('?')[0];
+        } else if (!urlOrId.startsWith('http')) {
+            videoId = urlOrId.trim();
+        }
+
+        const embedUrl = videoId ? ('https://www.youtube-nocookie.com/embed/' + videoId) : urlOrId;
+        const watchUrl = videoId ? ('https://www.youtube.com/watch?v=' + videoId) : urlOrId;
+
+        document.getElementById('globalTrailerTitle').innerText = 'Trailer: ' + (title || 'Chính Thức');
+        document.getElementById('globalTrailerDirectLink').href = watchUrl;
+        document.getElementById('globalTrailerIframe').src = embedUrl + (embedUrl.includes('?') ? '&' : '?') + 'autoplay=1&rel=0&enablejsapi=1';
+
+        const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('globalTrailerModal'));
+        modal.show();
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const modalEl = document.getElementById('globalTrailerModal');
+        if (modalEl) {
+            modalEl.addEventListener('hidden.bs.modal', function() {
+                document.getElementById('globalTrailerIframe').src = '';
+            });
+        }
+    });
+</script>
+
+<%- include('../layouts/footer') %>

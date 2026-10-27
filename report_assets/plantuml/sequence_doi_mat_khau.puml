@@ -1,0 +1,34 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":NguoiDung" as User
+boundary ":DoiMatKhau" as UI
+control ":TaiKhoanController" as Ctrl
+entity ":TaiKhoan" as Model
+
+User -> UI: 1. Nhập mật khẩu cũ, mật khẩu mới, xác nhận mật khẩu
+activate UI
+UI -> Ctrl: 2. Yêu cầu đổi mật khẩu
+activate Ctrl
+Ctrl -> Model: 3. xacThucMatKhauCu(userId, oldPassword)
+activate Model
+
+Model --> Ctrl: 4.1. Mật khẩu cũ không chính xác
+Ctrl --> UI: 5. Thông báo "Mật khẩu cũ không đúng"
+UI --> User: 6. Hiển thị thông báo lỗi
+
+Ctrl -> Model: 3. xacThucMatKhauCu(userId, oldPassword)
+Model --> Ctrl: 4.2. Mật khẩu cũ chính xác
+Ctrl -> Model: 7. capNhatMatKhauMoi(userId, newPasswordHash)
+Model --> Ctrl: 8. Cập nhật mật khẩu thành công
+Ctrl --> UI: 9. Thông báo "Đổi mật khẩu thành công"
+UI --> User: 10. Hiển thị thông báo thành công
+deactivate UI
+deactivate Ctrl
+deactivate Model
+
+@enduml

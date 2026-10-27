@@ -1,0 +1,21 @@
+<%- include('../layouts/header') %>
+
+<div class="container py-5 text-center">
+    <div class="py-5">
+        <i class="fa-solid fa-ban text-danger display-1 mb-4"></i>
+        <h1 class="text-white fw-bold">403 - KHÔNG CÓ QUYỀN TRUY CẬP</h1>
+        <p class="text-secondary fs-5 mb-4">
+            <%= typeof message !== 'undefined' ? message : 'Bạn không có quyền hạn thích hợp để truy cập vào phân hệ này.' %>
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a href="/" class="btn btn-outline-light px-4 rounded-pill">
+                <i class="fa-solid fa-house me-1"></i> Về Trang Chủ
+            </a>
+            <a href="/auth/login" class="btn btn-danger px-4 rounded-pill">
+                <i class="fa-solid fa-right-to-bracket me-1"></i> Đăng Nhập Tài Khoản Khác
+            </a>
+        </div>
+    </div>
+</div>
+
+<%- include('../layouts/footer') %>

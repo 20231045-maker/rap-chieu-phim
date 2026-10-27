@@ -1,0 +1,60 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện trang chủ rạp chiếu phim;
+
+if () then ([Xem lịch sử đơn đặt vé])
+    :Hiển thị danh sách vé đã mua;
+    :Chọn một đơn vé trong danh sách;
+    if () then ([Hủy đơn đặt vé])
+        :Kiểm tra quy định hủy vé (> 60 phút trước giờ chiếu);
+        if () then ([Hợp lệ])
+            :Xác nhận hủy vé & hoàn tiền;
+            :Cập nhật trạng thái vé 'cancelled';
+            :Giải phóng ghế về trạng thái trống;
+        else ([Không hợp lệ])
+            :Hiển thị thông báo không đủ điều kiện hủy vé;
+        endif
+    else ([Xem vé điện tử QR])
+        :Hiển thị chi tiết vé & mã QR check-in;
+    endif
+else ([Đặt vé xem phim trực tuyến])
+    :Xem danh sách phim đang chiếu;
+    :Chọn bộ phim và ngày chiếu mong muốn;
+    :Chọn suất chiếu và phòng chiếu;
+    :Hệ thống tải sơ đồ ghế thời gian thực;
+    
+    repeat
+        :Chọn vị trí ghế ngồi (Thường/VIP/Sweetbox);
+    repeat while (Khóa ghế tạm thời 5 phút thành công?) is (Ghế đang bận) not (Khóa thành công)
+    
+    if () then ([Chọn combo bắp nước])
+        :Chọn các combo bắp rang và nước uống;
+        :Thêm combo vào giỏ thanh toán;
+    else ([Không chọn bắp nước])
+    endif
+    
+    :Chọn phương thức thanh toán (VNPay / Thẻ ATM);
+    :Chuyển hướng sang cổng thanh toán trực tuyến;
+    
+    repeat
+        :Nhập thông tin thanh toán / Quét mã QR VNPay;
+        :Xác nhận thanh toán;
+    repeat while (Cổng thanh toán phản hồi?) is (Giao dịch lỗi) not (Thanh toán thành công)
+    
+    :Hệ thống tạo đơn đặt vé (bookings);
+    :Khởi tạo các vé xem phim (tickets) và mã QR bảo mật;
+    :Giải phóng khóa ghế tạm, chuyển ghế sang trạng thái 'sold';
+    :Hiển thị hóa đơn điện tử và mã vé xem phim;
+endif
+
+stop
+
+@enduml

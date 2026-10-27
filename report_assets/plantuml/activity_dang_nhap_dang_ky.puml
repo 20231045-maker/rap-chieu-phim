@@ -1,0 +1,31 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam dpi 300
+
+start
+
+:Giao diện đăng nhập;
+
+if () then ([Chưa có tài khoản])
+    :Giao diện đăng ký;
+    repeat
+        :Nhập họ tên, email, số điện thoại, mật khẩu;
+        :Nhấn nút "Đăng ký";
+    repeat while (Kiểm tra thông tin hợp lệ?) is (Thất bại) not (Thành công)
+    :Tạo tài khoản thành công;
+else ([Đã có tài khoản])
+    :Đăng nhập tài khoản;
+    repeat
+        :Nhập email và mật khẩu;
+        :Nhấn nút "Đăng nhập";
+    repeat while (Xác thực tài khoản và mật khẩu?) is (Thất bại) not (Thành công)
+    :Đăng nhập thành công và cấp quyền truy cập;
+endif
+
+stop
+
+@enduml

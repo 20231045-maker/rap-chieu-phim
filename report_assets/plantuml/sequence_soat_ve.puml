@@ -1,0 +1,37 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam dpi 300
+
+actor ":NhanVien" as Staff
+boundary ":SoatVeQR" as UI
+control ":SoatVeController" as Ctrl
+entity ":VeXemPhim" as ModelTicket
+
+Staff -> UI: 1. Quét mã QR trên vé của khách hàng
+activate UI
+UI -> Ctrl: 2. Yêu cầu xác thực mã vé
+activate Ctrl
+Ctrl -> ModelTicket: 3. kiemTraVe(qrCode, showtimeId)
+activate ModelTicket
+
+ModelTicket --> Ctrl: 4.1. Vé không tồn tại hoặc sai suất chiếu
+Ctrl --> UI: 5. Thông báo "Vé không hợp lệ!"
+UI --> Staff: 6. Cảnh báo lỗi trên màn hình
+
+ModelTicket --> Ctrl: 4.2. Vé đã được sử dụng trước đó (status='used')
+Ctrl --> UI: 7. Cảnh báo "Vé đã sử dụng lúc [time]!"
+UI --> Staff: 8. Phát chuông cảnh báo gian lận
+
+ModelTicket --> Ctrl: 4.3. Vé hợp lệ và chưa sử dụng (status='unused')
+Ctrl -> ModelTicket: 9. capNhatTrangThai(ticketId, 'used', checkInTime)
+ModelTicket --> Ctrl: 10. Cập nhật trạng thái thành công
+Ctrl --> UI: 11. Thông báo "Vé hợp lệ - Mời vào phòng"
+UI --> Staff: 12. Hiển thị thông tin ghế và cho phép khách vào rạp
+deactivate UI
+deactivate Ctrl
+deactivate ModelTicket
+
+@enduml

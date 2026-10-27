@@ -1,0 +1,24 @@
+@startuml
+skinparam monochrome true
+skinparam shadowing false
+skinparam defaultFontName "Arial"
+skinparam defaultFontSize 12
+skinparam linetype ortho
+skinparam roundCorner 0
+skinparam dpi 300
+
+title BIỂU ĐỒ CHUYỂN TRẠNG THÁI CỦA GHẾ NGỒI (SEAT STATE MACHINE)
+
+[*] --> TRONG : Khởi tạo suất chiếu mới
+
+TRONG --> TAM_GIU : Khách hàng bấm chọn ghế\n(Tạo SeatLock 5 phút)
+
+TAM_GIU --> TRONG : Khách bấm bỏ chọn ghế\nhoặc hết 5 phút chưa thanh toán
+
+TAM_GIU --> DA_DAT : Thanh toán thành công trong 5 phút\n(Tạo Ticket & Booking)
+
+DA_DAT --> HOAN_TAT : Suất chiếu kết thúc
+
+HOAN_TAT --> [*]
+
+@enduml
